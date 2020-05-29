@@ -1,9 +1,6 @@
 package bot;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import bot.cmd.Command;
 import bot.cmd.CommandContext;
@@ -13,9 +10,7 @@ import bot.cmd.group.system.HelpCommand;
 import bot.io.DataFile;
 import bot.io.MissingPropertyException;
 import bot.io.ReadOnlyJsonTraversal;
-import bot.util.SyncQueue;
 
-import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
@@ -49,6 +44,12 @@ public class Core {
 	public static DiscordClient client;
 	public static GatewayDiscordClient gateway;
 	public static BotData data;
+	
+	// possible states a user could be in. Usually has metadata associated with it. Determines what commands are available.
+	public enum UserState {
+		// 
+		Idle, Travel, Search, Battle, Trade
+	}
 	
 	public static final CommandSet rootCommands = new CommandSet(
 		new HelpCommand(),
@@ -132,8 +133,6 @@ public class Core {
 			})
 			.subscribe(messageEvent -> parseMessage(messageEvent, author, messageQueue));
 	}*/
-	
-	// fixme somehow need to make this async in a way that makes sure checking for queued messages after happens when this is done
 	
 	// -> first test if message events will overlap if each one takes a while; I assume they will in order to serve multiple people at once. But probably at certain boundaries, like the various filters and maps. 
 	
