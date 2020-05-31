@@ -4,11 +4,12 @@ import bot.command.ActionableCommand;
 import bot.command.ArgType;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
-import bot.pokemon.definiton.PokemonSpecies;
 import bot.pokemon.external.Importer;
 import bot.util.UsageException;
 
 import reactor.core.publisher.Mono;
+
+import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
 
 public class DexCommand extends ActionableCommand {
 	
@@ -33,7 +34,7 @@ public class DexCommand extends ActionableCommand {
 		}
 		
 		if(species != null)
-			msg = species.getName()+", #"+species.getDexNumber();
+			msg = species.getName()+", #"+species.getId();
 		
 		return context.channel.createMessage(msg).then();
 	}

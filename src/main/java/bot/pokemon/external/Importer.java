@@ -1,17 +1,47 @@
 package bot.pokemon.external;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.TreeMap;
+
+import bot.Core;
+
+import com.fasterxml.jackson.core.JsonGenerator;
 import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
+import me.sargunvohra.lib.pokekotlin.model.NamedApiResource;
+import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
 
 public class Importer {
+	
+	private Importer() {}
+	
+	// public static final int MAX_DEX_NUMBER = 807;
+	public static final int MAX_DEX_NUMBER = 151;
 	
 	// some methods and such to import pokemon data from PokeAPI
 	// if I don't end up actually importing them, then this will instead be an API from which I get the data.
 	
-	// TODO next key thing to do: determination of pokemon stats and moveset when they spawn. From there I can work on battle instances.
+	private static final PokeApiClient api = new PokeApiClient();
 	
-	public Importer() {
-		PokeApiClient api = new PokeApiClient();
-		
+	private static final TreeMap<String, PokemonSpecies> nameToSpeciesMap = new TreeMap<>();
+	private static final PokemonSpecies[] dexOrderedSpecies = new PokemonSpecies[MAX_DEX_NUMBER+1]; // index 0 won't be used
+	
+	static {
+		// initialization
+		// List<NamedApiResource> speciesList = api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults();
+	}
+	
+	public static PokemonSpecies getSpecies(int dex) {
+		if(dexOrderedSpecies[dex] == null)
+			dexOrderedSpecies[dex] = api.getPokemonSpecies(dex);
+		return dexOrderedSpecies[dex];
+	}
+	
+	public static PokemonSpecies getSpecies(String name) {
+		// return nameToSpeciesMap.computeIfAbsent(name, pname -> api.);
+		return nameToSpeciesMap.get(name);
 	}
 	
 	/*
@@ -38,4 +68,20 @@ public class Importer {
 			- 
 	 */
 	
+	// download data
+	public static void main(String[] args) throws IOException {
+		List<NamedApiResource> speciesList = api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults();
+		
+		JsonGenerator g = Core.jsonMapper.getFactory().createGenerator(new FileWriter("src/main/resources/species.json"));
+		g.writeStartObject();
+		g.writeArrayFieldStart("species");
+		for(NamedApiResource resource: speciesList) {
+			g.writeObject(resource);
+		}
+		g.writeEndArray();
+		g.writeEndObject();
+		g.close();
+		
+		// Core.jsonMapper.writeValue(new File("src/main/resources/species.json"), );
+	}
 }

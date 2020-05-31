@@ -5,9 +5,8 @@ import java.io.StringWriter;
 import java.util.function.Function;
 
 import bot.io.DataFile;
-import bot.io.MissingPropertyException;
-import bot.io.ReadOnlyJsonTraversal;
-import bot.io.WritableJsonTraversal;
+import bot.io.json.MissingPropertyException;
+import bot.io.json.node.JsonObjectNode;
 import bot.util.POJO;
 import bot.util.ThrowFunction;
 
@@ -15,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class BotData {
 	
-	private final WritableJsonTraversal dataWriter; // use to update and save the editable bot data.
+	// private final WritableJsonTraversal dataWriter; // use to update and save the editable bot data.
 	
 	// final DynamicProperty<Presence> defaultStatus;
 	
@@ -24,13 +23,14 @@ public class BotData {
 	}
 	
 	private BotData() throws IOException, MissingPropertyException {
-		ReadOnlyJsonTraversal config = new ReadOnlyJsonTraversal(DataFile.CONFIG);
+		JsonObjectNode config = DataFile.CONFIG.readJson();
+		// ReadOnlyJsonTraversal config = new ReadOnlyJsonTraversal(DataFile.CONFIG);
 		// prefix = config.getProperty("prefix", resolver(JsonNode::textValue));
-		// owner = config.getProperty("owner", resolver(PropertyFunction.attach(JsonNode::textValue, Snowflake::of)));
+		// owner = config.getProperty("owner", resolver(MapFunction.attach(JsonNode::textValue, Snowflake::of)));
 		// isBlobbo = config.getProperty("bot", resolver(JsonNode::booleanValue));
 		// greetingOrder = config.getProperty("greetingOrder", resolver(JsonNode::intValue));
 		
-		dataWriter = new WritableJsonTraversal(DataFile.DATA);
+		// dataWriter = new WritableJsonTraversal(DataFile.DATA);
 		
 		// status = new DynamicProperty<>("default_status", dataWriter.getProperty("default_status", JsonTraversal::getNode), PresenceData.class);
 		

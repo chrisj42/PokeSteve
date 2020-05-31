@@ -1,4 +1,4 @@
-package bot.io;
+package bot.io.json;
 
 import java.io.File;
 
@@ -7,5 +7,8 @@ public class MissingPropertyException extends Exception {
 		super(String.format(
 			"Error reading data file '%s': %s", file.getName(), message)
 		);
+	}
+	public MissingPropertyException(String message) {
+		super(message);
 	}
 }

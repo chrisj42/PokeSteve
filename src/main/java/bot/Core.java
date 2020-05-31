@@ -8,8 +8,7 @@ import bot.command.CommandSet;
 import bot.command.group.info.DexCommand;
 import bot.command.group.system.HelpCommand;
 import bot.io.DataFile;
-import bot.io.MissingPropertyException;
-import bot.io.ReadOnlyJsonTraversal;
+import bot.io.json.MissingPropertyException;
 
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
@@ -60,8 +59,9 @@ public class Core {
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
-		ReadOnlyJsonTraversal auth = new ReadOnlyJsonTraversal(DataFile.AUTH);
-		final String token = auth.getProperty("token").resolve(JsonNode::textValue);
+		// ReadOnlyJsonTraversal auth = new ReadOnlyJsonTraversal(DataFile.AUTH);
+		// final String token = auth.getPropertyValue("token", JsonNode::textValue);
+		final String token = DataFile.AUTH.readJson().getValueNode("token").parseValue(JsonNode::textValue);
 		
 		// read bot config
 		data = null;//BotData.load();
