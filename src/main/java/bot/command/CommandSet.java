@@ -1,7 +1,6 @@
-package bot.cmd;
+package bot.command;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 

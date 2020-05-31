@@ -2,11 +2,11 @@ package bot;
 
 import java.io.IOException;
 
-import bot.cmd.Command;
-import bot.cmd.CommandContext;
-import bot.cmd.CommandSet;
-import bot.cmd.group.info.DexCommand;
-import bot.cmd.group.system.HelpCommand;
+import bot.command.Command;
+import bot.command.CommandContext;
+import bot.command.CommandSet;
+import bot.command.group.info.DexCommand;
+import bot.command.group.system.HelpCommand;
 import bot.io.DataFile;
 import bot.io.MissingPropertyException;
 import bot.io.ReadOnlyJsonTraversal;
@@ -21,6 +21,7 @@ import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.jshell.spi.ExecutionControl.UserException;
 
 public class Core {
 	
@@ -101,11 +102,17 @@ public class Core {
 		
 		// return context.channel.createMessage("hello!").then();
 		Command cmd = Command.tryParseSubCommand(rootCommands, context);
-		System.out.println("basic command: "+cmd);
+		// System.out.println("basic command: "+cmd);
 		if(cmd == null)
 			return Mono.empty();
 		
-		return cmd.execute(context);
+		return cmd.execute(context).onErrorResume(e -> {
+			if(e instanceof UserException)
+				return context.channel.createMessage(e.getMessage()).then();
+			System.err.println("exception occurred while parsing command "+context);
+			e.printStackTrace();
+			return Mono.empty();
+		});
 		
 		/*final Snowflake uid = author.getId();
 		SyncQueue<MessageCreateEvent> messageQueue;

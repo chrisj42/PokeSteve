@@ -1,4 +1,4 @@
-package bot.cmd;
+package bot.command;
 
 import reactor.core.publisher.Mono;
 
@@ -13,6 +13,8 @@ public abstract class Command {
 	public String getName() { return name; }
 	
 	public abstract Mono<Void> execute(CommandContext context);
+	
+	public abstract String getHelp();
 	
 	// attempts to match the next argument in the context with a command from the given list
 	public static Command tryParseSubCommand(CommandSet commands, CommandContext context) {

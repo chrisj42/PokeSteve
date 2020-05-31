@@ -1,4 +1,4 @@
-package bot.cmd;
+package bot.command;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -89,5 +89,10 @@ public class CommandContext {
 			args.add(cur.toString());
 		
 		return args;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("CommandContext{user=%s#%s(%s), message=\"%s\", parsedMessage=%s, curArg=%s}", user.getUsername(), user.getTag(), user.getId(), event.getMessage().getContent(), args, curArg);
 	}
 }

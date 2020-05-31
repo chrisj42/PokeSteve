@@ -1,4 +1,4 @@
-package bot.cmd;
+package bot.command;
 
 import discord4j.common.util.Snowflake;
 

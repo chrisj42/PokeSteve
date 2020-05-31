@@ -1,4 +1,4 @@
-package bot.cmd;
+package bot.command;
 
 public enum VisualCommandGroup {
 	
