@@ -9,6 +9,7 @@ import bot.command.group.info.DexCommand;
 import bot.command.group.system.HelpCommand;
 import bot.io.DataFile;
 import bot.io.json.MissingPropertyException;
+import bot.util.UsageException;
 
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
@@ -20,7 +21,6 @@ import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.jshell.spi.ExecutionControl.UserException;
 
 public class Core {
 	
@@ -81,7 +81,13 @@ public class Core {
 		
 		gateway.on(MessageCreateEvent.class)
 			.flatMap(Core::createContext)
-			.flatMap(Core::parseMessage)
+			.flatMap(context -> Mono.just(context).flatMap(Core::parseMessage).onErrorResume(e -> {
+				if(e instanceof UsageException)
+					return context.channel.createMessage(e.getMessage()).then();
+				System.err.println("exception occurred while parsing command "+context);
+				e.printStackTrace();
+				return Mono.empty();
+			}))
 			.subscribe();
 		
 		gateway.onDisconnect().block();
@@ -106,13 +112,8 @@ public class Core {
 		if(cmd == null)
 			return Mono.empty();
 		
-		return cmd.execute(context).onErrorResume(e -> {
-			if(e instanceof UserException)
-				return context.channel.createMessage(e.getMessage()).then();
-			System.err.println("exception occurred while parsing command "+context);
-			e.printStackTrace();
-			return Mono.empty();
-		});
+		return Mono.just(cmd)
+			.flatMap(command -> command.execute(context));
 		
 		/*final Snowflake uid = author.getId();
 		SyncQueue<MessageCreateEvent> messageQueue;

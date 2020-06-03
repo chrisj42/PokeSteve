@@ -15,13 +15,13 @@ public enum DataFile {
 	
 	DATA("data.json");
 	
-	private final String fileName;
-	private final String path;
+	// private final String fileName;
+	// private final String path;
 	private final File file;
 	
-	DataFile(String fileName) {
-		this.fileName = fileName;
-		this.path = "src/main/resources/"+fileName;
+	DataFile(String path) {
+		// this.fileName = fileName;
+		// this.path = fileName;
 		this.file = new File(path);
 	}
 	

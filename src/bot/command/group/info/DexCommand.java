@@ -2,6 +2,7 @@ package bot.command.group.info;
 
 import bot.command.ActionableCommand;
 import bot.command.ArgType;
+import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
 import bot.pokemon.external.Importer;
@@ -18,7 +19,10 @@ public class DexCommand extends ActionableCommand {
 	}
 	
 	@Override
-	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
+	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
+		if(args.length < 1)
+			throw new ArgumentCountException(1);
+		
 		PokemonSpecies species;
 		
 		String msg = "";

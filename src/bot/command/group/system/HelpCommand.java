@@ -1,5 +1,7 @@
 package bot.command.group.system;
 
+import java.util.Arrays;
+
 import bot.Core;
 import bot.command.ActionableCommand;
 import bot.command.Command;
@@ -14,18 +16,20 @@ import reactor.core.publisher.Mono;
 public class HelpCommand extends ActionableCommand {
 	
 	public HelpCommand() {
-		super("help", "View available commands, what they do, and how to use them.", "command name");
+		super("help", "Show a list of available commands, or provide help on a single command.", "[command name]");
 	}
 	
 	@Override
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
-		if(args.length == 0)
+		if(args.length == 0) {
 			return context.channel.createMessage(
 				"Available commands: `"+String.join("`, `", Core.rootCommands.getCommandNames())+"`"
 			).then();
+		}
 		
 		CommandSet cmdSet = Core.rootCommands;
 		Command cmd = null;
+		System.out.println(Arrays.toString(args));
 		for(String arg: args) {
 			cmd = cmdSet.fetch(arg);
 			if(cmd == null)

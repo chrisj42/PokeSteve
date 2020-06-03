@@ -21,7 +21,7 @@ public class CommandParent extends Command {
 		else
 			defaultCommand = null;
 		
-		subCommandListing = "`"+String.join("`, `", this.subCommands.getCommandNames());
+		subCommandListing = "`"+String.join("`, `", this.subCommands.getCommandNames())+"`";
 	}
 	
 	@Override

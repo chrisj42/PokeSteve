@@ -11,10 +11,7 @@ public class ArgumentSet {
 	public ArgumentSet(String... args) {
 		this.args = args;
 		
-		StringBuilder use = new StringBuilder();
-		for(String arg: args)
-			use.append(" <").append(arg).append(">");
-		this.usage = use.toString();
+		this.usage = String.join(" ", args);
 	}
 	
 	// public int argCount() { return args.length; }
@@ -25,14 +22,14 @@ public class ArgumentSet {
 	public String getUsage() { return usage; }
 	
 	public String[] parseArguments(CommandContext context) throws ArgumentCountException {
-		String[] argValues = new String[args.length];
+		/*String[] argValues = new String[args.length];
 		for(int i = 0; i < args.length; i++) {
-			args[i] = context.nextArgument();
-			if(args[i] == null)
+			argValues[i] = context.nextArgument();
+			if(argValues[i] == null)
 				throw new ArgumentCountException(args.length - i);
 		}
-		
-		return argValues;
+		return argValues;*/
+		return context.getRemainingArgs().toArray(new String[0]);
 	}
 	
 	public static class ArgumentCountException extends Exception {

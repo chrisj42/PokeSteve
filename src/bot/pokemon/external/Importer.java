@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import bot.Core;
+import bot.util.UsageException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
@@ -34,14 +35,19 @@ public class Importer {
 	}
 	
 	public static PokemonSpecies getSpecies(int dex) {
+		if(dex >= MAX_DEX_NUMBER)
+			throw new UsageException("that is past the max dex value available. Current max is "+MAX_DEX_NUMBER+".");
+		if(dex <= 0)
+			throw new UsageException("Well at least you're being a good tester saul, but no, there are no pokemon with negative dex values.");
 		if(dexOrderedSpecies[dex] == null)
 			dexOrderedSpecies[dex] = api.getPokemonSpecies(dex);
 		return dexOrderedSpecies[dex];
 	}
 	
 	public static PokemonSpecies getSpecies(String name) {
+		throw new UsageException("not quite implemented yet, oops");
 		// return nameToSpeciesMap.computeIfAbsent(name, pname -> api.);
-		return nameToSpeciesMap.get(name);
+		// return nameToSpeciesMap.get(name);
 	}
 	
 	/*

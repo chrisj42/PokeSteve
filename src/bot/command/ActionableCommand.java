@@ -45,18 +45,16 @@ public abstract class ActionableCommand extends Command {
 	public Mono<Void> execute(CommandContext context) {
 		OptionValues optionValues = options.parseOptions(context);
 		
-		String[] argValues;
 		try {
-			argValues = arguments.parseArguments(context);
+			String[] argValues = arguments.parseArguments(context);
+			return execute(context, optionValues, argValues);
 		} catch(ArgumentCountException e) {
 			throw new UsageException(e.missingArgs + " argument" + (e.missingArgs == 1 ? " is" : "s are")+" missing.");
 			// throw new UsageException(e.insertArgCountString("is", "are")+" missing.");
 		}
-		
-		return execute(context, optionValues, argValues);
 	}
 	
-	protected abstract Mono<Void> execute(CommandContext context, OptionValues options, String[] args);
+	protected abstract Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException;
 	
 	@Override
 	public String getHelp() {
