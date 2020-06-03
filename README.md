@@ -10,11 +10,11 @@ Pokemon encounters are private, and can either be fights or catch attempts. The 
 
 This bot is extremely early in development, so there's not much yet, but there are a lot of features planned out and in the works!
 
-##### Implemented:
+#### Implemented:
 - basic command system
 - help and pokedex commands
 
-##### Planned:
+#### Planned:
 - good battle mechanics, which will try to emulate as many abilities and wacky move effects as feasibly possible
 - Some basic world simulation, i.e. you move around regions and areas to find pokemon there
 - IV/EV simulation, allowing you to train specific stats
