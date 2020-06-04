@@ -1,25 +1,37 @@
-apply plugin: "java"
-apply plugin: "idea"
-
-version = '1.0'
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-sourceCompatibility = 11
+allprojects {
+	apply plugin: "java"
+	apply plugin: "idea"
+	
+	version = '1.0'
+	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+	
+	sourceCompatibility = 11
+	
+	repositories {
+		mavenCentral()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+		maven { url 'https://dl.bintray.com/sargunv/maven' }
+		jcenter()
+	}
+	
+	dependencies {
+		compile 'org.jetbrains:annotations:17.0.0'
+	}
+}
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-repositories {
-	mavenCentral()
-	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-	maven { url 'https://dl.bintray.com/sargunv/maven' }
-	jcenter()
+dependencies {
+	implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
 }
 
-dependencies {
-	compile 'org.jetbrains:annotations:17.0.0'
+project(":importing") {
+	sourceSets.main.java.srcDirs = [ "src/" ]
 	
-	implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
-	implementation 'me.sargunvohra.lib:pokekotlin:2.3.1'
+	dependencies {
+		implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
+		implementation 'me.sargunvohra.lib:pokekotlin:2.3.1'
+	}
 }
 
 task run(dependsOn: classes, type: JavaExec) {

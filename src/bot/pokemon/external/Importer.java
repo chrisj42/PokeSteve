@@ -1,18 +1,9 @@
 package bot.pokemon.external;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
 import java.util.TreeMap;
 
-import bot.Core;
+import bot.pokemon.PokemonSpecies;
 import bot.util.UsageException;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
-import me.sargunvohra.lib.pokekotlin.model.NamedApiResource;
-import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
 
 public class Importer {
 	
@@ -23,8 +14,6 @@ public class Importer {
 	
 	// some methods and such to import pokemon data from PokeAPI
 	// if I don't end up actually importing them, then this will instead be an API from which I get the data.
-	
-	private static final PokeApiClient api = new PokeApiClient();
 	
 	private static final TreeMap<String, PokemonSpecies> nameToSpeciesMap = new TreeMap<>();
 	private static final PokemonSpecies[] dexOrderedSpecies = new PokemonSpecies[MAX_DEX_NUMBER+1]; // index 0 won't be used
@@ -39,8 +28,8 @@ public class Importer {
 			throw new UsageException("that is past the max dex value available. Current max is "+MAX_DEX_NUMBER+".");
 		if(dex <= 0)
 			throw new UsageException("Well at least you're being a good tester saul, but no, there are no pokemon with negative dex values.");
-		if(dexOrderedSpecies[dex] == null)
-			dexOrderedSpecies[dex] = api.getPokemonSpecies(dex);
+		// if(dexOrderedSpecies[dex] == null)
+		// 	dexOrderedSpecies[dex] = //api.getPokemonSpecies(dex);
 		return dexOrderedSpecies[dex];
 	}
 	
@@ -73,21 +62,4 @@ public class Importer {
 			- change forms
 			- 
 	 */
-	
-	// download data
-	public static void main(String[] args) throws IOException {
-		List<NamedApiResource> speciesList = api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults();
-		
-		JsonGenerator g = Core.jsonMapper.getFactory().createGenerator(new FileWriter("src/main/resources/species.json"));
-		g.writeStartObject();
-		g.writeArrayFieldStart("species");
-		for(NamedApiResource resource: speciesList) {
-			g.writeObject(resource);
-		}
-		g.writeEndArray();
-		g.writeEndObject();
-		g.close();
-		
-		// Core.jsonMapper.writeValue(new File("src/main/resources/species.json"), );
-	}
 }
