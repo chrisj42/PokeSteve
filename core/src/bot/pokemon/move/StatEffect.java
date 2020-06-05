@@ -7,7 +7,7 @@ import bot.pokemon.Stat;
 
 public class StatEffect extends MoveEffect {
 	
-	private final EnumMap<Stat, Integer> statStageChanges;
+	private final EnumMap<Stat, Integer> statStageChanges = new EnumMap<>(Stat.class);
 	
 	public StatEffect(JsonObjectNode node) {
 		

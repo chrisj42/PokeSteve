@@ -5,8 +5,8 @@ import bot.pokemon.StatusEffect;
 
 public class ApplyStatusEffect extends MoveEffect {
 	
-	private final StatusEffect statusEffect;
-	private final int chance;
+	private StatusEffect statusEffect;
+	private int chance;
 	
 	public ApplyStatusEffect(JsonObjectNode node) {
 		

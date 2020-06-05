@@ -5,8 +5,8 @@ import bot.pokemon.Weather;
 
 public class WeatherEffect {
 	
-	private final Weather weather;
-	private final int turns;
+	private Weather weather;
+	private int turns;
 	
 	public WeatherEffect(JsonObjectNode node) {
 		

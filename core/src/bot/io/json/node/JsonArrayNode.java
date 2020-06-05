@@ -14,6 +14,10 @@ public class JsonArrayNode extends JsonParentNode {
 		super(parent, node, nameInParent);
 	}
 	
+	public int getLength() {
+		return node.size();
+	}
+	
 	public JsonObjectNode getObjectNode(int idx) throws MissingPropertyException {
 		return new JsonObjectNode(this, node.get(idx), String.valueOf(idx));
 	}

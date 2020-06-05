@@ -5,12 +5,10 @@ import bot.command.ArgType;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
+import bot.pokemon.PokemonSpecies;
 import bot.pokemon.external.Importer;
-import bot.util.UsageException;
 
 import reactor.core.publisher.Mono;
-
-import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
 
 public class DexCommand extends ActionableCommand {
 	
@@ -38,7 +36,7 @@ public class DexCommand extends ActionableCommand {
 		}
 		
 		if(species != null)
-			msg = species.getName()+", #"+species.getId();
+			msg = species.name+", #"+species.dex;
 		
 		return context.channel.createMessage(msg).then();
 	}

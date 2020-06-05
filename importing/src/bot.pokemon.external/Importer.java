@@ -1,14 +1,15 @@
 package bot.pokemon.external;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.nio.file.Files;
+import java.util.Collections;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
-import me.sargunvohra.lib.pokekotlin.model.NamedApiResource;
-import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 public class Importer {
 	
@@ -21,8 +22,6 @@ public class Importer {
 	
 	// some methods and such to import pokemon data from PokeAPI
 	// if I don't end up actually importing them, then this will instead be an API from which I get the data.
-	
-	private static final PokeApiClient api = new PokeApiClient();
 	
 	/*
 		when you talk in a server that the bot is also in, there's a chance a pokemon could spawn (will be shown in your DMs)
@@ -48,21 +47,68 @@ public class Importer {
 			- 
 	 */
 	
+	private interface ResourceWriter<T> {
+		void write(JsonGenerator g, T resource) throws IOException;
+	}
+	
+	private static final HttpRequestFactory reqFactory = new NetHttpTransport().createRequestFactory();
+	
 	// download data
 	public static void main(String[] args) throws IOException {
-		List<NamedApiResource> speciesList = api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults();
+		// writeData("species", api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults(), api::getPokemonSpecies, JsonGenerator::writeObject);
 		
-		JsonGenerator g = jsonMapper.getFactory().createGenerator(new FileWriter("species.json"));
+		// download a list straight from PokeAPI
+		
+		final String data = readData("move", 165);
+		Files.write(new File("moves-gen1.json").toPath(), Collections.singleton(data));
+		System.out.println("file written");
+	}
+	
+	private static String readData(String type, int maxIdx) throws IOException {
+		String[] data = new String[maxIdx];
+		for(int i = 1; i <= maxIdx; i++) {
+			System.out.println("reading data "+i);
+			data[i - 1] = reqFactory.buildGetRequest(new GenericUrl("https://pokeapi.co/api/v2/" + type + "/" + i)).execute().parseAsString();
+		}
+		return "["+String.join(",", data)+"]";
+	}
+	
+	/*private static void writeMoves() throws IOException {
+		writeData("moves", api.getMoveList(0, 165).getResults(), api::getMove, (g, move) -> {
+			g.writeStartObject();
+			g.writeObjectField("id", move.getId());
+			g.writeObjectField("name", move.getName());
+			g.writeObjectField("accuracy", move.getAccuracy());
+			g.writeObjectField("effect-chance", move.getEffectChance());
+			g.writeObjectField("pp", move.getPp());
+			g.writeObjectField("priority", move.getPriority());
+			g.writeObjectField("power", move.getPower());
+			// todo change 
+			g.writeObjectField("damage-class", move.getDamageClass());
+			g.writeObjectFieldStart("effect-description");
+			g.writeObjectField("long", move.getEffectEntries().get(0).getEffect());
+			g.writeObjectField("short", move.getEffectEntries().get(0).getShortEffect());
+			// g.writeObjectField("flavor", move.());
+			g.writeEndObject();
+			g.writeObjectField("meta", move.getMeta());
+			g.writeObjectField("stat-changes", move.getStatChanges());
+			g.writeObjectField("target", move.getTarget());
+			g.writeObjectField("type", move.getType());
+			g.writeEndObject();
+		});
+	}*/
+	
+	/*private static <T> void writeData(String dataType, List<NamedApiResource> resourceList, Function<Integer, T> converter, ResourceWriter<T> writer) throws IOException {
+		JsonGenerator g = jsonMapper.getFactory().createGenerator(new FileWriter(dataType+".json"));
 		g.writeStartObject();
-		g.writeArrayFieldStart("species");
-		for(NamedApiResource resource: speciesList) {
-			PokemonSpecies species = api.getPokemonSpecies(resource.getId());
-			
+		g.writeArrayFieldStart(dataType);
+		for(NamedApiResource resource: resourceList) {
+			T converted = converter.apply(resource.getId());
+			writer.write(g, converted);
 		}
 		g.writeEndArray();
 		g.writeEndObject();
 		g.close();
 		System.out.println("file written");
-		// Core.jsonMapper.writeValue(new File("src/main/resources/species.json"), );
-	}
+	}*/
 }

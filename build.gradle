@@ -6,11 +6,13 @@ allprojects {
 	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 	
 	sourceCompatibility = 11
-	
+}
+
+subprojects {
 	repositories {
 		mavenCentral()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-		maven { url 'https://dl.bintray.com/sargunv/maven' }
+		//maven { url 'https://dl.bintray.com/sargunv/maven' }
 		jcenter()
 	}
 	
@@ -19,10 +21,19 @@ allprojects {
 	}
 }
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
-dependencies {
-	implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
+project("core") {
+	sourceSets.main.java.srcDirs = [ "src/" ]
+	
+	dependencies {
+		implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
+	}
+	
+	task run(dependsOn: classes, type: JavaExec) {
+		main = "bot.Core"
+		classpath = sourceSets.main.runtimeClasspath
+		workingDir = new File("resources")
+		ignoreExitValue = true
+	}
 }
 
 project(":importing") {
@@ -30,13 +41,7 @@ project(":importing") {
 	
 	dependencies {
 		implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
-		implementation 'me.sargunvohra.lib:pokekotlin:2.3.1'
+		//implementation 'me.sargunvohra.lib:pokekotlin:2.3.1'
+		compile group: 'com.google.http-client', name: 'google-http-client', version: '1.35.0'
 	}
-}
-
-task run(dependsOn: classes, type: JavaExec) {
-	main = "bot.Core"
-	classpath = sourceSets.main.runtimeClasspath
-	workingDir = new File("resources")
-	ignoreExitValue = true
 }

@@ -5,11 +5,11 @@ import bot.pokemon.DamageType;
 
 public class DamageEffect extends MoveEffect {
 	
-	private final DamageType damageType;
-	private final int accuracy;
-	private final int power;
-	private final int minTimes;
-	private final int maxTimes;
+	private DamageType damageType;
+	private int accuracy;
+	private int power;
+	private int minTimes;
+	private int maxTimes;
 	
 	public DamageEffect(JsonObjectNode node) {
 		

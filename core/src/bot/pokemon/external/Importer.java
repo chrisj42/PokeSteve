@@ -1,11 +1,23 @@
 package bot.pokemon.external;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.TreeMap;
 
+import bot.Core;
+import bot.io.json.MissingPropertyException;
+import bot.io.json.node.JsonArrayNode;
 import bot.pokemon.PokemonSpecies;
 import bot.util.UsageException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Importer {
+	
+	/*
+		classes in this package are similar to those in the main pokemon package, but instead they all take JsonNodes that expect the format of PokeAPI's data
+		
+	 */
 	
 	private Importer() {}
 	
@@ -17,11 +29,6 @@ public class Importer {
 	
 	private static final TreeMap<String, PokemonSpecies> nameToSpeciesMap = new TreeMap<>();
 	private static final PokemonSpecies[] dexOrderedSpecies = new PokemonSpecies[MAX_DEX_NUMBER+1]; // index 0 won't be used
-	
-	static {
-		// initialization
-		// List<NamedApiResource> speciesList = api.getPokemonSpeciesList(0, MAX_DEX_NUMBER).getResults();
-	}
 	
 	public static PokemonSpecies getSpecies(int dex) {
 		if(dex >= MAX_DEX_NUMBER)
@@ -62,4 +69,11 @@ public class Importer {
 			- change forms
 			- 
 	 */
+	
+	public static void main(String[] args) throws IOException, MissingPropertyException {
+		JsonArrayNode root = new JsonArrayNode(Core.jsonMapper.readTree(new File("moves-gen1.json")));
+		System.out.print("moves: ");
+		for(int i = 0; i < root.getLength(); i++)
+			System.out.print(root.getObjectNode(i).getValueNode("name").parseValue(JsonNode::textValue)+", ");
+	}
 }

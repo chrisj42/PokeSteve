@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
 public class Pokemon {
 	
 	@NotNull
-	private final PokemonSpecies species;
-	private final Nature nature;
-	private final Gender gender;
-	private final EnumMap<Stat, Integer> stats;
-	private final Move[] moveset;
+	private PokemonSpecies species;
+	private Nature nature;
+	private Gender gender;
+	private EnumMap<Stat, Integer> stats;
+	private Move[] moveset;
 	
 	public Pokemon(JsonObjectNode node) {
 		
