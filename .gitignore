@@ -5,7 +5,7 @@ gradle/
 
 .idea/
 build/
+out/
 
 notes/
-src/test/
-src/main/resources
+resources
