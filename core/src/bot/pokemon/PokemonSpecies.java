@@ -23,7 +23,7 @@ public class PokemonSpecies {
 	private final EnumMap<Stat, Integer> baseStats;
 	private final LearnSet learnableMoves;
 	
-	private final Ref<PokemonSpecies> evolvesFrom;
+	// private final Ref<PokemonSpecies> evolvesFrom;
 	// private final Ref<EvolutionChain> evoChain;
 	// private final EggGroup[] eggGroups;
 	final GrowthRate growthRate;
@@ -66,7 +66,7 @@ public class PokemonSpecies {
 		
 		catchRate = snode.parseValueNode("capture_rate", JsonNode::intValue);
 		femaleRate = snode.parseValueNode("gender_rate", JsonNode::intValue);
-		evolvesFrom = DataCore.POKEMON.getRef(snode.getObjectNode("evolves_from_species"));
+		// evolvesFrom = DataCore.POKEMON.getRef(snode.getObjectNode("evolves_from_species"));
 		habitat = Habitat.values[NodeParser.getResourceId(snode.getObjectNode("habitat"))-1];
 		growthRate = GrowthRate.values[NodeParser.getResourceId(snode.getObjectNode("growth_rate"))-1];
 		
@@ -95,6 +95,6 @@ public class PokemonSpecies {
 				gender = Gender.Male;
 		}
 		
-		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(20));
+		return new Pokemon(this, 90, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(90));
 	}
 }

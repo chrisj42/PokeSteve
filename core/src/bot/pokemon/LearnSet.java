@@ -28,6 +28,7 @@ public class LearnSet {
 		for(int i = 0; i < this.moves.length; i++) {
 			JsonObjectNode moveNode = moves.getObjectNode(i);
 			this.moves[i] = DataCore.MOVES.get(NodeParser.getResourceId(moveNode.getObjectNode("move")));
+			if(this.moves[i] == null) continue;
 			// this.moves[i] = DataCore.MOVES.getRef(moveNode.getObjectNode("move"));
 			
 			JsonArrayNode versionInfoList = moveNode.getArrayNode("version_group_details");

@@ -6,6 +6,7 @@ public enum MoveLearnMethod {
 	LevelUp, Egg, Machine, LightBallEgg;
 	
 	public static MoveLearnMethod getLearnMethod(String name) {
+		if(name == null) return null;
 		switch(name) {
 			case "level-up": return LevelUp;
 			case "egg": return Egg;

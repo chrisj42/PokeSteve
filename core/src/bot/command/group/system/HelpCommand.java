@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 public class HelpCommand extends ActionableCommand {
 	
-	private static final Option STATE_OPT = new Option("state", 's', "show help for commands usable in other bot states, like during battle or trade.", String.join("|", Utils.map(Arrays.asList(UserState.values), Enum::name)));
+	private static final Option STATE_OPT = new Option("state", 's', "show help for commands usable in other bot states, like during battle or trade.", "IDLE|BATTLE"/*String.join("|", Utils.map(Arrays.asList(UserState.values), Enum::name))*/);
 	
 	public HelpCommand() {
 		super("help", "Show a list of available commands, or provide help on a single command.",

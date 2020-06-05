@@ -12,7 +12,7 @@ public class UserPlayer extends Player {
 	public final BattlePokemon pokemon;
 	
 	public UserPlayer(MessageChannel channel, User user, Pokemon pokemon) {
-		super(user.getUsername());
+		super(user.getUsername(), pokemon);
 		this.channel = channel;
 		this.user = user;
 		this.pokemon = new BattlePokemon(pokemon);
