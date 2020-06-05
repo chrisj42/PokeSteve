@@ -9,6 +9,7 @@ import bot.command.group.info.DexCommand;
 import bot.command.group.system.HelpCommand;
 import bot.io.DataFile;
 import bot.io.json.MissingPropertyException;
+import bot.pokemon.DataCore;
 import bot.util.UsageException;
 
 import discord4j.core.DiscordClient;
@@ -31,6 +32,10 @@ public class Core {
 	private Core() {}
 	
 	public static final ObjectMapper jsonMapper = new ObjectMapper();
+	
+	static {
+		DataCore.init();
+	}
 	
 	/*private static final HashMap<String, BiPredicate<String, Member>> prefixMap = new HashMap<>(3);
 	private static void addPrefix(String prefix, Predicate<Member> userCheck) {

@@ -1,7 +1,7 @@
-package bot.pokemon.move;
+package bot.pokemon.notimpl;
 
 import bot.io.json.node.JsonObjectNode;
-import bot.pokemon.Weather;
+import bot.pokemon.notimpl.Weather;
 
 public class WeatherEffect {
 	

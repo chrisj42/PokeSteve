@@ -59,16 +59,17 @@ public class Importer {
 		
 		// download a list straight from PokeAPI
 		
-		DataImports.Locations.downloadData();
-		DataImports.LocationAreas.downloadData();
+		// DataImports.Locations.downloadData();
+		// DataImports.LocationAreas.downloadData();
+		DataImports.Gen1Encounters.downloadData();
 	}
 	
-	public static String readData(String type, int maxIdx) {
+	public static String readData(String urlPrefix, String urlSuffix, int maxIdx) {
 		String[] data = new String[maxIdx];
 		for(int i = 1; i <= maxIdx; i++) {
 			System.out.println("reading data "+i);
 			try {
-				data[i - 1] = reqFactory.buildGetRequest(new GenericUrl("https://pokeapi.co/api/v2/" + type + "/" + i)).execute().parseAsString();
+				data[i - 1] = reqFactory.buildGetRequest(new GenericUrl("https://pokeapi.co/api/v2/" + urlPrefix + "/" + i + urlSuffix)).execute().parseAsString();
 			} catch(IOException e) {
 				System.out.println("error with data "+i+", skipping");
 			}

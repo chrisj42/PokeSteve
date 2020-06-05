@@ -7,6 +7,16 @@ import java.util.function.Supplier;
 public final class Utils {
 	private Utils() {}
 	
+	public static int randInt(int min, int max) {
+		return ((int) (Math.random() * (max-min+1))) - min;
+	}
+	
+	public static <T> T pickRandom(T[] array) {
+		if(array.length == 0)
+			return null;
+		return array[randInt(0, array.length-1)];
+	}
+	
 	public static <T> boolean matchAny(T[] collection, Predicate<T> acceptFunc) {
 		for(T val: collection) {
 			if(acceptFunc.test(val))

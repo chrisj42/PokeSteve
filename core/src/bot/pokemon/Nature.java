@@ -28,6 +28,8 @@ public enum Nature {
 	Sassy(Stat.SpDefense, Stat.Speed),
 	Serious();
 	
+	public static final Nature[] values = Nature.values();
+	
 	private final Stat incStat, decStat;
 	
 	Nature() { this(null, null); }

@@ -21,7 +21,7 @@ subprojects {
 	}
 }
 
-project("core") {
+project(":core") {
 	sourceSets.main.java.srcDirs = [ "src/" ]
 	
 	dependencies {

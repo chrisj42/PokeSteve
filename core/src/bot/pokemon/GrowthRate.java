@@ -27,6 +27,8 @@ public enum GrowthRate {
 		return cube*((lv/2)+32)/50;
 	});
 	
+	public static final GrowthRate[] values = GrowthRate.values();
+	
 	private final Function<Integer, Integer> xpFetcher;
 	
 	GrowthRate(Function<Integer, Integer> xpFetcher) {

@@ -13,24 +13,33 @@ public enum DataImports {
 	
 	Gen1Pokemon("pokemon", "gen1", 151),
 	
+	Gen1Encounters("encounters", "pokemon", "/encounters", "gen1", 151),
+	
 	Gen1EvoChains("evolution-chain", "gen1", 78),
 	
 	Locations("location", null, 781),
 	
 	LocationAreas("location-area", null, 683);
 	
+	private final String urlPrefix;
+	private final String urlSuffix;
+	private final String fileSuffix;
 	public final String type;
-	public final String fileSuffix;
 	public final int maxIdx;
 	
 	DataImports(String type, String fileSuffix, int maxIdx) {
+		this(type, type, "", fileSuffix, maxIdx);
+	}
+	DataImports(String type, String urlPrefix, String urlSuffix, String fileSuffix, int maxIdx) {
+		this.urlPrefix = urlPrefix;
 		this.type = type;
+		this.urlSuffix = urlSuffix;
 		this.fileSuffix = fileSuffix;
 		this.maxIdx = maxIdx;
 	}
 	
 	public void downloadData() throws IOException {
-		final String data = Importer.readData(type, maxIdx);
+		final String data = Importer.readData(urlPrefix, urlSuffix, maxIdx);
 		String suffix = fileSuffix != null ? "-"+fileSuffix : "";
 		Files.write(new File(type+suffix+".json").toPath(), Collections.singleton(data));
 		System.out.println("file written");

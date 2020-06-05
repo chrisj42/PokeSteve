@@ -1,4 +1,4 @@
-package bot.pokemon;
+package bot.pokemon.notimpl;
 
 public enum Weather {
 	
