@@ -5,6 +5,8 @@ public enum DamageType {
 	Physical(Stat.Attack, Stat.Defense),
 	Special(Stat.SpAttack, Stat.SpDefense);
 	
+	public static final DamageType[] values = DamageType.values();
+	
 	private final Stat attackStat;
 	private final Stat defenseStat;
 	

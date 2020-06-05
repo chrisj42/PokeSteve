@@ -7,4 +7,5 @@ public enum StatusEffect {
 	HealBlock, NoTypeImmunity, LeechSeed, Embargo, PerishSong,
 	Ingrain, Silence;
 	
+	public static final StatusEffect[] values = StatusEffect.values();
 }

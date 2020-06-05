@@ -1,6 +1,7 @@
 package bot.io.json.node;
 
 import bot.io.json.MissingPropertyException;
+import bot.io.json.NodeParser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -28,6 +29,9 @@ public class JsonArrayNode extends JsonParentNode {
 	
 	public JsonValueNode getValueNode(int idx) throws MissingPropertyException {
 		return new JsonValueNode(this, node.get(idx), String.valueOf(idx));
+	}
+	public <T> T parseValueNode(int nodeIdx, NodeParser<T> parseFunction) throws MissingPropertyException {
+		return getValueNode(nodeIdx).parseValue(parseFunction);
 	}
 	
 	public JsonNode setChild(int idx, JsonNode newChild) {

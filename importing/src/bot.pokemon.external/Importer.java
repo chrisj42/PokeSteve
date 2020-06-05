@@ -59,16 +59,22 @@ public class Importer {
 		
 		// download a list straight from PokeAPI
 		
-		final String data = readData("move", 165);
-		Files.write(new File("moves-gen1.json").toPath(), Collections.singleton(data));
-		System.out.println("file written");
+		DataImports.Locations.downloadData();
+		DataImports.LocationAreas.downloadData();
 	}
 	
-	private static String readData(String type, int maxIdx) throws IOException {
+	public static String readData(String type, int maxIdx) {
 		String[] data = new String[maxIdx];
 		for(int i = 1; i <= maxIdx; i++) {
 			System.out.println("reading data "+i);
-			data[i - 1] = reqFactory.buildGetRequest(new GenericUrl("https://pokeapi.co/api/v2/" + type + "/" + i)).execute().parseAsString();
+			try {
+				data[i - 1] = reqFactory.buildGetRequest(new GenericUrl("https://pokeapi.co/api/v2/" + type + "/" + i)).execute().parseAsString();
+			} catch(IOException e) {
+				System.out.println("error with data "+i+", skipping");
+			}
+			try {
+				Thread.sleep(300);
+			} catch(InterruptedException ignored) {}
 		}
 		return "["+String.join(",", data)+"]";
 	}

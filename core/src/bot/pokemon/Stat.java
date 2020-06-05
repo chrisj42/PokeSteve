@@ -2,6 +2,8 @@ package bot.pokemon;
 
 public enum Stat {
 	
+	// these are the stats that are persistent for pokemon instances.
+	
 	Health,
 	Attack,
 	Defense,
@@ -9,4 +11,5 @@ public enum Stat {
 	SpDefense,
 	Speed;
 	
+	public static final Stat[] values = Stat.values();
 }
