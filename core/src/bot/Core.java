@@ -1,12 +1,11 @@
 package bot;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import bot.command.Command;
 import bot.command.CommandContext;
 import bot.command.CommandSet;
-import bot.command.group.info.DexCommand;
-import bot.command.group.system.HelpCommand;
 import bot.io.DataFile;
 import bot.io.json.MissingPropertyException;
 import bot.pokemon.DataCore;
@@ -50,16 +49,9 @@ public class Core {
 	public static GatewayDiscordClient gateway;
 	public static BotData data;
 	
-	// possible states a user could be in. Usually has metadata associated with it. Determines what commands are available.
-	public enum UserState {
-		// 
-		Idle, Travel, Search, Battle, Trade
+	public static CommandSet getRootCommands(User user) {
+		return UserState.getState(user).commands;
 	}
-	
-	public static final CommandSet rootCommands = new CommandSet(
-		new HelpCommand(),
-		new DexCommand()
-	);
 	
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
@@ -112,7 +104,7 @@ public class Core {
 		// System.out.println("DM message");
 		
 		// return context.channel.createMessage("hello!").then();
-		Command cmd = Command.tryParseSubCommand(rootCommands, context);
+		Command cmd = Command.tryParseSubCommand(getRootCommands(context.user), context);
 		// System.out.println("basic command: "+cmd);
 		if(cmd == null)
 			return Mono.empty();

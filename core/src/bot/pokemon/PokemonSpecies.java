@@ -20,7 +20,7 @@ public class PokemonSpecies {
 	private final String frontSpriteUrl, backSpriteUrl;
 	
 	private final Type primaryType, secondaryType;
-	final EnumMap<Stat, Integer> baseStats;
+	private final EnumMap<Stat, Integer> baseStats;
 	private final LearnSet learnableMoves;
 	
 	private final Ref<PokemonSpecies> evolvesFrom;
@@ -31,7 +31,7 @@ public class PokemonSpecies {
 	private final Habitat habitat;
 	private final int catchRate;
 	private final int femaleRate; // in eighths
-	private final int baseDefeatXp;
+	public final int baseDefeatExp;
 	private final EnumMap<Stat, Integer> baseDefeatEVs;
 	
 	// pass it species and pokemon
@@ -70,7 +70,17 @@ public class PokemonSpecies {
 		habitat = Habitat.values[NodeParser.getResourceId(snode.getObjectNode("habitat"))-1];
 		growthRate = GrowthRate.values[NodeParser.getResourceId(snode.getObjectNode("growth_rate"))-1];
 		
-		baseDefeatXp = pnode.parseValueNode("base_experience", JsonNode::intValue);
+		baseDefeatExp = pnode.parseValueNode("base_experience", JsonNode::intValue);
+	}
+	
+	public int getBaseStat(Stat stat) {
+		return baseStats.get(stat);
+	}
+	
+	public void addDefeatEV(StatData data) {
+		int ev = baseDefeatEVs.getOrDefault(data.getStatType(), 0);
+		if(ev != 0)
+			data.addEV(ev);
 	}
 	
 	public Pokemon spawnPokemon() {
@@ -85,6 +95,6 @@ public class PokemonSpecies {
 				gender = Gender.Male;
 		}
 		
-		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, baseStats, learnableMoves.getDefaultMoveset(20));
+		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(20));
 	}
 }

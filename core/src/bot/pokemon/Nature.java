@@ -38,11 +38,21 @@ public enum Nature {
 		this.decStat = decStat;
 	}
 	
-	public int alterStat(Stat stat, int value) {
+	public int getNatureMod(Stat stat) {
+		if(stat == incStat) return 11;
+		if(stat == decStat) return 9;
+		return 10;
+	}
+	
+	public static int applyNatureMod(int statValue, int natureMod) {
+		return statValue * natureMod / 10;
+	}
+	
+	/*public int alterStat(Stat stat, int value) {
 		if(stat == incStat)
 			return value * 11 / 10;
 		if(stat == decStat)
 			return value * 9 / 10;
 		return value;
-	}
+	}*/
 }

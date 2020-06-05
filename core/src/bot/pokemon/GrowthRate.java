@@ -35,7 +35,7 @@ public enum GrowthRate {
 		this.xpFetcher = xpFetcher;
 	}
 	
-	public int getXpRequirement(int level) {
+	public int getExpRequirement(int level) {
 		return xpFetcher.apply(level);
 	}
 }

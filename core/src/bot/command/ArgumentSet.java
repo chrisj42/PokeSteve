@@ -21,14 +21,16 @@ public class ArgumentSet {
 	
 	public String getUsage() { return usage; }
 	
-	public String[] parseArguments(CommandContext context) throws ArgumentCountException {
-		/*String[] argValues = new String[args.length];
-		for(int i = 0; i < args.length; i++) {
-			argValues[i] = context.nextArgument();
-			if(argValues[i] == null)
-				throw new ArgumentCountException(args.length - i);
+	public String[] parseArguments(CommandContext context, boolean validateArgs) throws ArgumentCountException {
+		if(validateArgs) {
+			String[] argValues = new String[args.length];
+			for(int i = 0; i < args.length; i++) {
+				argValues[i] = context.nextArgument();
+				if(argValues[i] == null)
+					throw new ArgumentCountException(args.length - i);
+			}
+			return argValues;
 		}
-		return argValues;*/
 		return context.getRemainingArgs().toArray(new String[0]);
 	}
 	

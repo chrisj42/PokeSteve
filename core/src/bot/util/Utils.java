@@ -1,5 +1,6 @@
 package bot.util;
 
+import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -44,9 +45,11 @@ public final class Utils {
 		return Core.data.owner.equals(id);
 	}*/
 	
-	/*public static <A, B> Iterable<B> map(Iterable<A> iterable, Function<A, B> mapper) {
-		
-	}*/
+	public static <A, B> Iterable<B> map(Iterable<A> iterable, Function<A, B> mapper) {
+		LinkedList<B> list = new LinkedList<>();
+		iterable.forEach(a -> list.add(mapper.apply(a)));
+		return list;
+	}
 	
 	/*@SafeVarargs
 	@SuppressWarnings("unchecked")

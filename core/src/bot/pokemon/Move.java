@@ -15,9 +15,9 @@ public class Move {
 	
 	public final String name;
 	public final int id;
-	private final MoveDescription description;
-	private final Type type;
-	private final int pp;
+	public final MoveDescription description;
+	public final Type type;
+	public final int pp;
 	private final int accuracy;
 	private final int priority;
 	private final MoveTarget target;

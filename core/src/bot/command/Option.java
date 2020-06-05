@@ -15,6 +15,9 @@ public class Option implements Comparable<Option> {
 	
 	private final String help;
 	
+	public Option(String name, char abbrev, String description, String... args) {
+		this(name, abbrev, description, new ArgumentSet(args));
+	}
 	public Option(String name, char abbrev, String description, ArgumentSet args) {
 		this.name = name;
 		this.abbrev = abbrev;
@@ -37,7 +40,7 @@ public class Option implements Comparable<Option> {
 	
 	public String[] parseOptionArgs(CommandContext context, String referenceString) {
 		try {
-			return args.parseArguments(context);
+			return args.parseArguments(context, true);
 		} catch(ArgumentCountException e) {
 			throw new UsageException("option "+referenceString+" is missing at least one argument.");
 		}

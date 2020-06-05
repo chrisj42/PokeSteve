@@ -2,6 +2,8 @@ package bot.command;
 
 import java.util.function.Function;
 
+import bot.util.UsageException;
+
 public class ArgType<T> {
 	
 	public static final ArgType<String> TEXT = new ArgType<>(String::toString);
@@ -17,6 +19,10 @@ public class ArgType<T> {
 	}
 	
 	public T parseArg(String arg) {
-		return argParser.apply(arg);
+		try {
+			return argParser.apply(arg);
+		} catch(Exception e) {
+			throw new UsageException("Argument \""+arg+"\" has invalid format", e);
+		}
 	}
 }
