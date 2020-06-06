@@ -44,16 +44,21 @@ public class Move {
 		// effects = MoveEffect.parseEffects(node);
 		priority = node.parseValueNode("priority", JsonNode::intValue);
 		target = MoveTarget.getTarget(node.getObjectNode("target").parseValueNode("name", JsonNode::textValue));
+		effectChance = node.parseValueNode("effect_chance", JsonNode::intValue);
 		
 		damage = new DamageEffect(this, node, meta);
 		stat = new StatEffect(this, node, meta);
 		status = new ApplyStatusEffect(this, node, meta);
 		
-		effectChance = node.parseValueNode("effect_chance", JsonNode::intValue);
 		minTurns = meta.parseValueNode("min_turns", JsonNode::intValue);
 		maxTurns = meta.parseValueNode("max_turns", JsonNode::intValue);
 		drain = meta.parseValueNode("drain", JsonNode::intValue);
 		healing = meta.parseValueNode("healing", JsonNode::intValue);
 		flinchChance = meta.parseValueNode("flinch_chance", JsonNode::intValue);
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }

@@ -19,8 +19,8 @@ public class DamageEffect extends MoveEffect {
 	
 	public DamageEffect(Move move, JsonObjectNode node, JsonObjectNode meta) throws MissingPropertyException {
 		this.move = move;
-		int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 1;
-		damageType = damageTypeId < 2 ? DamageType.values[damageTypeId] : null;
+		int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 2;
+		damageType = damageTypeId >= 0 ? DamageType.values[damageTypeId] : null;
 		power = node.parseValueNode("power", JsonNode::intValue);
 		if((damageType == null) != (power == 0))
 			System.err.println("move "+node.parseValueNode("name", JsonNode::textValue)+" has conflicting power and damage type.");
@@ -29,4 +29,8 @@ public class DamageEffect extends MoveEffect {
 		maxHits = meta.parseValueNode("max_hits", JsonNode::intValue);
 	}
 	
+	public enum DamageMode {
+		Default, Percentage, Fixed; // what power refers to
+		// TODO list moves that use percentage or fixed damage modes, along with their values
+	}
 }

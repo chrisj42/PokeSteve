@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class SpawnCommand extends ActionableCommand {
 	
 	public SpawnCommand() {
-		super("spawn", "(debug command) spawn a wild pokemon and list information about it.", "<your pokemon id> <wild pokemon id>");
+		super("spawn", "(debug command) spawn a wild pokemon and list information about it.", "<pokemon id>");
 		// super("spawn", "(debug command) spawn a wild pokemon and list all its characteristics.", "<pokemon id>");
 	}
 	

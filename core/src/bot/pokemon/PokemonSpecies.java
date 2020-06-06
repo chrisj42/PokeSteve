@@ -37,6 +37,7 @@ public class PokemonSpecies {
 	// pass it species and pokemon
 	public PokemonSpecies(JsonObjectNode snode, JsonObjectNode pnode) throws MissingPropertyException {
 		name = snode.parseValueNode("name", JsonNode::textValue);
+		// System.out.println("loading pokemon "+name);
 		dex = snode.parseValueNode("id", JsonNode::intValue);
 		flavorText = NodeParser.getEnglishNode(snode.getArrayNode("flavor_text_entries"), false).parseValueNode("flavor_text", JsonNode::textValue);
 		genus = NodeParser.getEnglishNode(snode.getArrayNode("genera"), true).parseValueNode("genus", JsonNode::textValue);

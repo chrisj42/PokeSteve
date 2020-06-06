@@ -57,7 +57,7 @@ public class DataCore {
 		}
 		
 		public T get(int id) {
-			if(id > data.length) return null;
+			if(id > data.length || id <= 0) return null;
 			return data[id-1];
 		}
 		

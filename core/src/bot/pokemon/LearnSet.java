@@ -1,5 +1,6 @@
 package bot.pokemon;
 
+import java.util.LinkedList;
 import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -33,7 +34,7 @@ public class LearnSet {
 			
 			JsonArrayNode versionInfoList = moveNode.getArrayNode("version_group_details");
 			JsonObjectNode latestVersionInfo = versionInfoList.getObjectNode(versionInfoList.getLength()-1);
-			MoveLearnMethod learnMethod = MoveLearnMethod.getLearnMethod(latestVersionInfo.parseValueNode("move_learn_method", JsonNode::textValue));
+			MoveLearnMethod learnMethod = MoveLearnMethod.getLearnMethod(latestVersionInfo.getObjectNode("move_learn_method").parseValueNode("name", JsonNode::textValue));
 			int level = latestVersionInfo.parseValueNode("level_learned_at", JsonNode::intValue);
 			if(learnMethod == MoveLearnMethod.LevelUp) {
 				LevelUpMove lMove = new LevelUpMove(level, this.moves[i]);
@@ -42,16 +43,19 @@ public class LearnSet {
 			} else if(level > 0)
 				System.err.println("move "+this.moves[i].name+" for pokemon "+species.name+" (#"+(i+1)+" in move list) is not a level up move, but has a non-zero level learned at.");
 		}
+		
+		// System.out.println("pokemon "+species.name+" levelup map:"+levelUpMoveMap);
 	}
 	
 	public Move[] getDefaultMoveset(int level) {
 		LevelUpMove lastMove = levelUpMoveMap.headMap(level, true).lastEntry().getValue().last();
 		NavigableSet<LevelUpMove> movePool = levelUpMoveSet.headSet(lastMove, true);
-		Move[] moveset = new Move[4];
+		// Move[] moveset = new Move[4];
+		LinkedList<Move> moveset = new LinkedList<>();
 		for(int i = 0; i < 4 && lastMove != null; i++, lastMove = movePool.lower(lastMove)) {
-			moveset[i] = lastMove.move;
+			moveset.add(lastMove.move);
 		}
-		return moveset;
+		return moveset.toArray(new Move[0]);
 	}
 	
 	private static class LevelUpMove implements Comparable<LevelUpMove> {
@@ -69,6 +73,11 @@ public class LearnSet {
 			if(levelComp == 0)
 				return Integer.compare(move.id, o.move.id);
 			return levelComp;
+		}
+		
+		@Override
+		public String toString() {
+			return move+"-lv"+level;
 		}
 	}
 }

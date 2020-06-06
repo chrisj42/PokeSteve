@@ -23,7 +23,7 @@ public class Option implements Comparable<Option> {
 		this.abbrev = abbrev;
 		this.args = args;
 		
-		String usage = "--" + name + "|-" + abbrev + args.getUsage();
+		String usage = "--" + name + "|-" + abbrev + (args.hasArgs() ? " " : "") + args.getUsage();
 		
 		this.help = usage + "\n\t" + description;
 	}

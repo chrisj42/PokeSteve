@@ -29,6 +29,11 @@ public class Pokemon {
 		this.gender = gender;
 		this.moveset = moveset;
 		
+		for(Move move: moveset) {
+			if(move == null)
+				System.err.println("pokemon "+species+" has nulls in moveset");
+		}
+		
 		statData = new EnumMap<>(Stat.class);
 		for(Stat stat: Stat.values)
 			statData.put(stat, new StatData(this, stat));
@@ -74,7 +79,7 @@ public class Pokemon {
 		info.append("\nmoves: ").append(
 			String.join(", ", Utils.map(Arrays.asList(moveset), move -> move.name))
 		);
-		info.append("\n\nsprite coming soon once I feel like added richEmbeds.");
+		info.append("\n\nsprite coming soon once I feel like adding richEmbeds.");
 		return info.toString();
 	}
 }

@@ -83,7 +83,7 @@ public class Core {
 					return context.channel.createMessage(e.getMessage()).then();
 				System.err.println("exception occurred while parsing command "+context);
 				e.printStackTrace();
-				return Mono.empty();
+				return context.channel.createMessage("internal error.").then();
 			}))
 			.subscribe();
 		

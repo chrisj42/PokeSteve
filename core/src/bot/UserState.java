@@ -41,6 +41,7 @@ public enum UserState {
 	
 	public static Mono<Void> startBattle(WildBattle battle) {
 		userBattles.put(battle.player.user, battle.player);
+		userStates.put(battle.player.user, UserState.Battle);
 		return battle.player.channel.createMessage("Battle Start!")
 			.flatMap(e -> battle.onRoundStart());
 	}
