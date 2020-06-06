@@ -7,6 +7,7 @@ import bot.command.CommandSet;
 import bot.command.Commands;
 import bot.pokemon.battle.BattleInstance;
 import bot.pokemon.battle.BattleInstance.Player;
+import bot.pokemon.battle.UserPlayer;
 import bot.pokemon.battle.WildBattle;
 
 import discord4j.core.object.entity.User;
@@ -14,7 +15,7 @@ import reactor.core.publisher.Mono;
 
 // possible states a user could be in. Usually has metadata associated with it. Determines what commands are available.
 public enum UserState {
-	Idle(Commands.HELP, Commands.DEX, Commands.SPAWN, Commands.BATTLE),
+	Idle(Commands.HELP, Commands.DEX, Commands.SPAWN, Commands.BATTLE, Commands.DUEL),
 	Travel(Commands.HELP),
 	Search(Commands.HELP),
 	Battle(Commands.HELP, Commands.ATTACK, Commands.FLEE),
@@ -30,7 +31,7 @@ public enum UserState {
 	
 	
 	private static final HashMap<User, UserState> userStates = new HashMap<>();
-	private static final HashMap<User, Player> userBattles = new HashMap<>();
+	private static final HashMap<User, UserPlayer> userBattles = new HashMap<>();
 	
 	public static UserState getState(User user) {
 		return userStates.computeIfAbsent(user, u -> UserState.Idle);
@@ -39,19 +40,25 @@ public enum UserState {
 		userStates.put(user, state);
 	}*/
 	
-	public static Mono<Void> startBattle(WildBattle battle) {
-		userBattles.put(battle.player.user, battle.player);
-		userStates.put(battle.player.user, UserState.Battle);
-		return battle.player.channel.createMessage("Battle Start!")
-			.flatMap(e -> battle.onRoundStart());
+	public static Mono<Void> startBattle(BattleInstance battle) {
+		return battle.userFlux().flatMap(player -> {
+			userBattles.put(player.user, player);
+			userStates.put(player.user, UserState.Battle);
+			return player.user.getPrivateChannel();
+		}).flatMap(channel -> channel.createMessage("Battle Start!"))
+			.then(Mono.just(true).flatMap(e -> battle.onRoundStart()));
 	}
 	
 	public static Player getBattle(User user) {
 		return userBattles.get(user);
 	}
 	
-	public static void leaveBattle(User user) {
-		userBattles.remove(user);
+	public static UserPlayer leaveBattle(User user) { return leaveBattle(user, true); }
+	public static UserPlayer leaveBattle(User user, boolean checkOther) {
+		UserPlayer player = userBattles.remove(user);
+		if(checkOther && player != null && player.opponent instanceof UserPlayer)
+			leaveBattle(((UserPlayer)player.opponent).user, false);
 		userStates.put(user, UserState.Idle);
+		return player;
 	}
 }

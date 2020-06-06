@@ -2,6 +2,8 @@ package bot;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.stream.Collector;
 
 import bot.command.Command;
 import bot.command.CommandContext;
@@ -11,10 +13,12 @@ import bot.io.json.MissingPropertyException;
 import bot.pokemon.DataCore;
 import bot.util.UsageException;
 
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
+import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
 import reactor.core.publisher.Mono;
@@ -55,6 +59,10 @@ public class Core {
 	
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
+	// guild id of friend lounge; cannot duel those not in this server, just to ensure that we don't accidentally DM random people lol
+	private static final String GUILD_ID = "613836711134494721";
+	public static HashSet<Snowflake> MEMBERS = new HashSet<>();
+	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
 		// ReadOnlyJsonTraversal auth = new ReadOnlyJsonTraversal(DataFile.AUTH);
 		// final String token = auth.getPropertyValue("token", JsonNode::textValue);
@@ -74,6 +82,12 @@ public class Core {
 			throw new NullPointerException("gateway is null");
 		
 		gateway.on(ReadyEvent.class)
+			.map(ready -> {
+				gateway.requestMembers(Snowflake.of(GUILD_ID))
+					.map(User::getId).collectList()
+					.subscribe(list -> MEMBERS.addAll(list));
+				return ready;
+			})
 			.subscribe(ready -> System.out.println("Logged in as " + ready.getSelf().getUsername()));
 		
 		gateway.on(MessageCreateEvent.class)

@@ -35,13 +35,17 @@ public abstract class BattleInstance {
 		player2.battle = this;
 	}
 	
+	public Flux<UserPlayer> userFlux() {
+		return Flux.just(player1, player2)
+			.filter(UserPlayer.class::isInstance)
+			.map(UserPlayer.class::cast);
+	}
+	
 	public Mono<Void> broadcast(String message) {
 		return broadcast(p -> message);
 	}
 	public Mono<Void> broadcast(Function<UserPlayer, String> messageFetcher) {
-		return Flux.just(player1, player2)
-			.filter(UserPlayer.class::isInstance)
-			.map(UserPlayer.class::cast)
+		return userFlux()
 			// .map(player -> player.channel)
 			.flatMap(player -> {
 				String message = messageFetcher.apply(player);
@@ -101,7 +105,7 @@ public abstract class BattleInstance {
 		public final BattlePokemon pokemon;
 		private BattleInstance battle;
 		private int moveIdx = -1;
-		private Player opponent;
+		public Player opponent;
 		
 		public Player(String name, Pokemon pokemon) {
 			this.name = name;
@@ -145,9 +149,9 @@ public abstract class BattleInstance {
 			msg.append("\n").append(winner).append(" wins!");
 			winner.pokemon.pokemon.onDefeat(winner.opponent.pokemon.pokemon);
 			if(player1 instanceof UserPlayer)
-				UserState.leaveBattle(((UserPlayer)player1).user);
+				UserState.leaveBattle(((UserPlayer)player1).user, false);
 			if(player2 instanceof UserPlayer)
-				UserState.leaveBattle(((UserPlayer)player2).user);
+				UserState.leaveBattle(((UserPlayer)player2).user, false);
 			running = false;
 		}
 		
