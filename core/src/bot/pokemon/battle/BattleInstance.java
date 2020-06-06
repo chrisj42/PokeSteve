@@ -53,9 +53,9 @@ public abstract class BattleInstance {
 	public Mono<Void> onRoundStart() {
 		// send appropriate messages to all active players
 		return broadcast(player -> {
-			StringBuilder str = new StringBuilder("Next Round\n");
+			StringBuilder str = new StringBuilder("**__Next Round__**\n");
 			Player opponent = ((Player)player).opponent;
-			str.append("Opponent: ").append(opponent.name).append(" - Health: ").append(opponent.pokemon.health).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
+			str.append("Opponent: ").append(opponent).append(" - Health: ").append(opponent.pokemon.health).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
 			str.append("\nYour pokemon: ").append(player.pokemon.pokemon.species.name);
 			str.append(" - Health: ").append(player.pokemon.health).append("/").append(player.pokemon.pokemon.getStat(Stat.Health));
 			str.append("\nSelect your move with the 'attack <move number>' command. Available moves:");
