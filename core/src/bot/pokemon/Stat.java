@@ -9,8 +9,8 @@ public enum Stat {
 	Health,
 	Attack,
 	Defense,
-	SpAttack,
-	SpDefense,
+	SpAttack("Special Attack"),
+	SpDefense("Special Defense"),
 	Speed,
 	Accuracy,
 	Evasion;
@@ -23,7 +23,18 @@ public enum Stat {
 	};
 	public static final Stat[] values = Stat.values();
 	
-	Stat() {}
+	private String altName;
+	
+	Stat() { this(null); }
+	Stat(String altName) {
+		this.altName = altName;
+	}
+	
+	@Override
+	public String toString() {
+		return altName == null ? super.toString() : altName;
+	}
+	
 	
 	public enum StatEquation {
 		

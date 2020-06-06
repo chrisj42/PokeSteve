@@ -5,6 +5,9 @@ import bot.io.json.NodeParser;
 import bot.io.json.node.JsonObjectNode;
 import bot.pokemon.DamageType;
 import bot.pokemon.Move;
+import bot.pokemon.Stat.StageEquation;
+import bot.pokemon.battle.MoveContext;
+import bot.util.Utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -32,5 +35,45 @@ public class DamageEffect extends MoveEffect {
 	public enum DamageMode {
 		Default, Percentage, Fixed; // what power refers to
 		// TODO list moves that use percentage or fixed damage modes, along with their values
+	}
+	
+	public int doDamage(MoveContext context, StringBuilder msg) {
+		if(damageType == null || power == 0)
+			return 0;
+		
+		final int attackStat = StageEquation.Main.modifyStat(context.userPokemon.getStat(damageType.getAttackStat()), context.user.getStage(damageType.getAttackStat()));
+		final int defenseStat = StageEquation.Main.modifyStat(context.opponentPokemon.getStat(damageType.getDefenseStat()), context.opponent.getStage(damageType.getDefenseStat()));
+		int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attackStat * power / defenseStat / 50 + 2;
+		
+		// type effectiveness
+		DamagePower powerTracker = new DamagePower();
+		damage = move.type.getDamageTo(context.opponentSpecies.primaryType).multiplyDamage(damage, powerTracker);
+		if(context.opponentSpecies.secondaryType != null)
+			damage = move.type.getDamageTo(context.opponentSpecies.secondaryType).multiplyDamage(damage, powerTracker);
+		// same type attack bonus
+		if(move.type == context.userSpecies.primaryType
+			|| move.type == context.userSpecies.secondaryType)
+			damage = damage * 3 / 2;
+		
+		if(damage > 0) {
+			String message = powerTracker.getEffectivenessMessage();
+			if(message != null)
+				msg.append("\n").append(message);
+		}
+		
+		return damage;
+	}
+	
+	public static class DamagePower {
+		public int effectiveness = 2;
+		
+		public String getEffectivenessMessage() {
+			effectiveness = Utils.clamp(effectiveness, 1, 3);
+			if(effectiveness == 1)
+				return "It's not very effective...";
+			if(effectiveness == 3)
+				return "It's super effective!";
+			return null;
+		}
 	}
 }

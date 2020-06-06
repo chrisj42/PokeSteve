@@ -157,54 +157,43 @@ public abstract class BattleInstance {
 	// returns player if opponent faints, null otherwise
 	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
 		final Move move = player.flushMove();
-		final MoveContext context = new MoveContext(player.pokemon, player.opponent.pokemon, move);
+		final MoveContext context = new MoveContext(player, player.opponent, move);
 		
-		msg.append(player).append(" used ").append(move).append("\n");
-		int power = move.damage.power;
-		if(power == 0) {
-			msg.append("(just gonna pretend this is a damaging move >\\_>)\n");
-			power = 30;
-		}
+		msg.append("\n").append(player).append(" used ").append(move).append('!');
+		
+		// calc if hit
 		int accuracy = move.accuracy;
-		if(accuracy == 0) {
-			msg.append("(just gonna pretend this has normal accuracy >\\_>)\n");
-			accuracy = 100;
+		boolean hit = accuracy == 0;
+		if(!hit) {
+			int accuracyStage = Utils.clamp(context.user.getStage(Stat.Accuracy) - context.opponent.getStage(Stat.Evasion), BattlePokemon.MIN_STAGE, BattlePokemon.MAX_STAGE);
+			accuracy = StageEquation.Accuracy.modifyStat(accuracy, accuracyStage);
+			// System.out.println("accuracy: "+accuracy);
+			hit = Utils.randInt(0, 99) < accuracy;
 		}
-		DamageType damageType = move.damage.damageType;
-		if(damageType == null) {
-			damageType = DamageType.Physical;
-		}
-		
-		// calc accuracy
-		int accuracyStage = Utils.clamp(context.user.getStage(Stat.Accuracy) - context.opponent.getStage(Stat.Evasion), BattlePokemon.MIN_STAGE, BattlePokemon.MAX_STAGE);
-		accuracy = StageEquation.Accuracy.modifyStat(accuracy, accuracyStage);
-		
-		if(Utils.randInt(0, 99) >= accuracy)
-			msg.append("it missed!");
+		if(!hit)
+			msg.append("\nIt missed!");
 		else {
-			final int attackStat = StageEquation.Main.modifyStat(context.userPokemon.getStat(damageType.getAttackStat()), context.user.getStage(damageType.getAttackStat()));
-			final int defenseStat = StageEquation.Main.modifyStat(context.opponentPokemon.getStat(damageType.getDefenseStat()), context.opponent.getStage(damageType.getDefenseStat()));
-			int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attackStat * power / defenseStat / 50 + 2;
 			
-			// type effectiveness
-			damage = move.type.getDamageTo(context.opponentSpecies.primaryType).multiplyDamage(damage);
-			if(context.opponentSpecies.secondaryType != null)
-				damage = move.type.getDamageTo(context.opponentSpecies.secondaryType).multiplyDamage(damage);
-			// same type attack bonus
-			if(move.type == context.userSpecies.primaryType
-				|| move.type == context.userSpecies.secondaryType)
-				damage = damage * 3 / 2;
+			boolean change = move.stat.doStatEffect(context, msg);
 			
-			if(damage == 0)
-				msg.append("it had no effect...");
+			final int damage = move.damage.doDamage(context, msg);
+			if(damage == 0) {
+				if(!change) {
+					if(move.damage.damageType == null)
+						msg.append("\nBut it failed!");
+					else
+						msg.append("\nIt had no effect...");
+				}
+			}
 			else
-				msg.append(player.opponent).append(" took ").append(damage).append(" damage!");
+				msg.append("\n").append(player.opponent).append(" took ").append(damage).append(" damage!");
 			
 			context.opponent.health -= damage;
+			
 			if(context.opponent.health <= 0) {
 				msg.append("\n").append(player.opponent).append(" fainted!");
 				return player;
-			} else msg.append("\n");
+			}// else msg.append("\n");
 		}
 		
 		return null;

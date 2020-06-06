@@ -17,7 +17,7 @@ public class BattlePokemon {
 	public final Pokemon pokemon;
 	private final EnumMap<Stat, Integer> statStages;
 	
-	int health;
+	public int health;
 	private final int[] movePp;
 	
 	public BattlePokemon(Pokemon pokemon) {
