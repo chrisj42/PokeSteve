@@ -9,7 +9,7 @@ public final class Utils {
 	private Utils() {}
 	
 	public static int randInt(int min, int max) {
-		return ((int) (Math.random() * (max-min+1))) - min;
+		return ((int) (Math.random() * (max-min+1))) + min;
 	}
 	
 	public static <T> T pickRandom(T[] array) {
@@ -17,6 +17,14 @@ public final class Utils {
 			return null;
 		return array[randInt(0, array.length-1)];
 	}
+	
+	public static <T extends Comparable<T>> T clamp(T value, T min, T max) {
+		if(value.compareTo(min) < 0)
+			return min;
+		if(value.compareTo(max) > 0)
+			return max;
+		return value;
+	} 
 	
 	public static <T> boolean matchAny(T[] collection, Predicate<T> acceptFunc) {
 		for(T val: collection) {

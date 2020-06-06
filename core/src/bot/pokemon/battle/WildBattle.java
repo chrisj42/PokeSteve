@@ -1,7 +1,5 @@
 package bot.pokemon.battle;
 
-import java.util.function.Supplier;
-
 import bot.pokemon.Pokemon;
 import bot.util.Utils;
 
@@ -22,7 +20,7 @@ public class WildBattle extends BattleInstance {
 	public Mono<Void> onRoundStart() {
 		return super.onRoundStart().then(Mono.fromCallable(() -> {
 			// determine ai move
-			return Utils.randInt(0, opponent.pokemon.pokemon.moveset.length - 1);
+			return Utils.randInt(1, opponent.pokemon.pokemon.moveset.length);
 		}).flatMap(
 			move -> submitAttack(opponent, move)
 		)).then();

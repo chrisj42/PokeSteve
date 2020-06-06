@@ -17,7 +17,7 @@ public enum UserState {
 	Idle(Commands.HELP, Commands.DEX, Commands.SPAWN, Commands.BATTLE),
 	Travel(Commands.HELP),
 	Search(Commands.HELP),
-	Battle(Commands.HELP, Commands.ATTACK),
+	Battle(Commands.HELP, Commands.ATTACK, Commands.FLEE),
 	Trade(Commands.HELP);
 	
 	public static final UserState[] values = UserState.values();
@@ -48,5 +48,10 @@ public enum UserState {
 	
 	public static Player getBattle(User user) {
 		return userBattles.get(user);
+	}
+	
+	public static void leaveBattle(User user) {
+		userBattles.remove(user);
+		userStates.put(user, UserState.Idle);
 	}
 }

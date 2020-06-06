@@ -11,11 +11,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class DamageEffect extends MoveEffect {
 	
 	private final Move move;
-	private final DamageType damageType;
-	private final int power;
-	private final int critRateBonus;
-	private final int minHits;
-	private final int maxHits;
+	public final DamageType damageType;
+	public final int power;
+	public final int critRateBonus;
+	public final int minHits;
+	public final int maxHits;
 	
 	public DamageEffect(Move move, JsonObjectNode node, JsonObjectNode meta) throws MissingPropertyException {
 		this.move = move;

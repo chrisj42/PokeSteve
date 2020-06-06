@@ -7,15 +7,15 @@ import bot.io.json.NodeParser;
 import bot.io.json.node.JsonArrayNode;
 import bot.io.json.node.JsonObjectNode;
 import bot.pokemon.Move;
-import bot.pokemon.battle.ShiftableStat;
+import bot.pokemon.Stat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class StatEffect extends MoveEffect {
 	
 	private final Move move;
-	private final EnumMap<ShiftableStat, Integer> statStageChanges = new EnumMap<>(ShiftableStat.class);
-	private final int chance;
+	public final EnumMap<Stat, Integer> statStageChanges = new EnumMap<>(Stat.class);
+	public final int chance;
 	
 	public StatEffect(Move move, JsonObjectNode node, JsonObjectNode meta) throws MissingPropertyException {
 		this.move = move;
@@ -26,7 +26,7 @@ public class StatEffect extends MoveEffect {
 		JsonArrayNode statChanges = node.getArrayNode("stat_changes");
 		for(int i = 0; i < statChanges.getLength(); i++) {
 			JsonObjectNode change = statChanges.getObjectNode(i);
-			ShiftableStat stat = ShiftableStat.values[NodeParser.getResourceId(change.getObjectNode("stat")) - 2]; // -2 is to account for HP, the first one
+			Stat stat = Stat.values[NodeParser.getResourceId(change.getObjectNode("stat")) - 1];
 			int amount = change.parseValueNode("change", JsonNode::intValue);
 			statStageChanges.put(stat, amount);
 		}

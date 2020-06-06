@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class ApplyStatusEffect extends MoveEffect {
 	
 	private final Move move;
-	private final StatusEffect statusEffect;
-	private final int chance;
+	public final StatusEffect statusEffect;
+	public final int chance;
 	
 	public ApplyStatusEffect(Move move, JsonObjectNode node, JsonObjectNode meta) throws MissingPropertyException {
 		this.move = move;

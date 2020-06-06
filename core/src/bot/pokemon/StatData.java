@@ -1,5 +1,6 @@
 package bot.pokemon;
 
+import bot.pokemon.Stat.StatEquation;
 import bot.util.Utils;
 
 public class StatData {
@@ -13,10 +14,14 @@ public class StatData {
 	private final int iv;
 	private int ev;
 	private int value; // cache
+	private final StatEquation statEquation;
 	
 	StatData(Pokemon pokemon, Stat stat) {
 		this.pokemon = pokemon;
 		this.stat = stat;
+		if(stat == Stat.Health) statEquation = StatEquation.HP;
+		else statEquation = StatEquation.Main;
+		
 		this.base = pokemon.species.getBaseStat(stat);
 		this.iv = Utils.randInt(0, 31);
 		this.ev = 0;
@@ -26,7 +31,7 @@ public class StatData {
 	public Stat getStatType() { return stat; }
 	
 	public void recalcStat() {
-		value = stat.equation.calcStat(base, ev, iv, pokemon.getLevel(), pokemon.nature.getNatureMod(stat));
+		value = statEquation.calcStat(base, ev, iv, pokemon.getLevel(), pokemon.nature.getNatureMod(stat));
 	}
 	
 	public void addEV(int amount) {

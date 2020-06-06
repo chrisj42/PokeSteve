@@ -18,20 +18,20 @@ public class Move {
 	public final MoveDescription description;
 	public final Type type;
 	public final int pp;
-	private final int accuracy;
-	private final int priority;
-	private final MoveTarget target;
+	public final int accuracy;
+	public final int priority;
+	public final MoveTarget target;
 	
 	// private final MoveEffect[] effects;
-	private final DamageEffect damage;
-	private final StatEffect stat;
-	private final ApplyStatusEffect status;
+	public final DamageEffect damage;
+	public final StatEffect stat;
+	public final ApplyStatusEffect status;
 	public final int effectChance; // after hit, chance of non-damage effects
-	private final int minTurns;
-	private final int maxTurns;
-	private final int drain; // positive is drain, negative is recoil
-	private final int healing;
-	private final int flinchChance;
+	public final int minTurns;
+	public final int maxTurns;
+	public final int drain; // positive is drain, negative is recoil
+	public final int healing;
+	public final int flinchChance;
 	
 	public Move(JsonObjectNode node) throws MissingPropertyException {
 		final JsonObjectNode meta = node.getObjectNode("meta");

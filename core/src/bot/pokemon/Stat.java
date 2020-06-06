@@ -4,22 +4,26 @@ import java.util.function.Function;
 
 public enum Stat {
 	
-	// these are the stats that are persistent for pokemon instances.
+	// all stats
 	
-	Health(StatEquation.HP),
-	Attack(StatEquation.Main),
-	Defense(StatEquation.Main),
-	SpAttack(StatEquation.Main),
-	SpDefense(StatEquation.Main),
-	Speed(StatEquation.Main);
+	Health,
+	Attack,
+	Defense,
+	SpAttack,
+	SpDefense,
+	Speed,
+	Accuracy,
+	Evasion;
 	
-	public final StatEquation equation;
-	
-	Stat(StatEquation equation) {
-		this.equation = equation;
-	}
-	
+	public static final Stat[] persistStats = new Stat[] {
+		Health, Attack, Defense, SpAttack, SpDefense, Speed
+	};
+	public static final Stat[] stageStats = new Stat[] {
+		Attack, Defense, SpAttack, SpDefense, Speed, Accuracy, Evasion
+	};
 	public static final Stat[] values = Stat.values();
+	
+	Stat() {}
 	
 	public enum StatEquation {
 		
@@ -41,5 +45,23 @@ public enum Stat {
 		StatEquation() {}
 		
 		public abstract int calcStat(int base, int ev, int iv, int level, int natureMod);
+	}
+	
+	public enum StageEquation {
+		
+		Main(s -> Math.max(2f, 2 + s) / Math.max(2, 2 - s)),
+		
+		Accuracy(s -> Math.max(3f, 3 + s) / Math.max(3, 3 - s));
+		
+		private final Function<Integer, Float> statModifer;
+		
+		StageEquation(Function<Integer, Float> statModifer) {
+			this.statModifer = statModifer;
+		}
+		
+		// statVal is the current stat for a pokemon, as opposed to species base stats
+		public int modifyStat(int statVal, int stage) {
+			return Math.round(statVal * statModifer.apply(stage));
+		}
 	}
 }

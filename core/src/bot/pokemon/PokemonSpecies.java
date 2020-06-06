@@ -6,7 +6,6 @@ import bot.io.json.MissingPropertyException;
 import bot.io.json.NodeParser;
 import bot.io.json.node.JsonArrayNode;
 import bot.io.json.node.JsonObjectNode;
-import bot.util.Ref;
 import bot.util.Utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,7 +18,7 @@ public class PokemonSpecies {
 	private final String genus; // essentially more flavor text
 	private final String frontSpriteUrl, backSpriteUrl;
 	
-	private final Type primaryType, secondaryType;
+	public final Type primaryType, secondaryType;
 	private final EnumMap<Stat, Integer> baseStats;
 	private final LearnSet learnableMoves;
 	
@@ -96,6 +95,6 @@ public class PokemonSpecies {
 				gender = Gender.Male;
 		}
 		
-		return new Pokemon(this, 90, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(90));
+		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(20));
 	}
 }

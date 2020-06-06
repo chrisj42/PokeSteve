@@ -35,7 +35,7 @@ public class Pokemon {
 		}
 		
 		statData = new EnumMap<>(Stat.class);
-		for(Stat stat: Stat.values)
+		for(Stat stat: Stat.persistStats)
 			statData.put(stat, new StatData(this, stat));
 		
 	}
