@@ -9,9 +9,15 @@ public enum DataImports {
 	
 	Gen1Moves("move", "gen1", 165),
 	
+	AllMoves("move", null, 746),
+	
 	Gen1PokemonSpecies("pokemon-species", "gen1", 151),
 	
 	Gen1Pokemon("pokemon", "gen1", 151),
+	
+	AllPokemonSpecies("pokemon-species", null, 807),
+	
+	AllPokemon("pokemon", null, 807),
 	
 	Gen1Encounters("encounters", "pokemon", "/encounters", "gen1", 151),
 	

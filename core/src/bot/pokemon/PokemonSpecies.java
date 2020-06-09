@@ -27,7 +27,7 @@ public class PokemonSpecies {
 	// private final EggGroup[] eggGroups;
 	final GrowthRate growthRate;
 	
-	private final Habitat habitat;
+	// private final Habitat habitat;
 	private final int catchRate;
 	public final int femaleRate; // in eighths
 	public final int baseDefeatExp;
@@ -67,7 +67,8 @@ public class PokemonSpecies {
 		catchRate = snode.parseValueNode("capture_rate", JsonNode::intValue);
 		femaleRate = snode.parseValueNode("gender_rate", JsonNode::intValue);
 		// evolvesFrom = DataCore.POKEMON.getRef(snode.getObjectNode("evolves_from_species"));
-		habitat = Habitat.values[NodeParser.getResourceId(snode.getObjectNode("habitat"))-1];
+		// NOTE: turtwig has no habitat entry in database
+		// habitat = Habitat.values[NodeParser.getResourceId(snode.getObjectNode("habitat"))-1];
 		growthRate = GrowthRate.values[NodeParser.getResourceId(snode.getObjectNode("growth_rate"))-1];
 		
 		baseDefeatExp = pnode.parseValueNode("base_experience", JsonNode::intValue);

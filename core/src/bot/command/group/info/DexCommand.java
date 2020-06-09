@@ -59,7 +59,7 @@ public class DexCommand extends ActionableCommand {
 				+"\nSp. Defense - "+species.getBaseStat(Stat.SpDefense)
 				+"\nSpeed       - "+species.getBaseStat(Stat.Speed)
 				, false)
-			.setImage("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/"+format.format(species.dex)+".png")
+			.setImage("https://raw.githubusercontent.com/chrisj42/PokeSteve/master/resources/sprites/"+format.format(species.dex)+".png")
 		).then();
 	}
 }

@@ -21,8 +21,8 @@ public class Importer {
 	
 	private Importer() {}
 	
-	// public static final int MAX_DEX_NUMBER = 807;
-	public static final int MAX_DEX_NUMBER = 151;
+	public static final int MAX_DEX_NUMBER = 807;
+	// public static final int MAX_DEX_NUMBER = 151;
 	
 	// some methods and such to import pokemon data from PokeAPI
 	// if I don't end up actually importing them, then this will instead be an API from which I get the data.

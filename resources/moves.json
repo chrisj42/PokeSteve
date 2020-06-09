@@ -1,0 +1,7847 @@
+{
+	"moves": [
+		{
+			"id": 1,
+			"name": "pound",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 2,
+			"name": "karate-chop",
+			"accuracy": 100,
+			"pp": 25,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User\u0027s critical hit rate is one level higher when using this move.",
+				"short": "Has an increased chance for a critical hit."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 3,
+			"name": "double-slap",
+			"accuracy": 85,
+			"pp": 10,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 4,
+			"name": "comet-punch",
+			"accuracy": 85,
+			"pp": 15,
+			"priority": 0,
+			"power": 18,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 5,
+			"name": "mega-punch",
+			"accuracy": 85,
+			"pp": 20,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 6,
+			"name": "pay-day",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  After the battle ends, the winner receives five times the user\u0027s level in extra money for each time this move was used.",
+				"short": "Scatters money on the ground worth five times the user\u0027s level."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 7,
+			"name": "fire-punch",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 75,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to burn the target.",
+				"short": "Has a $effect_chance% chance to burn the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "burn",
+					"category": "move-ailment",
+					"id": 4
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fire",
+				"category": "type",
+				"id": 10
+			}
+		},
+		{
+			"id": 8,
+			"name": "ice-punch",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 75,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to freeze the target.",
+				"short": "Has a $effect_chance% chance to freeze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "freeze",
+					"category": "move-ailment",
+					"id": 3
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 9,
+			"name": "thunder-punch",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 75,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "electric",
+				"category": "type",
+				"id": 13
+			}
+		},
+		{
+			"id": 10,
+			"name": "scratch",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 11,
+			"name": "vice-grip",
+			"accuracy": 100,
+			"pp": 30,
+			"priority": 0,
+			"power": 55,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 12,
+			"name": "guillotine",
+			"accuracy": 30,
+			"pp": 5,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts damage equal to the target\u0027s max HP.  Ignores accuracy and evasion modifiers.  This move\u0027s accuracy is 30% plus 1% for each level the user is higher than the target.  If the user is a lower level than the target, this move will fail.\n\nBecause this move inflicts a specific and finite amount of damage, endure still prevents the target from fainting.\n\nThe effects of lock on, mind reader, and no guard still apply, as long as the user is equal or higher level than the target.  However, they will not give this move a chance to break through detect or protect.",
+				"short": "Causes a one-hit KO."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "ohko",
+					"category": "move-category",
+					"id": 9
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 13,
+			"name": "razor-wind",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User\u0027s critical hit rate is one level higher when using this move.  User charges for one turn before attacking.\n\nThis move cannot be selected by sleep talk.",
+				"short": "Requires a turn to charge before attacking."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 14,
+			"name": "swords-dance",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Attack by two stages.",
+				"short": "Raises the user\u0027s Attack by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 15,
+			"name": "cut",
+			"accuracy": 95,
+			"pp": 30,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 16,
+			"name": "gust",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.\n\nIf the target is under the effect of bounce, fly, or sky drop, this move will hit with double power.",
+				"short": "Inflicts regular damage and can hit Pokémon in the air."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 17,
+			"name": "wing-attack",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 60,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 18,
+			"name": "whirlwind",
+			"pp": 20,
+			"priority": -6,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Switches the target out for another of its trainer\u0027s Pokémon selected at random.  Wild battles end immediately.\n\nDoesn\u0027t affect Pokémon with suction cups or under the effect of ingrain.",
+				"short": "Immediately ends wild battles.  Forces trainers to switch Pokémon."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "force-switch",
+					"category": "move-category",
+					"id": 12
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 19,
+			"name": "fly",
+			"accuracy": 95,
+			"pp": 15,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User flies high into the air for one turn, becoming immune to attack, and hits on the second turn.\n\nDuring the immune turn, gust, hurricane, sky uppercut, smack down, thunder, twister, and whirlwind still hit the user normally.  gust and twister also have double power against the user.\n\nThe damage from hail and sandstorm still applies during the immune turn.\n\nThe user may be hit during its immune turn if under the effect of lock on, mind reader, or no guard.\n\nThis move cannot be used while gravity is in effect.\n\nThis move cannot be selected by sleep talk.",
+				"short": "User flies high into the air, dodging all attacks, and hits next turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 20,
+			"name": "bind",
+			"accuracy": 85,
+			"effect-chance": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the field, this effect ends.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.\n\nrapid spin cancels this effect.",
+				"short": "Prevents the target from fleeing and inflicts damage for 2-5 turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "trap",
+					"category": "move-ailment",
+					"id": 8
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 5,
+				"maxTurns": 6,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 100,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 21,
+			"name": "slam",
+			"accuracy": 75,
+			"pp": 20,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 22,
+			"name": "vine-whip",
+			"accuracy": 100,
+			"pp": 25,
+			"priority": 0,
+			"power": 45,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 23,
+			"name": "stomp",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.\n\nPower is doubled against Pokémon that have used minimize since entering the field.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 24,
+			"name": "double-kick",
+			"accuracy": 100,
+			"pp": 30,
+			"priority": 0,
+			"power": 30,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits twice in one turn.",
+				"short": "Hits twice in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 2,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 25,
+			"name": "mega-kick",
+			"accuracy": 75,
+			"pp": 5,
+			"priority": 0,
+			"power": 120,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 26,
+			"name": "jump-kick",
+			"accuracy": 95,
+			"pp": 10,
+			"priority": 0,
+			"power": 100,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  If this move misses, is blocked by protect or detect, or has no effect, the user takes half the damage it would have inflicted in recoil.  This recoil damage will not exceed half the user\u0027s max HP.\n\nThis move cannot be used while gravity is in effect.",
+				"short": "If the user misses, it takes half the damage it would have inflicted in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 27,
+			"name": "rolling-kick",
+			"accuracy": 85,
+			"effect-chance": 30,
+			"pp": 15,
+			"priority": 0,
+			"power": 60,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 28,
+			"name": "sand-attack",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s accuracy by one stage.",
+				"short": "Lowers the target\u0027s accuracy by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "accuracy",
+						"category": "stat",
+						"id": 7
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 29,
+			"name": "headbutt",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 15,
+			"priority": 0,
+			"power": 70,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 30,
+			"name": "horn-attack",
+			"accuracy": 100,
+			"pp": 25,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 31,
+			"name": "fury-attack",
+			"accuracy": 85,
+			"pp": 20,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 32,
+			"name": "horn-drill",
+			"accuracy": 30,
+			"pp": 5,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts damage equal to the target\u0027s max HP.  Ignores accuracy and evasion modifiers.  This move\u0027s accuracy is 30% plus 1% for each level the user is higher than the target.  If the user is a lower level than the target, this move will fail.\n\nBecause this move inflicts a specific and finite amount of damage, endure still prevents the target from fainting.\n\nThe effects of lock on, mind reader, and no guard still apply, as long as the user is equal or higher level than the target.  However, they will not give this move a chance to break through detect or protect.",
+				"short": "Causes a one-hit KO."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "ohko",
+					"category": "move-category",
+					"id": 9
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 33,
+			"name": "tackle",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 34,
+			"name": "body-slam",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 15,
+			"priority": 0,
+			"power": 85,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 30,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 35,
+			"name": "wrap",
+			"accuracy": 90,
+			"effect-chance": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the field, this effect ends.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.\n\nrapid spin cancels this effect.",
+				"short": "Prevents the target from fleeing and inflicts damage for 2-5 turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "trap",
+					"category": "move-ailment",
+					"id": 8
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 5,
+				"maxTurns": 6,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 100,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 36,
+			"name": "take-down",
+			"accuracy": 85,
+			"pp": 20,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User takes 1/4 the damage it inflicts in recoil.",
+				"short": "User receives 1/4 the damage it inflicts in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": -25,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 37,
+			"name": "thrash",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 120,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User is forced to attack with this move for 2–3 turns,selected at random.  After the last hit, the user becomes confused.\n\nsafeguard does not protect against the confusion from this move.",
+				"short": "Hits every turn for 2-3 turns, then confuses the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "random-opponent",
+				"category": "move-target",
+				"id": 8
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 38,
+			"name": "double-edge",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 120,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User takes 1/3 the damage it inflicts in recoil.",
+				"short": "User receives 1/3 the damage inflicted in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": -33,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 39,
+			"name": "tail-whip",
+			"accuracy": 100,
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s Defense by one stage.",
+				"short": "Lowers the target\u0027s Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 40,
+			"name": "poison-sting",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 35,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to poison the target.",
+				"short": "Has a $effect_chance% chance to poison the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 30,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 41,
+			"name": "twineedle",
+			"accuracy": 100,
+			"effect-chance": 20,
+			"pp": 20,
+			"priority": 0,
+			"power": 25,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits twice in the same turn.  Has a $effect_chance% chance to poison the target.",
+				"short": "Hits twice in the same turn.  Has a $effect_chance% chance to poison the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minHits": 2,
+				"maxHits": 2,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 20,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "bug",
+				"category": "type",
+				"id": 7
+			}
+		},
+		{
+			"id": 42,
+			"name": "pin-missile",
+			"accuracy": 95,
+			"pp": 20,
+			"priority": 0,
+			"power": 25,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "bug",
+				"category": "type",
+				"id": 7
+			}
+		},
+		{
+			"id": 43,
+			"name": "leer",
+			"accuracy": 100,
+			"effect-chance": 100,
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s Defense by one stage.",
+				"short": "Lowers the target\u0027s Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 100
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 44,
+			"name": "bite",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 25,
+			"priority": 0,
+			"power": 60,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "dark",
+				"category": "type",
+				"id": 17
+			}
+		},
+		{
+			"id": 45,
+			"name": "growl",
+			"accuracy": 100,
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s Attack by one stage.",
+				"short": "Lowers the target\u0027s Attack by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 46,
+			"name": "roar",
+			"pp": 20,
+			"priority": -6,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Switches the target out for another of its trainer\u0027s Pokémon selected at random.  Wild battles end immediately.\n\nDoesn\u0027t affect Pokémon with suction cups or under the effect of ingrain.",
+				"short": "Immediately ends wild battles.  Forces trainers to switch Pokémon."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "force-switch",
+					"category": "move-category",
+					"id": 12
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 47,
+			"name": "sing",
+			"accuracy": 55,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Puts the target to sleep.",
+				"short": "Puts the target to sleep."
+			},
+			"meta": {
+				"ailment": {
+					"name": "sleep",
+					"category": "move-ailment",
+					"id": 2
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 48,
+			"name": "supersonic",
+			"accuracy": 55,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Confuses the target.",
+				"short": "Confuses the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "confusion",
+					"category": "move-ailment",
+					"id": 6
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 49,
+			"name": "sonic-boom",
+			"accuracy": 90,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts exactly 20 damage.",
+				"short": "Inflicts 20 points of damage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 50,
+			"name": "disable",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Disables the target\u0027s last used move, preventing its use for 4–7 turns, selected at random, or until the target leaves the field.  If the target hasn\u0027t used a move since entering the field, if it tried to use a move this turn and failed,  if its last used move has 0 PP remaining, or if it already has a move disabled, this move will fail.",
+				"short": "Disables the target\u0027s last used move for 1-8 turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "disable",
+					"category": "move-ailment",
+					"id": 13
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"minTurns": 4,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 51,
+			"name": "acid",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 30,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Special Defense by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Special Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "special-defense",
+						"category": "stat",
+						"id": 5
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 52,
+			"name": "ember",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 25,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to burn the target.",
+				"short": "Has a $effect_chance% chance to burn the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "burn",
+					"category": "move-ailment",
+					"id": 4
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fire",
+				"category": "type",
+				"id": 10
+			}
+		},
+		{
+			"id": 53,
+			"name": "flamethrower",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to burn the target.",
+				"short": "Has a $effect_chance% chance to burn the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "burn",
+					"category": "move-ailment",
+					"id": 4
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fire",
+				"category": "type",
+				"id": 10
+			}
+		},
+		{
+			"id": 54,
+			"name": "mist",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Pokémon on the user\u0027s side of the field are immune to stat-lowering effects for five turns.\n\nguard swap, heart swap, and power swap may still be used.\n\ndefog used by an opponent will end this effect.",
+				"short": "Protects the user\u0027s stats from being changed by enemy moves."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "field-effect",
+					"category": "move-category",
+					"id": 11
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "users-field",
+				"category": "move-target",
+				"id": 4
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 55,
+			"name": "water-gun",
+			"accuracy": 100,
+			"pp": 25,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 56,
+			"name": "hydro-pump",
+			"accuracy": 80,
+			"pp": 5,
+			"priority": 0,
+			"power": 110,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 57,
+			"name": "surf",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.\n\nIf the target is in the first turn of dive, this move will hit with double power.",
+				"short": "Inflicts regular damage and can hit Dive users."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-other-pokemon",
+				"category": "move-target",
+				"id": 9
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 58,
+			"name": "ice-beam",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 10,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to freeze the target.",
+				"short": "Has a $effect_chance% chance to freeze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "freeze",
+					"category": "move-ailment",
+					"id": 3
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 59,
+			"name": "blizzard",
+			"accuracy": 70,
+			"effect-chance": 10,
+			"pp": 5,
+			"priority": 0,
+			"power": 110,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to freeze the target.\n\nDuring hail, this move has 100% accuracy.  It also has a (100 - accuracy)% chance to break through the protection of protect and detect.",
+				"short": "Has a $effect_chance% chance to freeze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "freeze",
+					"category": "move-ailment",
+					"id": 3
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 60,
+			"name": "psybeam",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to confuse the target.",
+				"short": "Has a $effect_chance% chance to confuse the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "confusion",
+					"category": "move-ailment",
+					"id": 6
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 2,
+				"maxTurns": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 61,
+			"name": "bubble-beam",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Speed by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Speed by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "speed",
+						"category": "stat",
+						"id": 6
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 62,
+			"name": "aurora-beam",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Attack by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Attack by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 63,
+			"name": "hyper-beam",
+			"accuracy": 90,
+			"pp": 5,
+			"priority": 0,
+			"power": 150,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User loses its next turn to \"recharge\", and cannot attack or switch out during that turn.",
+				"short": "User foregoes its next turn to recharge."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 64,
+			"name": "peck",
+			"accuracy": 100,
+			"pp": 35,
+			"priority": 0,
+			"power": 35,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 65,
+			"name": "drill-peck",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 66,
+			"name": "submission",
+			"accuracy": 80,
+			"pp": 20,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User takes 1/4 the damage it inflicts in recoil.",
+				"short": "User receives 1/4 the damage it inflicts in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": -25,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 67,
+			"name": "low-kick",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Power increases with the target\u0027s weight in kilograms, to a maximum of 120.\n\nTarget\u0027s weight | Power\n--------------- | ----:\nUp to 10kg      |    20\nUp to 25kg      |    40\nUp to 50kg      |    60\nUp to 100kg     |    80\nUp to 200kg     |   100\nAbove 200kg     |   120\n",
+				"short": "Inflicts more damage to heavier targets, with a maximum of 120 power."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 68,
+			"name": "counter",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": -5,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Targets the last opposing Pokémon to hit the user with a physical move this turn.  Inflicts twice the damage that move did to the user.  If there is no eligible target, this move will fail.  Type immunity applies, but other type effects are ignored.\n\nThis move cannot be copied by mirror move, nor selected by assist or metronome.",
+				"short": "Inflicts twice the damage the user received from the last physical hit it took."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "specific-move",
+				"category": "move-target",
+				"id": 1
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 69,
+			"name": "seismic-toss",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts damage equal to the user\u0027s level.  Type immunity applies, but other type effects are ignored.",
+				"short": "Inflicts damage equal to the user\u0027s level."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 70,
+			"name": "strength",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 71,
+			"name": "absorb",
+			"accuracy": 100,
+			"pp": 25,
+			"priority": 0,
+			"power": 20,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Drains half the damage inflicted to heal the user.",
+				"short": "Drains half the damage inflicted to heal the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+heal",
+					"category": "move-category",
+					"id": 8
+				},
+				"drain": 50,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 72,
+			"name": "mega-drain",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Drains half the damage inflicted to heal the user.",
+				"short": "Drains half the damage inflicted to heal the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+heal",
+					"category": "move-category",
+					"id": 8
+				},
+				"drain": 50,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 73,
+			"name": "leech-seed",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Plants a seed on the target that drains 1/8 of its max HP at the end of every turn and heals the user for the amount taken.  Has no effect on grass Pokémon.  The seed remains until the target leaves the field.\n\nThe user takes damage instead of being healed if the target has liquid ooze.\n\nrapid spin will remove this effect.\n\nThis effect is passed on by baton pass.",
+				"short": "Seeds the target, stealing HP from it every turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "leech-seed",
+					"category": "move-ailment",
+					"id": 18
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 74,
+			"name": "growth",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Attack and Special Attack by one stage each.  During sunny day, raises both stats by two stages.",
+				"short": "Raises the user\u0027s Attack and Special Attack by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				},
+				{
+					"change": 1,
+					"stat": {
+						"name": "special-attack",
+						"category": "stat",
+						"id": 4
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 75,
+			"name": "razor-leaf",
+			"accuracy": 95,
+			"pp": 25,
+			"priority": 0,
+			"power": 55,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User\u0027s critical hit rate is one level higher when using this move.",
+				"short": "Has an increased chance for a critical hit."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 76,
+			"name": "solar-beam",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 120,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User charges for one turn before attacking.\n\nDuring sunny day, the charge turn is skipped.\n\nDuring hail, rain dance, or sandstorm, power is halved.\n\nThis move cannot be selected by sleep talk.",
+				"short": "Requires a turn to charge before attacking."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 77,
+			"name": "poison-powder",
+			"accuracy": 75,
+			"pp": 35,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Poisons the target.",
+				"short": "Poisons the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 78,
+			"name": "stun-spore",
+			"accuracy": 75,
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Paralyzes the target.",
+				"short": "Paralyzes the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 79,
+			"name": "sleep-powder",
+			"accuracy": 75,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Puts the target to sleep.",
+				"short": "Puts the target to sleep."
+			},
+			"meta": {
+				"ailment": {
+					"name": "sleep",
+					"category": "move-ailment",
+					"id": 2
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 80,
+			"name": "petal-dance",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 120,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User is forced to attack with this move for 2–3 turns,selected at random.  After the last hit, the user becomes confused.\n\nsafeguard does not protect against the confusion from this move.",
+				"short": "Hits every turn for 2-3 turns, then confuses the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "random-opponent",
+				"category": "move-target",
+				"id": 8
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 81,
+			"name": "string-shot",
+			"accuracy": 95,
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s Speed by two stages.",
+				"short": "Lowers the target\u0027s Speed by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -2,
+					"stat": {
+						"name": "speed",
+						"category": "stat",
+						"id": 6
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "bug",
+				"category": "type",
+				"id": 7
+			}
+		},
+		{
+			"id": 82,
+			"name": "dragon-rage",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts exactly 40 damage.",
+				"short": "Inflicts 40 points of damage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "dragon",
+				"category": "type",
+				"id": 16
+			}
+		},
+		{
+			"id": 83,
+			"name": "fire-spin",
+			"accuracy": 85,
+			"effect-chance": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 35,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the field, this effect ends.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.\n\nrapid spin cancels this effect.",
+				"short": "Prevents the target from fleeing and inflicts damage for 2-5 turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "trap",
+					"category": "move-ailment",
+					"id": 8
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 5,
+				"maxTurns": 6,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 100,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fire",
+				"category": "type",
+				"id": 10
+			}
+		},
+		{
+			"id": 84,
+			"name": "thunder-shock",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 30,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "electric",
+				"category": "type",
+				"id": 13
+			}
+		},
+		{
+			"id": 85,
+			"name": "thunderbolt",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "electric",
+				"category": "type",
+				"id": 13
+			}
+		},
+		{
+			"id": 86,
+			"name": "thunder-wave",
+			"accuracy": 90,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Paralyzes the target.",
+				"short": "Paralyzes the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "electric",
+				"category": "type",
+				"id": 13
+			}
+		},
+		{
+			"id": 87,
+			"name": "thunder",
+			"accuracy": 70,
+			"effect-chance": 30,
+			"pp": 10,
+			"priority": 0,
+			"power": 110,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.\n\nDuring rain dance, this move has 100% accuracy.  It also has a (100 - accuracy)% chance to break through the protection of protect and detect.\n\nDuring sunny day, this move has 50% accuracy.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 30,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "electric",
+				"category": "type",
+				"id": 13
+			}
+		},
+		{
+			"id": 88,
+			"name": "rock-throw",
+			"accuracy": 90,
+			"pp": 15,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "rock",
+				"category": "type",
+				"id": 6
+			}
+		},
+		{
+			"id": 89,
+			"name": "earthquake",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 100,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.\n\nIf the target is in the first turn of dig, this move will hit with double power.",
+				"short": "Inflicts regular damage and can hit Dig users."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-other-pokemon",
+				"category": "move-target",
+				"id": 9
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 90,
+			"name": "fissure",
+			"accuracy": 30,
+			"pp": 5,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts damage equal to the target\u0027s max HP.  Ignores accuracy and evasion modifiers.  This move\u0027s accuracy is 30% plus 1% for each level the user is higher than the target.  If the user is a lower level than the target, this move will fail.\n\nBecause this move inflicts a specific and finite amount of damage, endure still prevents the target from fainting.\n\nThe effects of lock on, mind reader, and no guard still apply, as long as the user is equal or higher level than the target.  However, they will not give this move a chance to break through detect or protect.",
+				"short": "Causes a one-hit KO."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "ohko",
+					"category": "move-category",
+					"id": 9
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 91,
+			"name": "dig",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User digs underground for one turn, becoming immune to attack, and hits on the second turn.\n\nDuring the immune turn, earthquake, fissure, and magnitude still hit the user normally, and their power is doubled if appropriate.\n\nThe user may be hit during its immune turn if under the effect of lock on, mind reader, or no guard.\n\nThis move cannot be selected by sleep talk.",
+				"short": "User digs underground, dodging all attacks, and hits next turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 92,
+			"name": "toxic",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Badly poisons the target.  Never misses when used by a poison-type Pokémon.",
+				"short": "Badly poisons the target, inflicting more damage every turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 15,
+				"maxTurns": 15,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 93,
+			"name": "confusion",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 25,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to confuse the target.",
+				"short": "Has a $effect_chance% chance to confuse the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "confusion",
+					"category": "move-ailment",
+					"id": 6
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 2,
+				"maxTurns": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 94,
+			"name": "psychic",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 10,
+			"priority": 0,
+			"power": 90,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Special Defense by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Special Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "special-defense",
+						"category": "stat",
+						"id": 5
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 95,
+			"name": "hypnosis",
+			"accuracy": 60,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Puts the target to sleep.",
+				"short": "Puts the target to sleep."
+			},
+			"meta": {
+				"ailment": {
+					"name": "sleep",
+					"category": "move-ailment",
+					"id": 2
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 96,
+			"name": "meditate",
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Attack by one stage.",
+				"short": "Raises the user\u0027s Attack by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 97,
+			"name": "agility",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Speed by two stages.",
+				"short": "Raises the user\u0027s Speed by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "speed",
+						"category": "stat",
+						"id": 6
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 98,
+			"name": "quick-attack",
+			"accuracy": 100,
+			"pp": 30,
+			"priority": 1,
+			"power": 40,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 99,
+			"name": "rage",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 20,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Every time the user is hit after it uses this move but before its next action, its Attack raises by one stage.",
+				"short": "If the user is hit after using this move, its Attack rises by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 100,
+			"name": "teleport",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Does nothing.  Wild battles end immediately.",
+				"short": "Immediately ends wild battles.  No effect otherwise."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 101,
+			"name": "night-shade",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts damage equal to the user\u0027s level.  Type immunity applies, but other type effects are ignored.",
+				"short": "Inflicts damage equal to the user\u0027s level."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ghost",
+				"category": "type",
+				"id": 8
+			}
+		},
+		{
+			"id": 102,
+			"name": "mimic",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "This move is replaced by the target\u0027s last successfully used move, and its PP changes to 5.  If the target hasn\u0027t used a move since entering the field, if it tried to use a move this turn and failed, or if the user already knows the targeted move, this move will fail.  This effect vanishes when the user leaves the field.\n\nIf chatter, metronome, mimic, sketch, or struggle is selected, this move will fail.\n\nThis move cannot be copied by mirror move, nor selected by assist or metronome, nor forced by encore.",
+				"short": "Copies the target\u0027s last used move."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 103,
+			"name": "screech",
+			"accuracy": 85,
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s Defense by two stages.",
+				"short": "Lowers the target\u0027s Defense by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -2,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 104,
+			"name": "double-team",
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s evasion by one stage.",
+				"short": "Raises the user\u0027s evasion by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "evasion",
+						"category": "stat",
+						"id": 8
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 105,
+			"name": "recover",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Heals the user for half its max HP.",
+				"short": "Heals the user by half its max HP."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "heal",
+					"category": "move-category",
+					"id": 3
+				},
+				"drain": 0,
+				"healing": 50,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 106,
+			"name": "harden",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Defense by one stage.",
+				"short": "Raises the user\u0027s Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 107,
+			"name": "minimize",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s evasion by two stages.\n\nstomp and steamroller have double power against Pokémon that have used this move since entering the field.",
+				"short": "Raises the user\u0027s evasion by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "evasion",
+						"category": "stat",
+						"id": 8
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 108,
+			"name": "smokescreen",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s accuracy by one stage.",
+				"short": "Lowers the target\u0027s accuracy by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "accuracy",
+						"category": "stat",
+						"id": 7
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 109,
+			"name": "confuse-ray",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Confuses the target.",
+				"short": "Confuses the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "confusion",
+					"category": "move-ailment",
+					"id": 6
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ghost",
+				"category": "type",
+				"id": 8
+			}
+		},
+		{
+			"id": 110,
+			"name": "withdraw",
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Defense by one stage.",
+				"short": "Raises the user\u0027s Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 111,
+			"name": "defense-curl",
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises user\u0027s Defense by one stage.\n\nAfter this move is used, the power of ice ball and rollout are doubled until the user leaves the field.",
+				"short": "Raises user\u0027s Defense by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 112,
+			"name": "barrier",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Defense by two stages.",
+				"short": "Raises the user\u0027s Defense by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 113,
+			"name": "light-screen",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Erects a barrier around the user\u0027s side of the field that reduces damage from special attacks by half for five turns.  In double battles, the reduction is 1/3.  Critical hits are not affected by the barrier.\n\nIf the user is holding light clay, the barrier lasts for eight turns.\n\nbrick break or defog used by an opponent will destroy the barrier.",
+				"short": "Reduces damage from special attacks by 50% for five turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "field-effect",
+					"category": "move-category",
+					"id": 11
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "users-field",
+				"category": "move-target",
+				"id": 4
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 114,
+			"name": "haze",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Removes stat, accuracy, and evasion modifiers from every Pokémon on the field.\n\nThis does not count as a stat reduction for the purposes of clear body or white smoke.",
+				"short": "Resets all Pokémon\u0027s stats, accuracy, and evasion."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "whole-field-effect",
+					"category": "move-category",
+					"id": 10
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "entire-field",
+				"category": "move-target",
+				"id": 12
+			},
+			"type": {
+				"name": "ice",
+				"category": "type",
+				"id": 15
+			}
+		},
+		{
+			"id": 115,
+			"name": "reflect",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Erects a barrier around the user\u0027s side of the field that reduces damage from physical attacks by half for five turns.  In double battles, the reduction is 1/3.  Critical hits are not affected by the barrier.\n\nIf the user is holding light clay, the barrier lasts for eight turns.\n\nbrick break or defog used by an opponent will destroy the barrier.",
+				"short": "Reduces damage from physical attacks by half."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "field-effect",
+					"category": "move-category",
+					"id": 11
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "users-field",
+				"category": "move-target",
+				"id": 4
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 116,
+			"name": "focus-energy",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "User\u0027s critical hit rate is two levels higher until it leaves the field.  If the user has already used focus energy since entering the field, this move will fail.\n\nThis effect is passed on by baton pass.",
+				"short": "Increases the user\u0027s chance to score a critical hit."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 117,
+			"name": "bide",
+			"pp": 10,
+			"priority": 1,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "User waits for two turns.  On the second turn, the user inflicts twice the damage it accumulated on the last Pokémon to hit it.  Damage inflicted is typeless.\n\nThis move cannot be selected by sleep talk.",
+				"short": "User waits for two turns, then hits back for twice the damage it took."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 118,
+			"name": "metronome",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Selects any move at random and uses it.  Moves the user already knows are not eligible.  Assist, meta, protection, and reflection moves are also not eligible; specifically, assist, chatter, copycat, counter, covet, destiny bond, detect, endure, feint, focus punch, follow me, helping hand, me first, metronome, mimic, mirror coat, mirror move, protect, quick guard, sketch, sleep talk, snatch, struggle, switcheroo, thief, trick, and wide guard will not be selected by this move.\n\nThis move cannot be copied by mimic or mirror move, nor selected by assist, metronome, or sleep talk.",
+				"short": "Randomly selects and uses any move in the game."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 119,
+			"name": "mirror-move",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Uses the last move targeted at the user by a Pokémon still on the field.  A move counts as targeting the user even if it hit multiple Pokémon, as long as the user was one of them; however, moves targeting the field itself do not count.  If the user has not been targeted by an appropriate move since entering the field, or if no Pokémon that targeted the user remains on the field, this move will fail.\n\nMoves that failed, missed, had no effect, or were blocked are still copied.\n\nAssist moves, time-delayed moves, “meta” moves that operate on other moves/Pokémon/abilities, and some other special moves cannot be copied and are ignored; if the last move to hit the user was such a move, the previous move will be used instead.  The full list of ignored moves is: acid armor, acupressure, after you, agility, ally switch, amnesia, aqua ring, aromatherapy, aromatic mist, assist, autotomize, barrier, baton pass, belch, belly drum, bide, bulk up, calm mind, camouflage, celebrate, charge, coil, conversion, conversion 2, copycat, cosmic power, cotton guard, counter, crafty shield, curse, defend order, defense curl, destiny bond, detect, doom desire, double team, dragon dance, electric terrain, endure, final gambit, flower shield, focus energy, focus punch, follow me, future sight, geomancy, grassy terrain, gravity, growth, grudge, guard split, hail, happy hour, harden, haze, heal bell, heal order, heal pulse, healing wish, helping hand, hold hands, hone claws, howl, imprison, ingrain, ion deluge, iron defense, kings shield, light screen, lucky chant, lunar dance, magic coat, magnet rise, magnetic flux, mat block, me first, meditate, metronome, milk drink, mimic, minimize, mirror coat, mirror move, mist, misty terrain, moonlight, morning sun, mud sport, nasty plot, nature power, perish song, power split, power trick, protect, psych up, quick guard, quiver dance, rage powder, rain dance, recover, recycle, reflect, reflect type, refresh, rest, rock polish, role play, roost, rototiller, safeguard, sandstorm, shadow blast, shadow bolt, shadow half, shadow rush, shadow shed, shadow sky, shadow storm, shadow wave, sharpen, shell smash, shift gear, sketch, slack off, sleep talk, snatch, soft boiled, spikes, spiky shield, spit up, splash, stealth rock, sticky web, stockpile, struggle, substitute, sunny day, swallow, swords dance, synthesis, tail glow, tailwind, teleport, toxic spikes, transform, water sport, wide guard, wish, withdraw and work up.\n\nThis move cannot be selected by assist, metronome, or sleep talk, nor forced by encore.",
+				"short": "Uses the target\u0027s last used move."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 120,
+			"name": "self-destruct",
+			"accuracy": 100,
+			"pp": 5,
+			"priority": 0,
+			"power": 200,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "User faints, even if the attack fails or misses.  Inflicts regular damage.",
+				"short": "User faints."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-other-pokemon",
+				"category": "move-target",
+				"id": 9
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 121,
+			"name": "egg-bomb",
+			"accuracy": 75,
+			"pp": 10,
+			"priority": 0,
+			"power": 100,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.",
+				"short": "Inflicts regular damage with no additional effect."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 122,
+			"name": "lick",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 30,
+			"priority": 0,
+			"power": 30,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to paralyze the target.",
+				"short": "Has a $effect_chance% chance to paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 30,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ghost",
+				"category": "type",
+				"id": 8
+			}
+		},
+		{
+			"id": 123,
+			"name": "smog",
+			"accuracy": 70,
+			"effect-chance": 40,
+			"pp": 20,
+			"priority": 0,
+			"power": 30,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to poison the target.",
+				"short": "Has a $effect_chance% chance to poison the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 40,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 124,
+			"name": "sludge",
+			"accuracy": 100,
+			"effect-chance": 30,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to poison the target.",
+				"short": "Has a $effect_chance% chance to poison the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 30,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 125,
+			"name": "bone-club",
+			"accuracy": 85,
+			"effect-chance": 10,
+			"pp": 20,
+			"priority": 0,
+			"power": 65,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 10,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 126,
+			"name": "fire-blast",
+			"accuracy": 85,
+			"effect-chance": 10,
+			"pp": 5,
+			"priority": 0,
+			"power": 110,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to burn the target.",
+				"short": "Has a $effect_chance% chance to burn the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "burn",
+					"category": "move-ailment",
+					"id": 4
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 10,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fire",
+				"category": "type",
+				"id": 10
+			}
+		},
+		{
+			"id": 127,
+			"name": "waterfall",
+			"accuracy": 100,
+			"effect-chance": 20,
+			"pp": 15,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 20,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 128,
+			"name": "clamp",
+			"accuracy": 85,
+			"effect-chance": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 35,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the field, this effect ends.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.\n\nrapid spin cancels this effect.",
+				"short": "Prevents the target from fleeing and inflicts damage for 2-5 turns."
+			},
+			"meta": {
+				"ailment": {
+					"name": "trap",
+					"category": "move-ailment",
+					"id": 8
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 5,
+				"maxTurns": 6,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 100,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 129,
+			"name": "swift",
+			"pp": 20,
+			"priority": 0,
+			"power": 60,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Ignores accuracy and evasion modifiers.",
+				"short": "Never misses."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 130,
+			"name": "skull-bash",
+			"accuracy": 100,
+			"effect-chance": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 130,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Raises the user\u0027s Defense by one stage.  User then charges for one turn before attacking.\n\nThis move cannot be selected by sleep talk.",
+				"short": "Raises the user\u0027s Defense by one stage.  User charges for one turn before attacking."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 100,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 131,
+			"name": "spike-cannon",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 20,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 132,
+			"name": "constrict",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 35,
+			"priority": 0,
+			"power": 10,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Speed by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Speed by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "speed",
+						"category": "stat",
+						"id": 6
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 133,
+			"name": "amnesia",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Special Defense by two stages.",
+				"short": "Raises the user\u0027s Special Defense by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "special-defense",
+						"category": "stat",
+						"id": 5
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 134,
+			"name": "kinesis",
+			"accuracy": 80,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s accuracy by one stage.",
+				"short": "Lowers the target\u0027s accuracy by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "accuracy",
+						"category": "stat",
+						"id": 7
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 135,
+			"name": "soft-boiled",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Heals the user for half its max HP.",
+				"short": "Heals the user by half its max HP."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "heal",
+					"category": "move-category",
+					"id": 3
+				},
+				"drain": 0,
+				"healing": 50,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 136,
+			"name": "high-jump-kick",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"power": 130,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  If this move misses, is blocked by protect or detect, or has no effect, the user takes half the damage it would have inflicted in recoil.  This recoil damage will not exceed half the user\u0027s max HP.\n\nThis move cannot be used while gravity is in effect.",
+				"short": "If the user misses, it takes half the damage it would have inflicted in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "fighting",
+				"category": "type",
+				"id": 2
+			}
+		},
+		{
+			"id": 137,
+			"name": "glare",
+			"accuracy": 100,
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Paralyzes the target.",
+				"short": "Paralyzes the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "paralysis",
+					"category": "move-ailment",
+					"id": 1
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 138,
+			"name": "dream-eater",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"power": 100,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Fails if not used on a sleeping Pokémon.  Inflicts regular damage.  Drains half the damage inflicted to heal the user.",
+				"short": "Only works on sleeping Pokémon.  Drains half the damage inflicted to heal the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+heal",
+					"category": "move-category",
+					"id": 8
+				},
+				"drain": 50,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 139,
+			"name": "poison-gas",
+			"accuracy": 90,
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Poisons the target.",
+				"short": "Poisons the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "poison",
+					"category": "move-ailment",
+					"id": 5
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 140,
+			"name": "barrage",
+			"accuracy": 85,
+			"pp": 20,
+			"priority": 0,
+			"power": 15,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 141,
+			"name": "leech-life",
+			"accuracy": 100,
+			"pp": 10,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Drains half the damage inflicted to heal the user.",
+				"short": "Drains half the damage inflicted to heal the user."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+heal",
+					"category": "move-category",
+					"id": 8
+				},
+				"drain": 50,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "bug",
+				"category": "type",
+				"id": 7
+			}
+		},
+		{
+			"id": 142,
+			"name": "lovely-kiss",
+			"accuracy": 75,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Puts the target to sleep.",
+				"short": "Puts the target to sleep."
+			},
+			"meta": {
+				"ailment": {
+					"name": "sleep",
+					"category": "move-ailment",
+					"id": 2
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 143,
+			"name": "sky-attack",
+			"accuracy": 90,
+			"effect-chance": 30,
+			"pp": 5,
+			"priority": 0,
+			"power": 140,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User charges for one turn before attacking.  Critical hit chance is one level higher than normal.  Has a $effect_chance% chance to make the target flinch.\n\nThis move cannot be selected by sleep talk.",
+				"short": "User charges for one turn before attacking.  Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "flying",
+				"category": "type",
+				"id": 3
+			}
+		},
+		{
+			"id": 144,
+			"name": "transform",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "User copies the target\u0027s species, weight, type, ability, calculated stats (except HP), and moves.  Copied moves will all have 5 PP remaining.  IVs are copied for the purposes of hidden power, but stats are not recalculated.\n\nchoice band, choice scarf, and choice specs stay in effect, and the user must select a new move.\n\nThis move cannot be copied by mirror move, nor forced by encore.",
+				"short": "User becomes a copy of the target until it leaves battle."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 145,
+			"name": "bubble",
+			"accuracy": 100,
+			"effect-chance": 10,
+			"pp": 30,
+			"priority": 0,
+			"power": 40,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to lower the target\u0027s Speed by one stage.",
+				"short": "Has a $effect_chance% chance to lower the target\u0027s Speed by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage+lower",
+					"category": "move-category",
+					"id": 6
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 10
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "speed",
+						"category": "stat",
+						"id": 6
+					}
+				}
+			],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 146,
+			"name": "dizzy-punch",
+			"accuracy": 100,
+			"effect-chance": 20,
+			"pp": 10,
+			"priority": 0,
+			"power": 70,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to confuse the target.",
+				"short": "Has a $effect_chance% chance to confuse the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "confusion",
+					"category": "move-ailment",
+					"id": 6
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"minTurns": 2,
+				"maxTurns": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 20,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 147,
+			"name": "spore",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Puts the target to sleep.",
+				"short": "Puts the target to sleep."
+			},
+			"meta": {
+				"ailment": {
+					"name": "sleep",
+					"category": "move-ailment",
+					"id": 2
+				},
+				"category": {
+					"name": "ailment",
+					"category": "move-category",
+					"id": 1
+				},
+				"minTurns": 2,
+				"maxTurns": 4,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "grass",
+				"category": "type",
+				"id": 12
+			}
+		},
+		{
+			"id": 148,
+			"name": "flash",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Lowers the target\u0027s accuracy by one stage.",
+				"short": "Lowers the target\u0027s accuracy by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": -1,
+					"stat": {
+						"name": "accuracy",
+						"category": "stat",
+						"id": 7
+					}
+				}
+			],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 149,
+			"name": "psywave",
+			"accuracy": 100,
+			"pp": 15,
+			"priority": 0,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts typeless damage between 50% and 150% of the user\u0027s level, selected at random in increments of 10%.",
+				"short": "Inflicts damage between 50% and 150% of the user\u0027s level."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 150,
+			"name": "splash",
+			"pp": 40,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Does nothing.\n\nThis move cannot be used while gravity is in effect.",
+				"short": "Does nothing."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 151,
+			"name": "acid-armor",
+			"pp": 20,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Defense by two stages.",
+				"short": "Raises the user\u0027s Defense by two stages."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 2,
+					"stat": {
+						"name": "defense",
+						"category": "stat",
+						"id": 3
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "poison",
+				"category": "type",
+				"id": 4
+			}
+		},
+		{
+			"id": 152,
+			"name": "crabhammer",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"power": 100,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User\u0027s critical hit rate is one level higher when using this move.",
+				"short": "Has an increased chance for a critical hit."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "water",
+				"category": "type",
+				"id": 11
+			}
+		},
+		{
+			"id": 153,
+			"name": "explosion",
+			"accuracy": 100,
+			"pp": 5,
+			"priority": 0,
+			"power": 250,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "User faints, even if the attack fails or misses.  Inflicts regular damage.",
+				"short": "User faints."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-other-pokemon",
+				"category": "move-target",
+				"id": 9
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 154,
+			"name": "fury-swipes",
+			"accuracy": 80,
+			"pp": 15,
+			"priority": 0,
+			"power": 18,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits 2–5 times in one turn.\n\nHas a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.",
+				"short": "Hits 2-5 times in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 5,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 155,
+			"name": "bonemerang",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Hits twice in one turn.",
+				"short": "Hits twice in one turn."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"minHits": 2,
+				"maxHits": 2,
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "ground",
+				"category": "type",
+				"id": 5
+			}
+		},
+		{
+			"id": 156,
+			"name": "rest",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "User falls to sleep and immediately regains all its HP.  If the user has another major status effect, sleep will replace it.  The user will always wake up after two turns, or one turn with early bird.\n\nThis move fails if the Pokémon cannot fall asleep due to uproar, insomnia, or vital spirit.  It also fails if the Pokémon is at full health or is already asleep.",
+				"short": "User sleeps for two turns, completely healing itself."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "psychic",
+				"category": "type",
+				"id": 14
+			}
+		},
+		{
+			"id": 157,
+			"name": "rock-slide",
+			"accuracy": 90,
+			"effect-chance": 30,
+			"pp": 10,
+			"priority": 0,
+			"power": 75,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 30,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "all-opponents",
+				"category": "move-target",
+				"id": 11
+			},
+			"type": {
+				"name": "rock",
+				"category": "type",
+				"id": 6
+			}
+		},
+		{
+			"id": 158,
+			"name": "hyper-fang",
+			"accuracy": 90,
+			"effect-chance": 10,
+			"pp": 15,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to make the target flinch.",
+				"short": "Has a $effect_chance% chance to make the target flinch."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 10,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 159,
+			"name": "sharpen",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Raises the user\u0027s Attack by one stage.",
+				"short": "Raises the user\u0027s Attack by one stage."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "net-good-stats",
+					"category": "move-category",
+					"id": 2
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [
+				{
+					"change": 1,
+					"stat": {
+						"name": "attack",
+						"category": "stat",
+						"id": 2
+					}
+				}
+			],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 160,
+			"name": "conversion",
+			"pp": 30,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "User\u0027s type changes to the type of one of its moves, selected at random.  hidden power and weather ball are treated as normal.  Only moves with a different type are eligible, and curse is never eligible.  If the user has no suitable moves, this move will fail.",
+				"short": "User\u0027s type changes to the type of one of its moves at random."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 161,
+			"name": "tri-attack",
+			"accuracy": 100,
+			"effect-chance": 20,
+			"pp": 10,
+			"priority": 0,
+			"power": 80,
+			"damage-class": {
+				"name": "special",
+				"category": "move-damage-class",
+				"id": 3
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  Has a $effect_chance% chance to burn, freeze, or paralyze the target.  One of these effects is selected at random; they do not each have independent chances to occur.",
+				"short": "Has a $effect_chance% chance to burn, freeze, or paralyze the target."
+			},
+			"meta": {
+				"ailment": {
+					"name": "unknown",
+					"category": "move-ailment-",
+					"id": -1
+				},
+				"category": {
+					"name": "damage+ailment",
+					"category": "move-category",
+					"id": 4
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 20,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 162,
+			"name": "super-fang",
+			"accuracy": 90,
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts typeless damage equal to half the target\u0027s remaining HP.",
+				"short": "Inflicts damage equal to half the target\u0027s HP."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 163,
+			"name": "slash",
+			"accuracy": 100,
+			"pp": 20,
+			"priority": 0,
+			"power": 70,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts regular damage.  User\u0027s critical hit rate is one level higher when using this move.",
+				"short": "Has an increased chance for a critical hit."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 1,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "selected-pokemon",
+				"category": "move-target",
+				"id": 10
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 164,
+			"name": "substitute",
+			"pp": 10,
+			"priority": 0,
+			"damage-class": {
+				"name": "status",
+				"category": "move-damage-class",
+				"id": 1
+			},
+			"effect-description": {
+				"long": "Transfers 1/4 the user\u0027s max HP into a doll that absorbs damage and causes most negative move effects to fail.  If the user leaves the field, the doll will vanish.  If the user cannot pay the HP cost, this move will fail.\n\nThe doll takes damage as normal, using the user\u0027s stats and types, and will break when its HP reaches zero.  Self-inflicted damage from confusion or recoil is not absorbed.  Healing effects from opponents ignore the doll and heal the user as normal.  Moves that work based on the user\u0027s HP still do so; the doll\u0027s HP does not influence any move.\n\nThe doll will block major status effects, confusion, and flinching.  The effects of smelling salts and wake up slap do not trigger against a doll, even if the Pokémon behind the doll has the appropriate major status effect.  Multi-turn trapping moves like wrap will hit the doll for their regular damage, but the multi-turn trapping and damage effects will not activate.\n\nMoves blocked or damage absorbed by the doll do not count as hitting the user or inflicting damage for any effects that respond to such, e.g., avalanche, counter, or a rowap berry.  magic coat still works as normal, even against moves the doll would block.  Opposing Pokémon that damage the doll with a leech move like absorb are healed as normal.\n\nIt will also block acupressure, block, the curse effect of curse, dream eater, embargo, flatter, gastro acid, grudge, heal block, leech seed, lock on, mean look, mimic, mind reader, nightmare, pain split, psycho shift, spider web, sketch, swagger, switcheroo, trick, worry seed, and yawn.  A Pokémon affected by yawn before summoning the doll will still fall to sleep.\n\nThe doll blocks intimidate, but all other abilities act as though the doll did not exist.  If the user has an ability that absorbs moves of a certain type for HP (such as volt absorb absorbing thunder wave), such moves will not be blocked.\n\nlife orb and berries that cause confusion still work as normal, but their respective HP loss and confusion are absorbed/blocked by the doll.\n\nThe user is still vulnerable to damage inflicted when entering or leaving the field, such as by pursuit or spikes; however, the doll will block the poison effect of toxic spikes.\n\nThe doll is passed on by baton pass.  It keeps its existing HP, but uses the replacement Pokémon\u0027s stats and types for damage calculation.\n\nAll other effects work as normal.",
+				"short": "Transfers 1/4 of the user\u0027s max HP into a doll, protecting the user from further damage or status changes until it breaks."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "unique",
+					"category": "move-category",
+					"id": 13
+				},
+				"drain": 0,
+				"healing": 0,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "user",
+				"category": "move-target",
+				"id": 7
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		},
+		{
+			"id": 165,
+			"name": "struggle",
+			"pp": 1,
+			"priority": 0,
+			"power": 50,
+			"damage-class": {
+				"name": "physical",
+				"category": "move-damage-class",
+				"id": 2
+			},
+			"effect-description": {
+				"long": "Inflicts typeless regular damage.  User takes 1/4 its max HP in recoil.  Ignores accuracy and evasion modifiers.\n\nThis move is used automatically when a Pokémon cannot use any other move legally, e.g., due to having no PP remaining or being under the effect of both encore and torment at the same time.\n\nThis move\u0027s recoil is not treated as recoil for the purposes of anything that affects recoil, such as the ability rock head.  It also is not prevented by magic guard.\n\nThis move cannot be copied by mimic, mirror move, or sketch, nor selected by assist or metronome, nor forced by encore.",
+				"short": "User takes 1/4 its max HP in recoil."
+			},
+			"meta": {
+				"ailment": {
+					"name": "none",
+					"category": "move-ailment",
+					"id": 0
+				},
+				"category": {
+					"name": "damage",
+					"category": "move-category",
+					"id": 0
+				},
+				"drain": 0,
+				"healing": -25,
+				"critRate": 0,
+				"ailmentChance": 0,
+				"flinchChance": 0,
+				"statChance": 0
+			},
+			"stat-changes": [],
+			"target": {
+				"name": "random-opponent",
+				"category": "move-target",
+				"id": 8
+			},
+			"type": {
+				"name": "normal",
+				"category": "type",
+				"id": 1
+			}
+		}
+	]
+}

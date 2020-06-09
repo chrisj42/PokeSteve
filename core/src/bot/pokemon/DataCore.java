@@ -18,9 +18,9 @@ public class DataCore {
 	
 	private DataCore() {}
 	
-	public static final DataList<Move> MOVES = new DataList<>(Move.class, "moves-gen1.json", Move::new);
+	public static final DataList<Move> MOVES = new DataList<>(Move.class, "moves.json", Move::new);
 	
-	public static final DataList<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, "pokemon-species-gen1.json", "pokemon-gen1.json", PokemonSpecies::new);
+	public static final DataList<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, "pokemon-species.json", "pokemon.json", PokemonSpecies::new);
 	
 	public static class DataList<T> {
 		
@@ -41,6 +41,10 @@ public class DataCore {
 				data = (T[]) Array.newInstance(clazz, arrayNode.getLength());
 				nameMap = new HashMap<>(arrayNode.getLength());
 				for(int i = 0; i < data.length; i++) {
+					if(!arrayNode.getNode().has(i)) {
+						System.err.println("array node does not have "+i);
+						continue;
+					}
 					data[i] = parser.parseNode(arrayNode.getObjectNode(i));
 					nameMap.put(data[i].toString().toLowerCase(), data[i]);
 				}
@@ -56,6 +60,7 @@ public class DataCore {
 				data = (T[]) Array.newInstance(clazz, anode1.getLength());
 				nameMap = new HashMap<>(anode1.getLength());
 				for(int i = 0; i < data.length; i++) {
+					// System.out.println("parsing "+i);
 					data[i] = parser.parseNode(anode1.getObjectNode(i), anode2.getObjectNode(i));
 					nameMap.put(data[i].toString().toLowerCase(), data[i]);
 				}

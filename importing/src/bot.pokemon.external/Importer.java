@@ -15,8 +15,8 @@ public class Importer {
 	
 	private Importer() {}
 	
-	// public static final int MAX_DEX_NUMBER = 807;
-	public static final int MAX_DEX_NUMBER = 151;
+	public static final int MAX_DEX_NUMBER = 807;
+	// public static final int MAX_DEX_NUMBER = 151;
 	
 	public static final ObjectMapper jsonMapper = new ObjectMapper();
 	
@@ -59,9 +59,7 @@ public class Importer {
 		
 		// download a list straight from PokeAPI
 		
-		// DataImports.Locations.downloadData();
-		// DataImports.LocationAreas.downloadData();
-		DataImports.Gen1Encounters.downloadData();
+		DataImports.AllMoves.downloadData();
 	}
 	
 	public static String readData(String urlPrefix, String urlSuffix, int maxIdx) {
@@ -74,7 +72,7 @@ public class Importer {
 				System.out.println("error with data "+i+", skipping");
 			}
 			try {
-				Thread.sleep(300);
+				Thread.sleep(1000);
 			} catch(InterruptedException ignored) {}
 		}
 		return "["+String.join(",", data)+"]";
@@ -90,7 +88,7 @@ public class Importer {
 			g.writeObjectField("pp", move.getPp());
 			g.writeObjectField("priority", move.getPriority());
 			g.writeObjectField("power", move.getPower());
-			// todo change 
+			
 			g.writeObjectField("damage-class", move.getDamageClass());
 			g.writeObjectFieldStart("effect-description");
 			g.writeObjectField("long", move.getEffectEntries().get(0).getEffect());
