@@ -22,7 +22,7 @@ public class CommandContext {
 		this.channel = channel;
 		
 		this.args = parseArguments(text);
-		System.out.println("args: "+args);
+		System.out.println("from user "+user.getUsername()+": args: "+args);
 	}
 	
 	String nextArgument() {

@@ -40,12 +40,18 @@ public class DataCore {
 				JsonArrayNode arrayNode = new JsonArrayNode(Core.jsonMapper.readTree(new File(filename)));
 				data = (T[]) Array.newInstance(clazz, arrayNode.getLength());
 				nameMap = new HashMap<>(arrayNode.getLength());
+				System.out.println("reading "+data.length+" entries");
 				for(int i = 0; i < data.length; i++) {
 					if(!arrayNode.getNode().has(i)) {
 						System.err.println("array node does not have "+i);
 						continue;
 					}
-					data[i] = parser.parseNode(arrayNode.getObjectNode(i));
+					// System.out.println("parsing "+i);
+					try {
+						data[i] = parser.parseNode(arrayNode.getObjectNode(i));
+					} catch(MissingPropertyException e) {
+						throw new RuntimeException("Error while parsing data "+i, e);
+					}
 					nameMap.put(data[i].toString().toLowerCase(), data[i]);
 				}
 			} catch(IOException | MissingPropertyException e) {
@@ -61,7 +67,11 @@ public class DataCore {
 				nameMap = new HashMap<>(anode1.getLength());
 				for(int i = 0; i < data.length; i++) {
 					// System.out.println("parsing "+i);
-					data[i] = parser.parseNode(anode1.getObjectNode(i), anode2.getObjectNode(i));
+					try {
+						data[i] = parser.parseNode(anode1.getObjectNode(i), anode2.getObjectNode(i));
+					} catch(MissingPropertyException e) {
+						throw new RuntimeException("Error while parsing data "+i, e);
+					}
 					nameMap.put(data[i].toString().toLowerCase(), data[i]);
 				}
 			} catch(IOException | MissingPropertyException e) {

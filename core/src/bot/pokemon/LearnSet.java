@@ -23,19 +23,27 @@ public class LearnSet {
 	
 	// @SuppressWarnings("unchecked")
 	public LearnSet(PokemonSpecies species, JsonArrayNode moves) throws MissingPropertyException {
+		// final boolean print = species.dex == 381;
+		
+		// if(print) System.out.println("moves: "+moves.getLength());
+		
 		levelUpMoveSet = new TreeSet<>();
 		levelUpMoveMap = new TreeMap<>();
 		this.moves = new Move[moves.getLength()];
 		for(int i = 0; i < this.moves.length; i++) {
 			JsonObjectNode moveNode = moves.getObjectNode(i);
 			this.moves[i] = DataCore.MOVES.get(NodeParser.getResourceId(moveNode.getObjectNode("move")));
-			if(this.moves[i] == null) continue;
+			if(this.moves[i] == null) {
+				System.err.println("note: move "+i+" for pokemon "+species+" is null, skipping (resource name was "+moveNode.getObjectNode("move").parseValueNode("name", JsonNode::textValue)+")");
+				continue;
+			}
 			// this.moves[i] = DataCore.MOVES.getRef(moveNode.getObjectNode("move"));
 			
 			JsonArrayNode versionInfoList = moveNode.getArrayNode("version_group_details");
 			JsonObjectNode latestVersionInfo = versionInfoList.getObjectNode(versionInfoList.getLength()-1);
 			MoveLearnMethod learnMethod = MoveLearnMethod.getLearnMethod(latestVersionInfo.getObjectNode("move_learn_method").parseValueNode("name", JsonNode::textValue));
 			int level = latestVersionInfo.parseValueNode("level_learned_at", JsonNode::intValue);
+			// if(print) System.out.println("move "+this.moves[i]+" learned at "+level+" with method "+learnMethod);
 			if(learnMethod == MoveLearnMethod.LevelUp) {
 				LevelUpMove lMove = new LevelUpMove(level, this.moves[i]);
 				levelUpMoveSet.add(lMove);
@@ -44,7 +52,8 @@ public class LearnSet {
 				System.err.println("move "+this.moves[i].name+" for pokemon "+species.name+" (#"+(i+1)+" in move list) is not a level up move, but has a non-zero level learned at.");
 		}
 		
-		// System.out.println("pokemon "+species.name+" levelup map:"+levelUpMoveMap);
+		// if(print)
+		// 	System.out.println("pokemon "+species.name+" levelup map:"+levelUpMoveMap);
 	}
 	
 	public Move[] getDefaultMoveset(int level) {

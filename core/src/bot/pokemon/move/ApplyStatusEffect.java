@@ -19,7 +19,7 @@ public class ApplyStatusEffect extends MoveEffect {
 	public ApplyStatusEffect(Move move, JsonObjectNode node, JsonObjectNode meta) throws MissingPropertyException {
 		this.move = move;
 		int statusId = NodeParser.getResourceId(meta.getObjectNode("ailment")) - 1;
-		statusEffect = statusId < 0 ? null : StatusEffects.values[statusId];
+		statusEffect = statusId < 0 || statusId >= StatusEffects.values.length ? null : StatusEffects.values[statusId];
 		chance = meta.parseValueNode("ailment_chance", JsonNode::intValue);
 		if(chance != 0 && move.effectChance != chance)
 			System.err.println("move "+move.name+" has inconsistent effect chance and ailment chance.");

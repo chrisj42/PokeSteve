@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 
 // possible states a user could be in. Usually has metadata associated with it. Determines what commands are available.
 public enum UserState {
-	Idle(Commands.HELP, Commands.DEX, Commands.SPAWN, Commands.BATTLE, Commands.DUEL),
+	Idle(Commands.HELP, Commands.DEX, Commands.MOVE, Commands.SPAWN, Commands.BATTLE, Commands.DUEL),
 	Travel(Commands.HELP),
 	Search(Commands.HELP),
 	Battle(Commands.HELP, Commands.ATTACK, Commands.FLEE),

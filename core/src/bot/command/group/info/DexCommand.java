@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 public class DexCommand extends ActionableCommand {
 	
 	public DexCommand() {
-		super("dex", "View an entry in the pokedex.", "<pokemon dex number>");
+		super("dex", "View an entry in the pokedex.", "<pokemon name or dex number>");
 	}
 	
 	@Override
