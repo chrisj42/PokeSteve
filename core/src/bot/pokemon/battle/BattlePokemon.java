@@ -66,7 +66,7 @@ public class BattlePokemon {
 		return speed;
 	}
 	
-	public void applyStatusEffect(StatusEffects effect, )
+	// public void applyStatusEffect(StatusEffects effect, )
 	
 	public <T extends StatusEffect> T getStatusEffect(StatusEffects effect, Class<T> clazz) {
 		return clazz.cast(statusEffects.get(effect));

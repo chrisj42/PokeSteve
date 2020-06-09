@@ -16,7 +16,7 @@ public class PokemonSpecies {
 	public final int dex;
 	private final String flavorText; // pokedex entry
 	private final String genus; // essentially more flavor text
-	private final String frontSpriteUrl, backSpriteUrl;
+	public final String frontSpriteUrl, backSpriteUrl;
 	
 	public final Type primaryType, secondaryType;
 	private final EnumMap<Stat, Integer> baseStats;
@@ -29,7 +29,7 @@ public class PokemonSpecies {
 	
 	private final Habitat habitat;
 	private final int catchRate;
-	private final int femaleRate; // in eighths
+	public final int femaleRate; // in eighths
 	public final int baseDefeatExp;
 	private final EnumMap<Stat, Integer> baseDefeatEVs;
 	
@@ -96,5 +96,10 @@ public class PokemonSpecies {
 		}
 		
 		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(20));
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }

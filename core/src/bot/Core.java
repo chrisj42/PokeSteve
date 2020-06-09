@@ -83,7 +83,9 @@ public class Core {
 			throw new NullPointerException("gateway is null");
 		
 		gateway.updatePresence(StatusUpdate.builder()
-			.status("DM \"help\" to get started!").build()
+			.status("DM \"help\" to get started!")
+			.afk(false)
+			.build()
 		);
 		
 		gateway.on(ReadyEvent.class)

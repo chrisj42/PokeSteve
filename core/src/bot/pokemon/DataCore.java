@@ -3,6 +3,7 @@ package bot.pokemon;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -31,14 +32,18 @@ public class DataCore {
 		}
 		
 		private final T[] data;
+		private HashMap<String, T> nameMap;
 		
 		@SuppressWarnings("unchecked")
 		private DataList(Class<T> clazz, String filename, SingleNodeParser<T> parser) {
 			try {
 				JsonArrayNode arrayNode = new JsonArrayNode(Core.jsonMapper.readTree(new File(filename)));
 				data = (T[]) Array.newInstance(clazz, arrayNode.getLength());
-				for(int i = 0; i < data.length; i++)
+				nameMap = new HashMap<>(arrayNode.getLength());
+				for(int i = 0; i < data.length; i++) {
 					data[i] = parser.parseNode(arrayNode.getObjectNode(i));
+					nameMap.put(data[i].toString().toLowerCase(), data[i]);
+				}
 			} catch(IOException | MissingPropertyException e) {
 				throw new RuntimeException(e);
 			}
@@ -49,8 +54,11 @@ public class DataCore {
 				JsonArrayNode anode1 = new JsonArrayNode(Core.jsonMapper.readTree(new File(filename1)));
 				JsonArrayNode anode2 = new JsonArrayNode(Core.jsonMapper.readTree(new File(filename2)));
 				data = (T[]) Array.newInstance(clazz, anode1.getLength());
-				for(int i = 0; i < data.length; i++)
+				nameMap = new HashMap<>(anode1.getLength());
+				for(int i = 0; i < data.length; i++) {
 					data[i] = parser.parseNode(anode1.getObjectNode(i), anode2.getObjectNode(i));
+					nameMap.put(data[i].toString().toLowerCase(), data[i]);
+				}
 			} catch(IOException | MissingPropertyException e) {
 				throw new RuntimeException(e);
 			}
@@ -59,6 +67,10 @@ public class DataCore {
 		public T get(int id) {
 			if(id > data.length || id <= 0) return null;
 			return data[id-1];
+		}
+		
+		public T get(String name) {
+			return nameMap.get(name.toLowerCase());
 		}
 		
 		public Ref<T> getRef(int id) {
