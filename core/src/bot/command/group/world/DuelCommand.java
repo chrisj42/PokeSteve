@@ -41,8 +41,8 @@ public class DuelCommand extends ActionableCommand {
 		RestUser user = Core.client.getUserById(userId);
 		return user.getData().flatMap(
 			uData -> {
-				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon();
-				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon();
+				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon();
+				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon();
 				User opponent = new User(Core.gateway, uData);
 				if(UserState.getBattle(opponent) != null)
 					throw new UsageException("user is already in a battle.");
