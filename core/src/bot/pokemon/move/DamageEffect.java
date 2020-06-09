@@ -26,6 +26,8 @@ public class DamageEffect extends MoveEffect {
 		this.move = move;
 		int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 2;
 		damageType = damageTypeId >= 0 ? DamageType.values[damageTypeId] : null;
+		if(move.name.equals("double-slap"))
+			System.out.println("move damage type: "+damageType);
 		power = node.parseValueNode("power", JsonNode::intValue);
 		if((damageType == null) != (power == 0))
 			System.err.println("move "+node.parseValueNode("name", JsonNode::textValue)+" has conflicting power and damage type.");
@@ -40,6 +42,11 @@ public class DamageEffect extends MoveEffect {
 	}
 	
 	public void doDamage(MoveContext context) {
+		if(damageType == null) {
+			context.line("But it failed!");
+			return;
+		}
+		
 		final DamageRelation relation1, relation2;
 		if(move.type == null) {
 			relation1 = DamageRelation.Regular;
@@ -80,8 +87,8 @@ public class DamageEffect extends MoveEffect {
 		
 		context.enemy.health -= damage;
 		context.withEnemy("took ").append(damage).append(" damage!");
-		if(!singleHit)
-			context.line("Hit ").append(hits).append(hits == 1 ? " time!":" times!");
+		// if(!singleHit)
+		// 	context.line("Hit ").append(hits).append(hits == 1 ? " time!":" times!");
 	}
 	
 	protected int getDamage(MoveContext context) {
@@ -92,6 +99,8 @@ public class DamageEffect extends MoveEffect {
 		
 		if(critical)
 			context.line("A critical hit!");
+		
+		// System.out.println("doing damage with move "+move+", damage type "+damageType);
 		
 		final Stat attackStat = damageType.getAttackStat();
 		final Stat defenseStat = damageType.getDefenseStat();
