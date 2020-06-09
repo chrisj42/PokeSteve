@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class SpawnCommand extends ActionableCommand {
 	
 	public SpawnCommand() {
-		super("spawn", "(debug command) spawn a wild pokemon and list information about it.", "<pokemon id>");
+		super("spawn", "(debug command) spawn a wild pokemon and list information about it.", "<pokemon name or dex number>");
 		// super("spawn", "(debug command) spawn a wild pokemon and list all its characteristics.", "<pokemon id>");
 	}
 	
@@ -24,16 +24,7 @@ public class SpawnCommand extends ActionableCommand {
 		if(args.length == 0)
 			throw new ArgumentCountException(1);
 		
-		Pokemon pokemon = getPokemon(args[0]);
+		Pokemon pokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon();
 		return context.channel.createMessage(pokemon.buildInfo()).then();
-	}
-	
-	private static Pokemon getPokemon(String idString) {
-		int id = ArgType.INTEGER.parseArg(idString);
-		PokemonSpecies species = DataCore.POKEMON.get(id);
-		if(species == null)
-			throw new UsageException("no matching pokemon exists.");
-		
-		return species.spawnPokemon();
 	}
 }

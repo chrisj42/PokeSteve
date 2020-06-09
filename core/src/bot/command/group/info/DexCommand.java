@@ -17,6 +17,8 @@ import reactor.core.publisher.Mono;
 
 public class DexCommand extends ActionableCommand {
 	
+	private static final DecimalFormat format = new DecimalFormat("000");
+	
 	public DexCommand() {
 		super("dex", "View an entry in the pokedex.", "<pokemon name or dex number>");
 	}
@@ -26,27 +28,7 @@ public class DexCommand extends ActionableCommand {
 		if(args.length < 1)
 			throw new ArgumentCountException(1);
 		
-		PokemonSpecies tempSpecies;
-		
-		// String msg = "";
-		try {
-			int dexNumber = Integer.parseInt(args[0]);
-			tempSpecies = DataCore.POKEMON.get(dexNumber);
-			if(tempSpecies == null)
-				throw new UsageException("Could not find a pokemon with that pokedex number. Note that this bot only knows of pokemon up to generation 7, where the national dex ends on #"+Importer.MAX_DEX_NUMBER+".");
-		} catch(NumberFormatException e) {
-			// species = Importer.getSpecies(args[0]);
-			// if(species == null)
-			// 	msg = ";
-			// throw new UsageException("dex numbers only for now, sorry");
-			// species = null;
-			tempSpecies = DataCore.POKEMON.get(args[0]);
-			if(tempSpecies == null)
-				throw new UsageException("Could not find a pokemon with that name. Note that this bot only knows of pokemon up to generation 7, gen 8+ are not yet supported.");
-		}
-		
-		final PokemonSpecies species = tempSpecies;
-		DecimalFormat format = new DecimalFormat("000");
+		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
 		return context.channel.createEmbed(em -> em
 			.setTitle("#"+species.dex+" - "+species.name)

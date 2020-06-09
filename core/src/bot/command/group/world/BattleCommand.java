@@ -18,8 +18,7 @@ import reactor.core.publisher.Mono;
 public class BattleCommand extends ActionableCommand {
 	
 	public BattleCommand() {
-		super("battle", "(debug command) spawn a wild pokemon and start a battle with it.", "<your pokemon id> <wild pokemon id>");
-		// super("spawn", "(debug command) spawn a wild pokemon and list all its characteristics.", "<pokemon id>");
+		super("battle", "(debug command) spawn a wild pokemon and start a battle with it.", "<your pokemon> <wild pokemon>");
 	}
 	
 	@Override
@@ -27,19 +26,10 @@ public class BattleCommand extends ActionableCommand {
 		if(args.length < 2)
 			throw new ArgumentCountException(2 - args.length);
 		
-		Pokemon userPokemon = getPokemon(args[0]);
-		Pokemon wildPokemon = getPokemon(args[1]);
+		Pokemon userPokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon();
+		Pokemon wildPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon();
 		
 		WildBattle battle = new WildBattle(new UserPlayer(context.channel, context.user, userPokemon), wildPokemon);
 		return UserState.startBattle(battle);
-	}
-	
-	private static Pokemon getPokemon(String idString) {
-		int id = ArgType.INTEGER.parseArg(idString);
-		PokemonSpecies species = DataCore.POKEMON.get(id);
-		if(species == null)
-			throw new UsageException("no matching pokemon exists.");
-		
-		return species.spawnPokemon();
 	}
 }

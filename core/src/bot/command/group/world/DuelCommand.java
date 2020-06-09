@@ -26,8 +26,7 @@ import reactor.core.publisher.Mono;
 public class DuelCommand extends ActionableCommand {
 	
 	public DuelCommand() {
-		super("duel", "start a battle with another player.", "<opponent user id>", "<your pokemon id>", "<opponent pokemon id>");
-		// super("spawn", "(debug command) spawn a wild pokemon and list all its characteristics.", "<pokemon id>");
+		super("duel", "start a battle with another player.", "<opponent user id>", "<your pokemon>", "<opponent pokemon>");
 	}
 	
 	@Override
@@ -42,26 +41,17 @@ public class DuelCommand extends ActionableCommand {
 		RestUser user = Core.client.getUserById(userId);
 		return user.getData().flatMap(
 			uData -> {
-				Pokemon userPokemon = getPokemon(args[1]);
-				Pokemon opponentPokemon = getPokemon(args[2]);
+				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon();
+				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon();
 				User opponent = new User(Core.gateway, uData);
 				if(UserState.getBattle(opponent) != null)
 					throw new UsageException("user is already in a battle.");
 				return user.getPrivateChannel().flatMap(cData -> {
 					PrivateChannel channel = new PrivateChannel(Core.gateway, cData);
-					PlayerBattle battle = new PlayerBattle(new UserPlayer(context.channel, context.user, userPokemon), new UserPlayer(channel, opponent, opponentPokemon));
+					PlayerBattle battle = new PlayerBattle(new UserPlayer(context.channel, context.user, userPokemon), new UserPlayer(channel, opponent, enemyPokemon));
 					return UserState.startBattle(battle);
 				});
 			}
 		);
-	}
-	
-	private static Pokemon getPokemon(String idString) {
-		int id = ArgType.INTEGER.parseArg(idString);
-		PokemonSpecies species = DataCore.POKEMON.get(id);
-		if(species == null)
-			throw new UsageException("no matching pokemon exists.");
-		
-		return species.spawnPokemon();
 	}
 }
