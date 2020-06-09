@@ -79,7 +79,7 @@ public class Pokemon {
 		info.append("\nmoves: ").append(
 			String.join(", ", Utils.map(Arrays.asList(moveset), move -> move.name))
 		);
-		info.append("\n\nsprite coming soon once I feel like adding richEmbeds.");
+		info.append("\n\nsprite coming soon once I feel like adding message embeds and also once this command is used to show your own pokemon instead of being a debug command to check spawns :D");
 		return info.toString();
 	}
 }

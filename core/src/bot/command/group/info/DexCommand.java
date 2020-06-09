@@ -50,6 +50,7 @@ public class DexCommand extends ActionableCommand {
 		
 		return context.channel.createEmbed(em -> em
 			.setTitle("#"+species.dex+" - "+species.name)
+			.setFooter("#"+species.dex+" - "+species.name, null)
 			.addField("Typing", species.primaryType+(species.secondaryType == null ? "" : " and "+species.secondaryType), false)
 			.addField("Base Stats", ""+
 				   "Health      - "+species.getBaseStat(Stat.Health)
