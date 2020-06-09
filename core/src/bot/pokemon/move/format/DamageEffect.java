@@ -36,7 +36,7 @@ public class DamageEffect extends MoveEffect {
 			relation2 = damageType.getDamageTo(context.enemySpecies.secondaryType);
 			// check for type immunity
 			if(relation1 == DamageRelation.NoEffect || relation2 == DamageRelation.NoEffect) {
-				context.finish();
+				context.setHadEffect();
 				context.withUser("is unaffected...");
 				return;
 			}

@@ -23,7 +23,7 @@ public class MoveContext {
 	public final boolean isFirst;
 	public final StringBuilder msg;
 	
-	private boolean isFinished = false;
+	private boolean hadEffect = false;
 	
 	public MoveContext(Player user, Player enemy, boolean isFirst, StringBuilder msg) {
 		userName = user.name;
@@ -44,11 +44,11 @@ public class MoveContext {
 		this.msg = msg;
 	}
 	
-	public void finish() {
-		isFinished = true;
+	public void setHadEffect() {
+		hadEffect = true;
 	}
 	
-	public boolean isFinished() { return isFinished; }
+	public boolean hadEffect() { return hadEffect; }
 	
 	public StringBuilder line(Object string) {
 		return msg.append('\n').append(string);

@@ -43,7 +43,10 @@ public class DamageEffect extends MoveEffect {
 	
 	public void doDamage(MoveContext context) {
 		if(damageType == null) {
-			context.line("But it failed!");
+			if(!context.hadEffect()) {
+				context.setHadEffect();
+				context.line("But it failed!");
+			}
 			return;
 		}
 		
@@ -56,8 +59,10 @@ public class DamageEffect extends MoveEffect {
 			relation2 = move.type.getDamageTo(context.enemySpecies.secondaryType);
 			// check for type immunity
 			if(relation1 == DamageRelation.NoEffect || relation2 == DamageRelation.NoEffect) {
-				context.finish();
-				context.withUser("is unaffected...");
+				if(!context.hadEffect()) {
+					context.setHadEffect();
+					context.withUser("is unaffected...");
+				}
 				return;
 			}
 		}
@@ -87,6 +92,7 @@ public class DamageEffect extends MoveEffect {
 		
 		context.enemy.health -= damage;
 		context.withEnemy("took ").append(damage).append(" damage!");
+		context.setHadEffect();
 		// if(!singleHit)
 		// 	context.line("Hit ").append(hits).append(hits == 1 ? " time!":" times!");
 	}
@@ -113,7 +119,11 @@ public class DamageEffect extends MoveEffect {
 		final int attack = StageEquation.Main.modifyStat(context.userPokemon.getStat(attackStat), attackStage);
 		final int defense = StageEquation.Main.modifyStat(context.enemyPokemon.getStat(defenseStat), defenseStage);
 		
-		return (2 * context.userPokemon.getLevel() / 2 + 2) * attack * power / defense / 50 + 2;
+		int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attack * power / defense / 50 + 2;
+		if(critical)
+			damage = damage * 3 / 2;
+		
+		return damage;
 	}
 	
 	/*public enum DamageTarget {

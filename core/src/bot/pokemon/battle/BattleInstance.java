@@ -192,21 +192,11 @@ public abstract class BattleInstance {
 		else {
 			
 			boolean change = move.stat.doStatEffect(context);
+			if(change)
+				context.setHadEffect();
 			
-			/*final int damage = */move.damage.doDamage(context);
-			/*if(damage == 0) {
-				if(!change) {
-					if(move.damage.damageType == null)
-						msg.append("\nBut it failed!");
-					else
-						msg.append("\nIt had no effect...");
-				}
-			}
-			else
-				msg.append("\n").append(player.opponent).append(" took ").append(damage).append(" damage!");
+			move.damage.doDamage(context);
 			
-			context.enemy.health -= damage;
-			*/
 			if(context.enemy.health <= 0) {
 				msg.append("\n").append(player.opponent).append(" fainted!");
 				return player;
