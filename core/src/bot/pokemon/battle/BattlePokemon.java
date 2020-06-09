@@ -5,6 +5,9 @@ import java.util.EnumMap;
 import bot.pokemon.Move;
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
+import bot.pokemon.Stat.StageEquation;
+import bot.pokemon.battle.status.StatusEffect;
+import bot.pokemon.battle.status.StatusEffects;
 import bot.util.Utils;
 
 public class BattlePokemon {
@@ -16,6 +19,7 @@ public class BattlePokemon {
 	
 	public final Pokemon pokemon;
 	private final EnumMap<Stat, Integer> statStages;
+	private final EnumMap<StatusEffects, StatusEffect> statusEffects;
 	
 	public int health;
 	private final int[] movePp;
@@ -27,6 +31,8 @@ public class BattlePokemon {
 		statStages = new EnumMap<>(Stat.class);
 		for(Stat stat: Stat.stageStats)
 			statStages.put(stat, 0);
+		
+		statusEffects = new EnumMap<>(StatusEffects.class);
 		
 		movePp = new int[pokemon.moveset.length];
 		for(int i = 0; i < movePp.length; i++)
@@ -51,5 +57,18 @@ public class BattlePokemon {
 	
 	public void subtractPp(int move) {
 		movePp[move]--;
+	}
+	
+	public int getSpeed() {
+		int speed = StageEquation.Main.modifyStat(pokemon.getStat(Stat.Speed), getStage(Stat.Speed));
+		
+		
+		return speed;
+	}
+	
+	public void applyStatusEffect(StatusEffects effect, )
+	
+	public <T extends StatusEffect> T getStatusEffect(StatusEffects effect, Class<T> clazz) {
+		return clazz.cast(statusEffects.get(effect));
 	}
 }

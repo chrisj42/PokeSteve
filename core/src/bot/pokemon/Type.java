@@ -41,6 +41,8 @@ public enum Type {
 	}
 	
 	public DamageRelation getDamageTo(Type defending) {
+		if(defending == null)
+			return Regular;
 		return relations[defending.ordinal()];
 	}
 	

@@ -21,6 +21,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
+import discord4j.discordjson.json.gateway.StatusUpdate;
 import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -81,12 +82,17 @@ public class Core {
 		if(gateway == null)
 			throw new NullPointerException("gateway is null");
 		
+		gateway.updatePresence(StatusUpdate.builder()
+			.status("DM \"help\" to get started!").build()
+		);
+		
 		gateway.on(ReadyEvent.class)
 			.map(ready -> {
 				gateway.requestMembers(Snowflake.of(GUILD_ID))
 					.map(User::getId).collectList()
 					.subscribe(list -> MEMBERS.addAll(list));
 				return ready;
+				
 			})
 			.subscribe(ready -> System.out.println("Logged in as " + ready.getSelf().getUsername()));
 		

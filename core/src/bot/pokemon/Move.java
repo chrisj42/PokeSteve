@@ -61,4 +61,8 @@ public class Move {
 	public String toString() {
 		return name;
 	}
+	
+	public Type getType() {
+		return type;
+	}
 }

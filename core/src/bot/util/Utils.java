@@ -1,5 +1,6 @@
 package bot.util;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -76,4 +77,9 @@ public final class Utils {
 		}
 	}*/
 	
+	private static final HashMap<Class<? extends Enum<?>>, Object[]> enumArrays = new HashMap<>();
+	@SuppressWarnings("unchecked")
+	public static <T extends Enum<T>> T[] values(Class<T> enumClass) {
+		return (T[]) enumArrays.computeIfAbsent(enumClass, Class::getEnumConstants);
+	}
 }

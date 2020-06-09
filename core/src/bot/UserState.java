@@ -56,8 +56,8 @@ public enum UserState {
 	public static UserPlayer leaveBattle(User user) { return leaveBattle(user, true); }
 	public static UserPlayer leaveBattle(User user, boolean checkOther) {
 		UserPlayer player = userBattles.remove(user);
-		if(checkOther && player != null && player.opponent instanceof UserPlayer)
-			leaveBattle(((UserPlayer)player.opponent).user, false);
+		if(checkOther && player != null && player.getOpponent() instanceof UserPlayer)
+			leaveBattle(((UserPlayer)player.getOpponent()).user, false);
 		userStates.put(user, UserState.Idle);
 		return player;
 	}

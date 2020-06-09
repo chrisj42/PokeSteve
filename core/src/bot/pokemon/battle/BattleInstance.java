@@ -1,20 +1,15 @@
 package bot.pokemon.battle;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.function.Function;
 
 import bot.UserState;
-import bot.pokemon.DamageType;
 import bot.pokemon.Move;
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
-import bot.pokemon.Type;
 import bot.util.UsageException;
 import bot.util.Utils;
 
-import discord4j.core.object.entity.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -105,19 +100,32 @@ public abstract class BattleInstance {
 		public final BattlePokemon pokemon;
 		private BattleInstance battle;
 		private int moveIdx = -1;
-		public Player opponent;
+		private Player opponent;
 		
 		public Player(String name, Pokemon pokemon) {
 			this.name = name;
 			this.pokemon = new BattlePokemon(pokemon);
 		}
 		
-		private Move flushMove() {
-			Move move = pokemon.pokemon.moveset[moveIdx];
+		public Player getOpponent() {
+			return opponent;
+		}
+		
+		Move getMove() {
+			// if(moveIdx < 0) return null;
+			return pokemon.pokemon.moveset[moveIdx];
+		}
+		
+		int getMoveIdx() {
+			return moveIdx;
+		}
+		
+		/*private void resetMove() {
+			// Move move = pokemon.pokemon.moveset[moveIdx];
 			pokemon.subtractPp(moveIdx);
 			moveIdx = -1;
-			return move;
-		}
+			// return move;
+		}*/
 		
 		// public Player getOpponent() { return opponent; }
 		
@@ -135,12 +143,13 @@ public abstract class BattleInstance {
 		// final Move move1 = player1.flushMove();
 		// final Move move2 = player2.flushMove();
 		
-		int speed1 = StageEquation.Main.modifyStat(player1.pokemon.pokemon.getStat(Stat.Speed), player1.pokemon.getStage(Stat.Speed));
-		int speed2 = StageEquation.Main.modifyStat(player2.pokemon.pokemon.getStat(Stat.Speed), player2.pokemon.getStage(Stat.Speed));
+		int speed1 = player1.pokemon.getSpeed();
+		int speed2 = player2.pokemon.getSpeed();
 		
 		final Player first = speed1 >= speed2 ? player1 : player2;
 		
 		StringBuilder msg = new StringBuilder();
+		
 		Player winner = doMove(first, true, msg);
 		if(winner == null)
 			winner = doMove(first.opponent, false, msg);
@@ -155,21 +164,25 @@ public abstract class BattleInstance {
 			running = false;
 		}
 		
+		player1.moveIdx = -1;
+		player2.moveIdx = -1;
+		
 		return msg.toString();
 	}
 	
 	// returns player if opponent faints, null otherwise
 	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
-		final Move move = player.flushMove();
-		final MoveContext context = new MoveContext(player, player.opponent, move);
+		final Move move = player.getMove();
+		final MoveContext context = new MoveContext(player, player.opponent, isFirst, msg);
 		
+		player.pokemon.subtractPp(context.userMoveIdx);
 		msg.append("\n").append(player).append(" used ").append(move).append('!');
 		
 		// calc if hit
 		int accuracy = move.accuracy;
 		boolean hit = accuracy == 0;
 		if(!hit) {
-			int accuracyStage = Utils.clamp(context.user.getStage(Stat.Accuracy) - context.opponent.getStage(Stat.Evasion), BattlePokemon.MIN_STAGE, BattlePokemon.MAX_STAGE);
+			int accuracyStage = Utils.clamp(context.user.getStage(Stat.Accuracy) - context.enemy.getStage(Stat.Evasion), BattlePokemon.MIN_STAGE, BattlePokemon.MAX_STAGE);
 			accuracy = StageEquation.Accuracy.modifyStat(accuracy, accuracyStage);
 			// System.out.println("accuracy: "+accuracy);
 			hit = Utils.randInt(0, 99) < accuracy;
@@ -178,9 +191,9 @@ public abstract class BattleInstance {
 			msg.append("\nIt missed!");
 		else {
 			
-			boolean change = move.stat.doStatEffect(context, msg);
+			boolean change = move.stat.doStatEffect(context);
 			
-			final int damage = move.damage.doDamage(context, msg);
+			final int damage = move.damage.doDamage(context);
 			if(damage == 0) {
 				if(!change) {
 					if(move.damage.damageType == null)
@@ -192,9 +205,9 @@ public abstract class BattleInstance {
 			else
 				msg.append("\n").append(player.opponent).append(" took ").append(damage).append(" damage!");
 			
-			context.opponent.health -= damage;
+			context.enemy.health -= damage;
 			
-			if(context.opponent.health <= 0) {
+			if(context.enemy.health <= 0) {
 				msg.append("\n").append(player.opponent).append(" fainted!");
 				return player;
 			}// else msg.append("\n");

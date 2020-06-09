@@ -37,19 +37,19 @@ public class DamageEffect extends MoveEffect {
 		// TODO list moves that use percentage or fixed damage modes, along with their values
 	}
 	
-	public int doDamage(MoveContext context, StringBuilder msg) {
+	public int doDamage(MoveContext context) {
 		if(damageType == null || power == 0)
 			return 0;
 		
 		final int attackStat = StageEquation.Main.modifyStat(context.userPokemon.getStat(damageType.getAttackStat()), context.user.getStage(damageType.getAttackStat()));
-		final int defenseStat = StageEquation.Main.modifyStat(context.opponentPokemon.getStat(damageType.getDefenseStat()), context.opponent.getStage(damageType.getDefenseStat()));
+		final int defenseStat = StageEquation.Main.modifyStat(context.enemyPokemon.getStat(damageType.getDefenseStat()), context.enemy.getStage(damageType.getDefenseStat()));
 		int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attackStat * power / defenseStat / 50 + 2;
 		
 		// type effectiveness
 		DamagePower powerTracker = new DamagePower();
-		damage = move.type.getDamageTo(context.opponentSpecies.primaryType).multiplyDamage(damage, powerTracker);
-		if(context.opponentSpecies.secondaryType != null)
-			damage = move.type.getDamageTo(context.opponentSpecies.secondaryType).multiplyDamage(damage, powerTracker);
+		damage = move.type.getDamageTo(context.enemySpecies.primaryType).multiplyDamage(damage, powerTracker);
+		if(context.enemySpecies.secondaryType != null)
+			damage = move.type.getDamageTo(context.enemySpecies.secondaryType).multiplyDamage(damage, powerTracker);
 		// same type attack bonus
 		if(move.type == context.userSpecies.primaryType
 			|| move.type == context.userSpecies.secondaryType)
@@ -58,7 +58,7 @@ public class DamageEffect extends MoveEffect {
 		if(damage > 0) {
 			String message = powerTracker.getEffectivenessMessage();
 			if(message != null)
-				msg.append("\n").append(message);
+				context.msg.append("\n").append(message);
 		}
 		
 		return damage;

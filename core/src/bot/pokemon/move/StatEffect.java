@@ -8,7 +8,6 @@ import bot.io.json.node.JsonArrayNode;
 import bot.io.json.node.JsonObjectNode;
 import bot.pokemon.Move;
 import bot.pokemon.Stat;
-import bot.pokemon.battle.BattlePokemon;
 import bot.pokemon.battle.MoveContext;
 import bot.util.Utils;
 
@@ -36,26 +35,26 @@ public class StatEffect extends MoveEffect {
 	}
 	
 	// returns whether a stat change occurred
-	public boolean doStatEffect(MoveContext context, StringBuilder msg) {
+	public boolean doStatEffect(MoveContext context) {
 		if(statStageChanges.size() == 0)
 			return false;
 		if(chance > 0 && Utils.randInt(0, 99) >= chance)
 			return false;
 		
-		boolean self = context.move.target != MoveTarget.Enemy;
-		boolean enemy = context.move.target != MoveTarget.Self;
+		boolean self = context.userMove.target != MoveTarget.Enemy;
+		boolean enemy = context.userMove.target != MoveTarget.Self;
 		statStageChanges.forEach((stat, amt) -> {
 			if(self) {
 				boolean change = context.user.alterStatStage(stat, amt);
 				String message = getStatChangeMessage(amt, change);
 				if(message != null)
-					msg.append("\n").append(context.userName).append("'s ").append(stat).append(message);
+					context.msg.append("\n").append(context.userName).append("'s ").append(stat).append(message);
 			}
 			if(enemy) {
-				boolean change = context.opponent.alterStatStage(stat, amt);
+				boolean change = context.enemy.alterStatStage(stat, amt);
 				String message = getStatChangeMessage(amt, change);
 				if(message != null)
-					msg.append("\n").append(context.opponentName).append("'s ").append(stat).append(message);
+					context.msg.append("\n").append(context.enemyName).append("'s ").append(stat).append(message);
 			}
 		});
 		return true;

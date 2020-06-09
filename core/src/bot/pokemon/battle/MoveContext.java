@@ -11,21 +11,54 @@ public class MoveContext {
 	public final BattlePokemon user;
 	public final Pokemon userPokemon;
 	public final PokemonSpecies userSpecies;
-	public final String opponentName;
-	public final BattlePokemon opponent;
-	public final Pokemon opponentPokemon;
-	public final PokemonSpecies opponentSpecies;
-	public final Move move;
+	public final Move userMove;
+	public final int userMoveIdx;
+	public final String enemyName;
+	public final BattlePokemon enemy;
+	public final Pokemon enemyPokemon;
+	public final PokemonSpecies enemySpecies;
+	public final Move enemyMove;
+	public final int enemyMoveIdx;
 	
-	public MoveContext(Player user, Player opponent, Move move) {
-		this.move = move;
+	public final boolean isFirst;
+	public final StringBuilder msg;
+	
+	private boolean isFinished = false;
+	
+	public MoveContext(Player user, Player enemy, boolean isFirst, StringBuilder msg) {
 		userName = user.name;
 		this.user = user.pokemon;
 		userPokemon = this.user.pokemon;
 		userSpecies = userPokemon.species;
-		opponentName = opponent.name;
-		this.opponent = opponent.pokemon;
-		opponentPokemon = this.opponent.pokemon;
-		opponentSpecies = opponentPokemon.species;
+		this.userMove = user.getMove();
+		this.userMoveIdx = user.getMoveIdx();
+		
+		enemyName = enemy.name;
+		this.enemy = enemy.pokemon;
+		enemyPokemon = this.enemy.pokemon;
+		enemySpecies = enemyPokemon.species;
+		this.enemyMove = enemy.getMove();
+		this.enemyMoveIdx = enemy.getMoveIdx();
+		
+		this.isFirst = isFirst;
+		this.msg = msg;
+	}
+	
+	public void finish() {
+		isFinished = true;
+	}
+	
+	public boolean isFinished() { return isFinished; }
+	
+	public StringBuilder line(Object string) {
+		return msg.append('\n').append(string);
+	}
+	
+	public StringBuilder withEnemy(Object string) {
+		return line(enemyName).append(' ').append(string);
+	}
+	
+	public StringBuilder withUser(Object string) {
+		return line(userName).append(' ').append(string);
 	}
 }
