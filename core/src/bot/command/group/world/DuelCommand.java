@@ -4,6 +4,7 @@ import bot.Core;
 import bot.UserState;
 import bot.command.ActionableCommand;
 import bot.command.ArgType;
+import bot.command.ArgumentSet;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
@@ -23,10 +24,12 @@ import discord4j.core.object.entity.channel.PrivateChannel;
 import discord4j.rest.entity.RestUser;
 import reactor.core.publisher.Mono;
 
+import static bot.command.group.world.BattleCommand.LEVELS_OPT;
+
 public class DuelCommand extends ActionableCommand {
 	
 	public DuelCommand() {
-		super("duel", "start a battle with another player.", "<opponent user id>", "<your pokemon>", "<opponent pokemon>");
+		super("duel", "start a battle with another player.", new ArgumentSet("<opponent user id>", "<your pokemon>", "<opponent pokemon>"), LEVELS_OPT);
 	}
 	
 	@Override
@@ -41,8 +44,15 @@ public class DuelCommand extends ActionableCommand {
 		RestUser user = Core.client.getUserById(userId);
 		return user.getData().flatMap(
 			uData -> {
-				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon();
-				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon();
+				int yourLevel = SpawnCommand.DEFAULT_LEVEL;
+				int enemyLevel = SpawnCommand.DEFAULT_LEVEL;
+				if(options.hasOption(LEVELS_OPT)) {
+					yourLevel = options.getOptionValue(LEVELS_OPT, 0, ArgType.INTEGER);
+					enemyLevel = options.getOptionValue(LEVELS_OPT, 1, ArgType.INTEGER);
+				}
+				
+				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon(yourLevel);
+				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon(enemyLevel);
 				User opponent = new User(Core.gateway, uData);
 				if(UserState.getBattle(opponent) != null)
 					throw new UsageException("user is already in a battle.");

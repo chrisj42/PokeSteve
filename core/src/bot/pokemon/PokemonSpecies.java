@@ -84,7 +84,7 @@ public class PokemonSpecies {
 			data.addEV(ev);
 	}
 	
-	public Pokemon spawnPokemon() {
+	public Pokemon spawnPokemon(int level) {
 		Gender gender;
 		if(femaleRate < 0)
 			gender = Gender.Ungendered;
@@ -96,7 +96,7 @@ public class PokemonSpecies {
 				gender = Gender.Male;
 		}
 		
-		return new Pokemon(this, 20, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(20));
+		return new Pokemon(this, level, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(level));
 	}
 	
 	@Override
