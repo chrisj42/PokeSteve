@@ -54,13 +54,13 @@ public abstract class BattleInstance {
 		return broadcast(player -> {
 			StringBuilder str = new StringBuilder("**__Next Round__**\n");
 			Player opponent = ((Player)player).opponent;
-			str.append("Opponent: ").append(opponent).append(" - Health: ").append(opponent.pokemon.health).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
-			str.append("\nYour pokemon: ").append(player.pokemon.pokemon.species.name);
+			str.append("Opponent: ").append(opponent).append(opponent instanceof UserPlayer ? " ("+opponent.pokemon.pokemon.species+")" : "").append(" - Health: ").append(opponent.pokemon.health).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
+			str.append("\nYour pokemon: ").append(player.pokemon.pokemon.species);
 			str.append(" - Health: ").append(player.pokemon.health).append("/").append(player.pokemon.pokemon.getStat(Stat.Health));
 			str.append("\nSelect your move with the 'attack <move number>' command. Available moves:");
 			Move[] moves = player.pokemon.pokemon.moveset;
 			for(int i = 0; i < moves.length; i++) {
-				str.append("\n").append(i+1).append(". ").append(moves[i].name);
+				str.append("\n").append(i+1).append(". ").append(moves[i]);
 				str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(moves[i].pp);
 			}
 			return str.toString();

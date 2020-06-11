@@ -31,8 +31,8 @@ public class DexCommand extends ActionableCommand {
 		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
 		return context.channel.createEmbed(em -> em
-			.setTitle("#"+species.dex+" - "+species.name)
-			.setFooter("#"+species.dex+" - "+species.name, null)
+			.setTitle("#"+species.dex+" - "+species)
+			.setFooter("#"+species.dex+" - "+species, null)
 			.addField("Typing", species.primaryType+(species.secondaryType == null ? "" : " and "+species.secondaryType), false)
 			.addField("Base Stats", ""+
 				   "Health      - "+species.getBaseStat(Stat.Health)

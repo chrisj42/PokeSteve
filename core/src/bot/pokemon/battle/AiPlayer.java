@@ -6,6 +6,6 @@ import bot.pokemon.battle.BattleInstance.Player;
 public class AiPlayer extends Player {
 	
 	public AiPlayer(Pokemon pokemon) {
-		super("wild "+pokemon.species.name, pokemon);
+		super("Wild "+pokemon.species, pokemon);
 	}
 }

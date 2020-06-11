@@ -68,7 +68,7 @@ public class Pokemon {
 	
 	public String buildInfo() {
 		StringBuilder info = new StringBuilder("__Pokemon info__");
-		info.append("\nname: ").append(species.name);
+		info.append("\nname: ").append(species);
 		info.append("\ndex: ").append(species.dex);
 		info.append("\ngender: ").append(gender);
 		info.append("\nnature: ").append(nature);
