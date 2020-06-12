@@ -146,6 +146,11 @@ public abstract class BattleInstance {
 		
 		first.pokemon.processEffects(new PlayerContext(first, first.opponent, msg));
 		first.opponent.pokemon.processEffects(new PlayerContext(first.opponent, first, msg));
+		// another win check in case the trailing effects caused someone to feint
+		if(winner == null && first.pokemon.getHealth() <= 0)
+			winner = first.opponent;
+		else if(winner == null && first.opponent.pokemon.getHealth() <= 0)
+			winner = first;
 		
 		if(winner != null) {
 			if(winner.pokemon.getHealth() > 0) {
