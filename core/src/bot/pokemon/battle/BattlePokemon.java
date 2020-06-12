@@ -12,8 +12,11 @@ import bot.pokemon.Stat.StageEquation;
 import bot.pokemon.battle.BattleInstance.Player;
 import bot.pokemon.battle.Flag.BoolFlag;
 import bot.pokemon.battle.Flag.ValueFlag;
+import bot.pokemon.move.ChargeState;
 import bot.pokemon.move.PersistentEffect;
 import bot.util.Utils;
+
+import reactor.util.annotation.Nullable;
 
 public class BattlePokemon {
 	
@@ -104,5 +107,12 @@ public class BattlePokemon {
 	
 	public void processEffects(PlayerContext context) {
 		effects.removeIf(effect -> !effect.apply(context));
+	}
+	
+	@Nullable
+	public ChargeState getChargeState() {
+		Integer chargeMove = getFlag(Flag.CHARGING_MOVE);
+		if(chargeMove == null) return null;
+		return pokemon.moveset[chargeMove].chargeState;
 	}
 }

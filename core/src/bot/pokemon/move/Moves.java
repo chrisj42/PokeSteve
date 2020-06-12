@@ -1,5 +1,7 @@
 package bot.pokemon.move;
 
+import java.util.function.Consumer;
+
 import bot.io.json.MissingPropertyException;
 import bot.io.json.NodeParser;
 import bot.io.json.node.JsonObjectNode;
@@ -7,13 +9,12 @@ import bot.pokemon.DamageCategory;
 import bot.pokemon.DataCore;
 import bot.pokemon.Stat;
 import bot.pokemon.Type;
-import bot.pokemon.battle.Flag;
 import bot.pokemon.battle.MoveContext;
-import bot.pokemon.battle.status.StatusEffects;
+import bot.pokemon.battle.status.StatusEffect;
 import bot.pokemon.move.DamageCalculator.ClassicDamage;
-import bot.pokemon.move.DamageCalculator.PercentageDamage;
 import bot.pokemon.move.DamageProperty.DamageBuilder;
 import bot.pokemon.move.Move.MoveBuilder;
+import bot.pokemon.move.PokemonEffectSet.PokemonEffect;
 import bot.pokemon.move.StatProperty.StatBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -47,49 +48,33 @@ public enum Moves {
 	// gen 1
 	Pound,
 	Karate_Chop,
-	Double_Slap(new MoveBuilder()
-		.damage(new DamageBuilder(DamageCategory.Physical,
-			new ClassicDamage(15,
-	0))
-			.multiHit(MultiHitProperty.SCALED_2_5)
-			.create())
-	),
-	Comet_Punch(new MoveBuilder()
-		.damage(new DamageBuilder(DamageCategory.Physical,
-			new ClassicDamage(18,
-	0))
-			.multiHit(MultiHitProperty.SCALED_2_5)
-			.create())
-	),
+	Double_Slap(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
+	Comet_Punch(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
 	Mega_Punch,
 	Pay_Day,
 	Fire_Punch(new MoveBuilder()
 		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffects.Burn))
+		.affectEnemy(new StatusProperty(StatusEffect.Burn))
 		.add()
 	),
 	Ice_Punch(new MoveBuilder()
 		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffects.Freeze))
+		.affectEnemy(new StatusProperty(StatusEffect.Freeze))
 		.add()
 	),
 	Thunder_Punch(new MoveBuilder()
 		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffects.Paralysis))
+		.affectEnemy(new StatusProperty(StatusEffect.Paralysis))
 		.add()
 	),
 	Scratch,
 	Vice_Grip,
 	Guillotine(new MoveBuilder()
-		.acc(context -> context.userPokemon.getLevel() - context.enemyPokemon.getLevel() + 30)
-		.condition(context -> context.userPokemon.getLevel() >= context.enemyPokemon.getLevel())
-		.damage(new DamageBuilder(DamageCategory.Physical,
-			new PercentageDamage(100, false)).create())
+		.ohko(DamageCategory.Physical)
 	),
-	Razor_Wind,
+	Razor_Wind(m -> m.builder.charge(ChargeState.Normal)),
 	Swords_Dance(new MoveBuilder()
-		.primary().affectSelf(new StatBuilder().set(Stat.Attack, 2).create())
-		.add()
+		.primary().affectSelf(StatBuilder.get(Stat.Attack, 2)).add()
 	),
 	Cut,
 	Gust(new MoveBuilder()
@@ -97,7 +82,7 @@ public enum Moves {
 			@Override
 			protected int getPower(MoveContext context) {
 				int base = super.getPower(context);
-				if(context.user.hasFlag(Flag.CHARGING_MOVE) && context.user.pokemon.moveset[context.user.getFlag(Flag.CHARGING_MOVE)].chargeState == ChargeState.Sky)
+				if(context.user.getChargeState() == ChargeState.Sky)
 					base *= 2; // power doubled in the sky
 				return base;
 			}
@@ -105,31 +90,43 @@ public enum Moves {
 	),
 	Wing_Attack,
 	Whirlwind, // no impl
-	Fly,
+	Fly(m -> m.builder.charge(ChargeState.Sky)),
 	Bind(new MoveBuilder()
 		.primary().affectEnemy(new PokemonTrapEffect(p -> p+" is squeezed by "+p.getOpponent()+"!")).add()
 	),
 	Slam,
 	Vine_Whip,
 	Stomp(new MoveBuilder()
-		.secondary(30).affectEnemy((context, onEnemy) -> {
-			if(context.isFirst) context.enemy.setFlag(Flag.FLINCH);
-			return EffectResult.NO_OUTPUT;
-		}).add()
+		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
 	),
-	Double_Kick,
+	Double_Kick(
+		m -> m.damageBuilder.multiHit(new MultiHitProperty(2))
+	),
 	Mega_Kick,
-	Jump_Kick,
-	Rolling_Kick,
-	Sand_Attack,
-	Headbutt,
+	Jump_Kick(new MoveBuilder().onMiss(context -> {
+		int dam = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / 2);
+		context.withUser("crashed to the ground and took ").append(-dam).append(" damage!");
+	})),
+	Rolling_Kick(new MoveBuilder()
+		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+	),
+	Sand_Attack(new MoveBuilder()
+		.primary().affectEnemy(StatBuilder.get(Stat.Accuracy, -1)).add()
+	),
+	Headbutt(new MoveBuilder()
+		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+	),
 	Horn_Attack,
-	Fury_Attack,
-	Horn_Drill,
+	Fury_Attack(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
+	Horn_Drill(new MoveBuilder().ohko(DamageCategory.Physical)),
 	Tackle,
-	Body_Slam,
-	Wrap,
-	Take_Down,
+	Body_Slam(new MoveBuilder()
+		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Paralysis)).add()
+	),
+	Wrap(new MoveBuilder()
+		.primary().affectEnemy(new PokemonTrapEffect(p -> p+" was wrapped by "+p.getOpponent()+"!")).add()
+	),
+	Take_Down(m -> m.damageBuilder.recoil(25)),
 	Thrash,
 	Double_Edge,
 	Tail_Whip,
@@ -920,20 +917,25 @@ public enum Moves {
 	Type type;
 	int priority;
 	DamageProperty classicDamage;
+	private DamageBuilder damageBuilder;
 	int secondaryChance;
 	// EffectGroup secondary;
 	
 	private Move move;
 	private final MoveBuilder builder;
+	private final Consumer<Moves> valueEditor;
 	
 	Moves() { this((String)null); }
 	Moves(String name) { this(new MoveBuilder(name)); }
-	Moves(MoveBuilder b) {
+	Moves(MoveBuilder b) { this(b, m -> {}); }
+	Moves(Consumer<Moves> valueEditor) { this(new MoveBuilder(), valueEditor); }
+	Moves(MoveBuilder b, Consumer<Moves> valueEditor) {
 		/*if(b == null) {
 			move = null;
 			return;
 		}*/
 		this.builder = b;
+		this.valueEditor = valueEditor;
 		
 		if(ordinal() >= DataCore.MOVE_JSON.getLength())
 			return;
@@ -956,7 +958,8 @@ public enum Moves {
 			else {
 				int power = node.parseValueNode("power", JsonNode::intValue);
 				int critRateBonus = meta.parseValueNode("crit_rate", JsonNode::intValue);
-				classicDamage = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus)).create();
+				damageBuilder = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus));
+				// classicDamage = damageBuilder.create();
 			}
 			
 			// secondaryChance = node.parseValueNode("effect_chance", JsonNode::intValue);
@@ -998,12 +1001,13 @@ public enum Moves {
 		return move;
 	}
 	
-	// extra initialization that would mess up class init order
+	// post-enum def initialization
 	static {
-		Razor_Wind.builder.charge(ChargeState.Normal);
-		Fly.builder.charge(ChargeState.Sky);
-		
-		for(Moves move: Moves.values)
+		for(Moves move: Moves.values) {
+			move.valueEditor.accept(move);
+			if(move.classicDamage == null && move.damageBuilder != null)
+				move.classicDamage = move.damageBuilder.create();
 			move.move = move.builder.create(move);
+		}
 	}
 }

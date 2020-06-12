@@ -2,6 +2,7 @@ package bot.pokemon.move;
 
 import java.util.List;
 
+import bot.pokemon.battle.Flag;
 import bot.pokemon.battle.MoveContext;
 
 public class PokemonEffectSet {
@@ -11,6 +12,11 @@ public class PokemonEffectSet {
 	
 	public interface PokemonEffect {
 		EffectResult doEffect(MoveContext context, boolean onEnemy);
+		
+		PokemonEffect FLINCH = (context, onEnemy) -> {
+			if(context.isFirst) context.enemy.setFlag(Flag.FLINCH);
+			return EffectResult.NO_OUTPUT;
+		};
 	}
 	
 	private final PokemonEffect[] effects;

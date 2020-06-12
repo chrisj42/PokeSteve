@@ -73,13 +73,13 @@ public class DamageProperty {
 		
 		context.enemy.alterHealth(-damage); // intentionally not using the returned value
 		context.withEnemy("took ").append(damage).append(" damage!");
-		// context.setHadEffect();
-		// if(!singleHit)
-		// 	context.line("Hit ").append(hits).append(hits == 1 ? " time!":" times!");
 		
 		if(drainPercent > 0) {
 			int gain = context.user.alterHealth(damage * drainPercent / 100);
-			context.withUser("regained ").append(gain).append(" health!");
+			if(gain > 0)
+				context.withUser("regained ").append(gain).append(" health!");
+			else if(gain < 0)
+				context.withUser("took ").append(-gain).append(" recoil damage!");
 		}
 		
 		return EffectResult.RECORDED;
@@ -101,7 +101,7 @@ public class DamageProperty {
 		private DamageCategory damageType;
 		private DamageCalculator damageBehavior;
 		private MultiHitProperty multiHitProperty;
-		private int drainPercent;
+		private int healPercent; // is negative for recoil
 		private boolean ignoreTypeBonuses;
 		
 		DamageBuilder(DamageCategory damageType, DamageCalculator damageBehavior) {
@@ -117,7 +117,11 @@ public class DamageProperty {
 		}
 		
 		DamageBuilder drain(int percentOfDealt) {
-			drainPercent = percentOfDealt;
+			healPercent = percentOfDealt;
+			return this;
+		}
+		DamageBuilder recoil(int percentOfDealt) {
+			healPercent = -percentOfDealt;
 			return this;
 		}
 		
@@ -127,7 +131,7 @@ public class DamageProperty {
 		}
 		
 		DamageProperty create() {
-			return new DamageProperty(damageType, damageBehavior, multiHitProperty, drainPercent, ignoreTypeBonuses);
+			return new DamageProperty(damageType, damageBehavior, multiHitProperty, healPercent, ignoreTypeBonuses);
 		}
 	}
 }

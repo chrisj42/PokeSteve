@@ -1,13 +1,17 @@
 package bot.pokemon.move;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
+import bot.pokemon.DamageCategory;
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
 import bot.pokemon.Type;
 import bot.pokemon.battle.BattlePokemon;
 import bot.pokemon.battle.Flag;
 import bot.pokemon.battle.MoveContext;
+import bot.pokemon.move.DamageCalculator.PercentageDamage;
+import bot.pokemon.move.DamageProperty.DamageBuilder;
 import bot.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.util.Utils;
 
@@ -27,11 +31,12 @@ public class Move {
 	private final AccuracyProperty accuracyProp;
 	public final DamageProperty damageEffect;
 	private final Function<MoveContext, Boolean> moveCondition;
+	private final Consumer<MoveContext> onMoveMiss;
 	public final EffectGroup primary;
 	public final EffectGroup secondary;
 	public final int secondaryChance;
 	
-	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, AccuracyProperty accuracyProp, DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
+	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, AccuracyProperty accuracyProp, DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, Consumer<MoveContext> onMoveMiss, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
 		this.name = name;
 		this.id = id;
 		this.description = description;
@@ -44,6 +49,7 @@ public class Move {
 		this.accuracyProp = accuracyProp;
 		this.damageEffect = damageEffect;
 		this.moveCondition = moveCondition;
+		this.onMoveMiss = onMoveMiss;
 		this.primary = primary == null ? EffectGroup.NO_EFFECTS : primary;
 		this.secondary = secondary == null ? EffectGroup.NO_EFFECTS : secondary;
 		this.secondaryChance = secondaryChance;
@@ -101,8 +107,11 @@ public class Move {
 		}
 		// System.out.println("accuracy for move "+this+": "+accuracy);
 		boolean hit = Utils.chance(accuracy);
-		if(!hit)
+		if(!hit) {
 			context.line("It missed!");
+			if(onMoveMiss != null)
+				onMoveMiss.accept(context);
+		}
 		else {
 			if(doesRecharge)
 				// user is going to have to recharge next turn
@@ -146,6 +155,7 @@ public class Move {
 		private EffectGroup secondary;
 		private int secondaryChance;
 		private Function<MoveContext, Boolean> moveCondition;
+		private Consumer<MoveContext> onMoveMiss;
 		
 		// MoveBuilder(Type type, int pp) {  this(null, type, pp); }
 		// MoveBuilder(Type type, int pp, int accuracy) {  this(null, type, pp, accuracy); }
@@ -163,10 +173,10 @@ public class Move {
 		
 		Move create(Moves moveEnum) {
 			String name = this.name == null ? moveEnum.name().replaceAll("_", " ").trim() : this.name;
-			return new Move(name, moveEnum.ordinal()+1, moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, doesCharge, doesRecharge, moveEnum.accuracy, accuracyProp, damageEffect == null ? moveEnum.classicDamage : 	damageEffect, moveCondition, primary, secondary, secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance);
+			return new Move(name, moveEnum.ordinal()+1, moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, doesCharge, doesRecharge, moveEnum.accuracy, accuracyProp, damageEffect == null ? moveEnum.classicDamage : 	damageEffect, moveCondition, onMoveMiss, primary, secondary, secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance);
 		}
 		
-		MoveBuilder acc(AccuracyProperty prop) {
+		MoveBuilder accuracy(AccuracyProperty prop) {
 			this.accuracyProp = prop;
 			return this;
 		}
@@ -178,6 +188,11 @@ public class Move {
 		
 		MoveBuilder condition(Function<MoveContext, Boolean> condition) {
 			this.moveCondition = condition;
+			return this;
+		}
+		
+		MoveBuilder onMiss(Consumer<MoveContext> onMiss) {
+			this.onMoveMiss = onMiss;
 			return this;
 		}
 		
@@ -211,6 +226,14 @@ public class Move {
 		MoveBuilder effectChance(int chance) {
 			secondaryChance = chance;
 			return this;
+		}
+		
+		// add properties for classic one-hit-KO
+		MoveBuilder ohko(DamageCategory damageType) {
+			return accuracy(context -> context.userPokemon.getLevel() - context.enemyPokemon.getLevel() + 30)
+				.condition(context -> context.userPokemon.getLevel() >= context.enemyPokemon.getLevel())
+				.damage(new DamageBuilder(damageType, new PercentageDamage(100, false))
+					.create());
 		}
 	}
 }

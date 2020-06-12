@@ -57,6 +57,10 @@ public class StatProperty implements PokemonEffect {
 	
 	static class StatBuilder {
 		
+		public static StatProperty get(Stat stat, int stageDelta) {
+			return new StatBuilder().set(stat, stageDelta).create();
+		}
+		
 		private final EnumMap<Stat, Integer> statStageChanges = new EnumMap<>(Stat.class);
 		
 		StatBuilder() {}
