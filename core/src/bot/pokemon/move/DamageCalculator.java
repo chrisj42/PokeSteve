@@ -40,6 +40,10 @@ public interface DamageCalculator {
 			this.critBonus = critBonus;
 		}
 		
+		protected int getPower(MoveContext context) {
+			return power;
+		}
+		
 		@Override
 		public int getDamage(MoveContext context, DamageCategory damageType) {
 			// check critical
@@ -60,7 +64,7 @@ public interface DamageCalculator {
 			final int attack = StageEquation.Main.modifyStat(context.userPokemon.getStat(attackStat), attackStage);
 			final int defense = StageEquation.Main.modifyStat(context.enemyPokemon.getStat(defenseStat), defenseStage);
 			
-			int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attack * power / defense / 50 + 2;
+			int damage = (2 * context.userPokemon.getLevel() / 2 + 2) * attack * getPower(context) / defense / 50 + 2;
 			if(critical)
 				damage = damage * 3 / 2;
 			

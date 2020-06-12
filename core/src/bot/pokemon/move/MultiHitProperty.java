@@ -9,7 +9,7 @@ public class MultiHitProperty {
 	
 	// public static final MultiHitProperty SINGLE = new MultiHitProperty(1);
 	public static final MultiHitProperty SCALED_2_5 = new MultiHitProperty(
-		2, 2, 2, 3, 3, 3, 4, 5
+		2, 2, 3, 3, 4, 5
 	);
 	
 	private final int[] hitCounts;

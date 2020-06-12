@@ -45,13 +45,13 @@ public class StatEffect extends MoveEffect {
 				boolean change = context.user.alterStatStage(stat, amt);
 				String message = getStatChangeMessage(amt, change);
 				if(message != null)
-					context.msg.append("\n").append(context.userName).append("'s ").append(stat).append(message);
+					context.line(context.userPlayer).append("'s ").append(stat).append(message);
 			}
 			if(enemy) {
 				boolean change = context.enemy.alterStatStage(stat, amt);
 				String message = getStatChangeMessage(amt, change);
 				if(message != null)
-					context.msg.append("\n").append(context.enemyName).append("'s ").append(stat).append(message);
+					context.line(context.enemyPlayer).append("'s ").append(stat).append(message);
 			}
 		});
 		return true;

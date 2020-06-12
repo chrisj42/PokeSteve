@@ -2,12 +2,16 @@ package bot.pokemon.battle;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.ListIterator;
 
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
-import bot.pokemon.battle.status.StatusEffect;
-import bot.pokemon.battle.status.StatusEffects;
+import bot.pokemon.battle.BattleInstance.Player;
+import bot.pokemon.battle.Flag.BoolFlag;
+import bot.pokemon.battle.Flag.ValueFlag;
 import bot.pokemon.move.PersistentEffect;
 import bot.util.Utils;
 
@@ -19,11 +23,15 @@ public class BattlePokemon {
 	public static final int MIN_STAGE = -6;
 	
 	public final Pokemon pokemon;
-	private final EnumMap<Stat, Integer> statStages;
-	private final ArrayList<PersistentEffect> effects;
 	
 	private int health;
 	private final int[] movePp;
+	
+	private final EnumMap<Stat, Integer> statStages;
+	private final ArrayList<PersistentEffect> effects;
+	
+	private final HashSet<BoolFlag> boolFlags = new HashSet<>();
+	private final HashMap<ValueFlag<?>, Object> valueFlags = new HashMap<>();
 	
 	public BattlePokemon(Pokemon pokemon) {
 		this.pokemon = pokemon;
@@ -72,5 +80,29 @@ public class BattlePokemon {
 		return StageEquation.Main.modifyStat(pokemon.getStat(Stat.Speed), getStage(Stat.Speed));
 	}
 	
+	public boolean hasFlag(BoolFlag flag) { return boolFlags.contains(flag); }
+	public void setFlag(BoolFlag flag) { boolFlags.add(flag); }
+	public void clearFlag(BoolFlag flag) { boolFlags.remove(flag); }
 	
+	@SuppressWarnings("unchecked")
+	public <T> T getFlag(ValueFlag<T> flag) {
+		return (T) valueFlags.get(flag);
+	}
+	public <T> boolean hasFlag(ValueFlag<T> flag) {
+		return valueFlags.containsKey(flag);
+	}
+	public <T> void setFlag(ValueFlag<T> flag, T value) {
+		valueFlags.put(flag, value);
+	}
+	public <T> void clearFlag(ValueFlag<T> flag) {
+		valueFlags.remove(flag);
+	}
+	
+	public void addEffect(PersistentEffect effect) {
+		effects.add(effect);
+	}
+	
+	public void processEffects(PlayerContext context) {
+		effects.removeIf(effect -> !effect.apply(context));
+	}
 }

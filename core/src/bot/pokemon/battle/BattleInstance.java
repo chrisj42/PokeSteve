@@ -13,6 +13,8 @@ import bot.util.Utils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import org.jetbrains.annotations.Nullable;
+
 public abstract class BattleInstance {
 	
 	// tracks the participating players in the battle, their pokemon, and the DM channels of the participating users
@@ -57,28 +59,45 @@ public abstract class BattleInstance {
 			str.append("Opponent: ").append(opponent).append(opponent instanceof UserPlayer ? " ("+opponent.pokemon.pokemon.species+")" : "").append(" - Health: ").append(opponent.pokemon.getHealth()).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
 			str.append("\nYour pokemon: ").append(player.pokemon.pokemon.species);
 			str.append(" - Health: ").append(player.pokemon.getHealth()).append("/").append(player.pokemon.pokemon.getStat(Stat.Health));
-			str.append("\nSelect your move with the 'attack <move number>' command. Available moves:");
-			Move[] moves = player.pokemon.pokemon.moveset;
-			for(int i = 0; i < moves.length; i++) {
-				str.append("\n").append(i+1).append(". ").append(moves[i]);
-				str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(moves[i].pp);
+			
+			// here we need to check if the user is capable of choosing a move this turn; there are a number of things that could prevent the user from doing so.
+			
+			if(player.pokemon.hasFlag(Flag.CHARGING_MOVE))
+				str.append("\n__You are currently charging \"").append(player.pokemon.pokemon.moveset[player.pokemon.getFlag(Flag.CHARGING_MOVE)]).append("\" and cannot select another move.__");
+			else if(player.pokemon.hasFlag(Flag.RECHARGING))
+				str.append("\n__You are recharging from a previous move and cannot select a move this turn.__");
+			else {
+				str.append("\nSelect your move with the 'attack <move number>' command. Available moves:");
+				Move[] moves = player.pokemon.pokemon.moveset;
+				for(int i = 0; i < moves.length; i++) {
+					str.append("\n").append(i + 1).append(". ").append(moves[i]);
+					str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(moves[i].pp);
+				}
 			}
 			return str.toString();
-		});
+		}).thenMany(userFlux()).flatMap(player -> {
+			if(player.pokemon.hasFlag(Flag.CHARGING_MOVE))
+				return submitAttack(player, player.pokemon.getFlag(Flag.CHARGING_MOVE));
+			else if(player.pokemon.hasFlag(Flag.RECHARGING))
+				return submitAttack(player, 0, false);
+			return Mono.empty();
+		}).then();
 	}
 	
-	public Mono<Void> submitAttack(Player player, int moveIdx) {
+	public Mono<Void> submitAttack(Player player, int moveIdx) { return submitAttack(player, moveIdx, true); }
+	private Mono<Void> submitAttack(Player player, int moveIdx, boolean checkIdx) {
 		moveIdx--;
-		if(player.moveIdx >= 0)
+		if(checkIdx && player.moveIdx >= 0)
 			throw new UsageException(player+", you've already selected your move.");
 		
-		if(player.pokemon.getPp(moveIdx) <= 0)
+		if(moveIdx >= 0 && player.pokemon.getPp(moveIdx) <= 0)
 			throw new UsageException("move "+player.pokemon.pokemon.moveset[moveIdx]+" is out of PP.");
 		
 		player.moveIdx = moveIdx;
+		player.ready = true;
 		
-		return broadcast(player+" has selected their move.").then(
-			Mono.fromCallable(() -> player.opponent.moveIdx >= 0)
+		return broadcast(player+" is ready.").then(
+			Mono.fromCallable(() -> player.opponent.ready)
 			.flatMap(ready -> {
 				if(ready) return broadcast(doRound()).then(
 					Mono.fromCallable(() -> running)
@@ -98,15 +117,16 @@ public abstract class BattleInstance {
 	// both pokemon have selected their moves
 	// TODO later this will return a RichEmbed
 	private String doRound() {
-		final Move move1 = player1.getMove();
-		final Move move2 = player2.getMove();
-		
-		int speed1 = player1.pokemon.getSpeed();
-		int speed2 = player2.pokemon.getSpeed();
+		@Nullable final Move move1 = player1.getMove();
+		@Nullable final Move move2 = player2.getMove();
+		final int priority1 = move1 != null ? move1.priority : 0;
+		final int priority2 = move2 != null ? move2.priority : 0;
+		final int speed1 = player1.pokemon.getSpeed();
+		final int speed2 = player2.pokemon.getSpeed();
 		
 		final Player first;
-		if(move1.priority != move2.priority) {
-			if(move1.priority > move2.priority)
+		if(priority1 != priority2) {
+			if(priority1 > priority2)
 				first = player1;
 			else
 				first = player2;
@@ -120,22 +140,19 @@ public abstract class BattleInstance {
 		
 		StringBuilder msg = new StringBuilder();
 		
-		Player winner = null;
+		Player winner = doMove(first, true, msg);
+		if(winner == null)
+			winner = doMove(first.opponent, false, msg);
 		
-		MoveContext firstContext = new MoveContext(first, first.opponent, true, msg);
-		firstContext.doMove();
-		if(firstContext.enemy.getHealth() <= 0)
-			winner = first;
-		else {
-			MoveContext secondContext = new MoveContext(first.opponent, first, false, msg);
-			secondContext.doMove();
-			if(secondContext.enemy.getHealth() <= 0)
-				winner = first.opponent;
-		}
+		first.pokemon.processEffects(new PlayerContext(first, first.opponent, msg));
+		first.opponent.pokemon.processEffects(new PlayerContext(first.opponent, first, msg));
 		
 		if(winner != null) {
-			msg.append("\n").append(winner).append(" wins!");
-			winner.pokemon.pokemon.onDefeat(winner.opponent.pokemon.pokemon);
+			if(winner.pokemon.getHealth() > 0) {
+				msg.append("\n***").append(winner).append(" wins!***");
+				winner.pokemon.pokemon.onDefeat(winner.opponent.pokemon.pokemon);
+			} else
+				msg.append("\n***Both pokemon have fainted...***");
 			if(player1 instanceof UserPlayer)
 				UserState.leaveBattle(((UserPlayer)player1).user, false);
 			if(player2 instanceof UserPlayer)
@@ -143,16 +160,34 @@ public abstract class BattleInstance {
 			running = false;
 		}
 		
-		player1.moveIdx = -1;
-		player2.moveIdx = -1;
+		player1.resetMove();
+		player2.resetMove();
 		
 		return msg.toString();
+	}
+	
+	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
+		final Move move = player.getMove();
+		if(move != null) {
+			MoveContext context = new MoveContext(move, player, player.opponent, isFirst, msg);
+			context.doMove();
+			if(context.enemy.getHealth() <= 0)
+				return player;
+			else if(context.user.getHealth() <= 0)
+				return player.opponent; // recoil
+		} else {
+			msg.append('\n').append(player).append(" is recharging.");
+			player.pokemon.clearFlag(Flag.RECHARGING);
+		}
+		
+		return null;
 	}
 	
 	public static class Player {
 		public final String name;
 		public final BattlePokemon pokemon;
 		private BattleInstance battle;
+		private boolean ready = false;
 		private int moveIdx = -1;
 		private Player opponent;
 		
@@ -165,13 +200,19 @@ public abstract class BattleInstance {
 			return opponent;
 		}
 		
+		@Nullable
 		Move getMove() {
-			// if(moveIdx < 0) return null;
+			if(moveIdx < 0) return null;
 			return pokemon.pokemon.moveset[moveIdx];
 		}
 		
 		int getMoveIdx() {
 			return moveIdx;
+		}
+		
+		private void resetMove() {
+			moveIdx = -1;
+			ready = false;
 		}
 		
 		public BattleInstance getBattle() { return battle; }

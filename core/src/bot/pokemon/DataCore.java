@@ -47,7 +47,7 @@ public class DataCore {
 		
 		{
 			for(Moves m: Moves.values) {
-				final Move move = m.move;
+				final Move move = m.getMove();
 				nameMap.put(format(m.name()/*move.name*/), move);
 			}
 		}
@@ -59,7 +59,7 @@ public class DataCore {
 		
 		@Override
 		public Move get(int id) {
-			return Moves.values[id-1].move;
+			return Moves.values[id-1].getMove();
 		}
 		
 		@Override

@@ -9,6 +9,8 @@ import bot.util.Utils;
 
 public class DamageProperty {
 	
+	public static final DamageProperty NO_DAMAGE = new DamageBuilder(null, null).create();
+	
 	private final DamageCategory damageType;
 	private final DamageCalculator damageBehavior;
 	private final MultiHitProperty multiHitProperty;

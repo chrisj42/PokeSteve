@@ -1,9 +1,12 @@
 package bot.pokemon.move;
 
+import java.util.function.Function;
+
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
 import bot.pokemon.Type;
 import bot.pokemon.battle.BattlePokemon;
+import bot.pokemon.battle.Flag;
 import bot.pokemon.battle.MoveContext;
 import bot.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.util.Utils;
@@ -18,25 +21,31 @@ public class Move {
 	public final Type type;
 	public final int pp;
 	public final int priority;
+	public final ChargeState chargeState;
+	private final boolean doesRecharge;
 	private final int accuracy;
 	private final AccuracyProperty accuracyProp;
 	public final DamageProperty damageEffect;
+	private final Function<MoveContext, Boolean> moveCondition;
 	public final EffectGroup primary;
 	public final EffectGroup secondary;
 	public final int secondaryChance;
 	
-	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, int accuracy, AccuracyProperty accuracyProp, DamageProperty damageEffect, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
+	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, AccuracyProperty accuracyProp, DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
 		this.name = name;
 		this.id = id;
 		this.description = description;
 		this.type = type;
 		this.pp = pp;
 		this.priority = priority;
+		this.chargeState = chargeState;
+		this.doesRecharge = doesRecharge;
 		this.accuracy = accuracy;
 		this.accuracyProp = accuracyProp;
 		this.damageEffect = damageEffect;
-		this.primary = primary;
-		this.secondary = secondary;
+		this.moveCondition = moveCondition;
+		this.primary = primary == null ? EffectGroup.NO_EFFECTS : primary;
+		this.secondary = secondary == null ? EffectGroup.NO_EFFECTS : secondary;
 		this.secondaryChance = secondaryChance;
 	}
 	
@@ -53,7 +62,31 @@ public class Move {
 	
 	public void doMove(MoveContext context) {
 		context.user.subtractPp(context.userMoveIdx);
-		context.withUser(" used ").append(name).append('!');
+		context.withUser("used ").append(name).append('!');
+		
+		if(moveCondition != null && !moveCondition.apply(context)) {
+			context.line("But it failed!");
+			return;
+		}
+		
+		if(chargeState != null) {
+			// it's taken as a given that this is the move that's charging
+			if(context.user.hasFlag(Flag.CHARGING_MOVE))
+				context.user.clearFlag(Flag.CHARGING_MOVE);
+			else {
+				context.user.setFlag(Flag.CHARGING_MOVE, context.userMoveIdx);
+				context.withUser(chargeState.prepMessage);
+				return;
+			}
+		}
+		
+		if(context.enemy.hasFlag(Flag.CHARGING_MOVE)) {
+			ChargeState state = context.enemyPokemon.moveset[context.enemy.getFlag(Flag.CHARGING_MOVE)].chargeState;
+			if(!state.affectedBy(this)) {
+				context.line("But ").append(context.enemyPlayer).append(" wasn't there!");
+				return;
+			}
+		}
 		
 		// calc if hit
 		int accuracy = getAccuracy(context);
@@ -65,6 +98,10 @@ public class Move {
 		if(!hit)
 			context.line("It missed!");
 		else {
+			if(doesRecharge)
+				// user is going to have to recharge next turn
+				context.user.setFlag(Flag.RECHARGING);
+			
 			EffectResult result = context.userMove.damageEffect.doDamage(context);
 			if(result == EffectResult.FAILURE) {
 				context.line("It had no effect...");
@@ -95,39 +132,34 @@ public class Move {
 	static class MoveBuilder {
 		
 		private final String name;
-		// private final Type type;
-		// private final int pp;
-		private int accuracy;
+		private ChargeState doesCharge;
+		private boolean doesRecharge;
 		private AccuracyProperty accuracyProp;
 		private DamageProperty damageEffect;
 		private EffectGroup primary;
 		private EffectGroup secondary;
 		private int secondaryChance;
+		private Function<MoveContext, Boolean> moveCondition;
 		
 		// MoveBuilder(Type type, int pp) {  this(null, type, pp); }
 		// MoveBuilder(Type type, int pp, int accuracy) {  this(null, type, pp, accuracy); }
 		// MoveBuilder(@Nullable String name, Type type, int pp) { this(name, type, pp, 0); }
 		// MoveBuilder(@Nullable String name, Type type, int pp, int accuracy) {
 		MoveBuilder() {  this(null); }
-		MoveBuilder(int accuracy) {  this(null, accuracy); }
-		MoveBuilder(@Nullable String name) { this(name, 0); }
-		MoveBuilder(@Nullable String name, int accuracy) {
+		// MoveBuilder(int accuracy) {  this(null, accuracy); }
+		// MoveBuilder(@Nullable String name) { this(name, 0); }
+		MoveBuilder(@Nullable String name) {
 			this.name = name;
-			// this.type = type;
-			// this.pp = pp;
-			this.accuracy = accuracy;
-			
+			// doesCharge = false;
+			doesRecharge = false;
+			secondaryChance = -1;
 		}
 		
 		Move create(Moves moveEnum) {
 			String name = this.name == null ? moveEnum.name().replaceAll("_", " ").trim() : this.name;
-			return new Move(name, moveEnum.ordinal(), moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, accuracy, accuracyProp, damageEffect, primary, secondary, secondaryChance);
+			return new Move(name, moveEnum.ordinal()+1, moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, doesCharge, doesRecharge, moveEnum.accuracy, accuracyProp, damageEffect == null ? moveEnum.classicDamage : 	damageEffect, moveCondition, primary, secondary, secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance);
 		}
 		
-		/*MoveBuilder acc(int accuracy) {
-			this.accuracy = accuracy;
-			return this;
-		}*/
 		MoveBuilder acc(AccuracyProperty prop) {
 			this.accuracyProp = prop;
 			return this;
@@ -135,6 +167,21 @@ public class Move {
 		
 		MoveBuilder damage(DamageProperty damageEffect) {
 			this.damageEffect = damageEffect;
+			return this;
+		}
+		
+		MoveBuilder condition(Function<MoveContext, Boolean> condition) {
+			this.moveCondition = condition;
+			return this;
+		}
+		
+		MoveBuilder charge(ChargeState chargeState) {
+			doesCharge = chargeState;
+			return this;
+		}
+		
+		MoveBuilder recharge() {
+			doesRecharge = true;
 			return this;
 		}
 		

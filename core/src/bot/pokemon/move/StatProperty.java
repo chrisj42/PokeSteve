@@ -3,6 +3,7 @@ package bot.pokemon.move;
 import java.util.EnumMap;
 
 import bot.pokemon.Stat;
+import bot.pokemon.battle.BattleInstance.Player;
 import bot.pokemon.battle.BattlePokemon;
 import bot.pokemon.battle.MoveContext;
 import bot.pokemon.move.PokemonEffectSet.PokemonEffect;
@@ -23,20 +24,20 @@ public class StatProperty implements PokemonEffect {
 			return EffectResult.NA;
 		
 		final BattlePokemon pokemon;
-		final String name;
+		final Player player;
 		if(onEnemy) {
 			pokemon = context.enemy;
-			name = context.enemyName;
+			player = context.enemyPlayer;
 		} else {
 			pokemon = context.user;
-			name = context.userName;
+			player = context.userPlayer;
 		}
 		
 		statStageChanges.forEach((stat, amt) -> {
 			boolean change = pokemon.alterStatStage(stat, amt);
 			String message = getStatChangeMessage(amt, change);
 			if(message != null)
-				context.line(name).append("'s ").append(stat).append(message);
+				context.line(player).append("'s ").append(stat).append(message);
 		});
 		
 		return EffectResult.AFFECTED;

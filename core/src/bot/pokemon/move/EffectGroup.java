@@ -8,6 +8,8 @@ import bot.pokemon.move.PokemonEffectSet.PokemonEffect;
 
 public class EffectGroup {
 	
+	public static final EffectGroup NO_EFFECTS = new EffectGroup(PokemonEffectSet.NO_EFFECT, PokemonEffectSet.NO_EFFECT, FieldEffectSet.NO_EFFECT);
+	
 	public final PokemonEffectSet self;
 	public final PokemonEffectSet enemy;
 	public final FieldEffectSet field;
