@@ -172,7 +172,7 @@ public abstract class BattleInstance {
 	
 	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
 		final Move move = player.getMove();
-		System.out.println("doing player move: "+player+" with move "+move+", idx "+player.moveIdx);
+		// System.out.println("doing player move: "+player+" with move "+move+", idx "+player.moveIdx);
 		if(move != null) {
 			MoveContext context = new MoveContext(move, player, player.opponent, isFirst, msg);
 			context.doMove();

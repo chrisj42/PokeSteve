@@ -94,7 +94,7 @@ public class Move {
 			int accuracyStage = Utils.clamp(context.user.getStage(Stat.Accuracy) - context.enemy.getStage(Stat.Evasion), BattlePokemon.MIN_STAGE, BattlePokemon.MAX_STAGE);
 			accuracy = StageEquation.Accuracy.modifyStat(accuracy, accuracyStage);
 		}
-		System.out.println("accuracy for move "+this+": "+accuracy);
+		// System.out.println("accuracy for move "+this+": "+accuracy);
 		boolean hit = Utils.chance(accuracy);
 		if(!hit)
 			context.line("It missed!");
