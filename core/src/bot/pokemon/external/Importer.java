@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.TreeMap;
 
-import bot.Core;
 import bot.io.json.MissingPropertyException;
 import bot.io.json.node.JsonArrayNode;
+import bot.pokemon.DataCore;
 import bot.pokemon.PokemonSpecies;
 import bot.util.UsageException;
 
@@ -71,7 +71,7 @@ public class Importer {
 	 */
 	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
-		JsonArrayNode root = new JsonArrayNode(Core.jsonMapper.readTree(new File("moves-gen1.json")));
+		JsonArrayNode root = new JsonArrayNode(DataCore.jsonMapper.readTree(new File("moves.json")));
 		System.out.print("moves: ");
 		for(int i = 0; i < root.getLength(); i++)
 			System.out.print(root.getObjectNode(i).getValueNode("name").parseValue(JsonNode::textValue)+", ");

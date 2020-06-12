@@ -35,8 +35,6 @@ public class Core {
 	
 	private Core() {}
 	
-	public static final ObjectMapper jsonMapper = new ObjectMapper();
-	
 	static {
 		DataCore.init();
 	}

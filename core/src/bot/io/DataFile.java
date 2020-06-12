@@ -3,9 +3,9 @@ package bot.io;
 import java.io.File;
 import java.io.IOException;
 
-import bot.Core;
 import bot.io.json.MissingPropertyException;
 import bot.io.json.node.JsonObjectNode;
+import bot.pokemon.DataCore;
 
 public enum DataFile {
 	
@@ -26,6 +26,6 @@ public enum DataFile {
 	}
 	
 	public JsonObjectNode readJson() throws MissingPropertyException, IOException {
-		return new JsonObjectNode(Core.jsonMapper.readTree(file));
+		return new JsonObjectNode(DataCore.jsonMapper.readTree(file));
 	}
 }

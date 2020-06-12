@@ -7,6 +7,7 @@ import java.util.function.Function;
 import bot.io.DataFile;
 import bot.io.json.MissingPropertyException;
 import bot.io.json.node.JsonObjectNode;
+import bot.pokemon.DataCore;
 import bot.util.POJO;
 import bot.util.ThrowFunction;
 
@@ -58,7 +59,7 @@ public class BotData {
 		
 		@SuppressWarnings("unchecked")
 		private DynamicProperty(String name, JsonNode node, Class<? extends POJO<T>> pojoClass) throws IOException {
-			this(name, node, nodeValue -> ((POJO<T>)Core.jsonMapper.readerFor(pojoClass).readValue(nodeValue)).create(), getWriter(pojoClass));
+			this(name, node, nodeValue -> ((POJO<T>) DataCore.jsonMapper.readerFor(pojoClass).readValue(nodeValue)).create(), getWriter(pojoClass));
 		}
 		private DynamicProperty(String name, JsonNode node, ThrowFunction<JsonNode, T, IOException> reader, ThrowFunction<T, JsonNode, Throwable> writer) throws IOException {
 			super(name, reader.apply(node));
@@ -74,11 +75,11 @@ public class BotData {
 		return instance -> {
 			StringWriter cache = new StringWriter();
 			
-			Core.jsonMapper.writerFor(instance.getClass()).writeValue(cache, pojoClass.getDeclaredConstructor(instance.getClass()).newInstance(instance));
+			DataCore.jsonMapper.writerFor(instance.getClass()).writeValue(cache, pojoClass.getDeclaredConstructor(instance.getClass()).newInstance(instance));
 			cache.flush();
 			String content = cache.getBuffer().toString();
 			
-			return Core.jsonMapper.readTree(content);
+			return DataCore.jsonMapper.readTree(content);
 		};
 	}
 }
