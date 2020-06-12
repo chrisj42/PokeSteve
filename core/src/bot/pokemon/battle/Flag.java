@@ -10,6 +10,7 @@ public interface Flag {
 	class ValueFlag<T> implements Flag {}
 	
 	BoolFlag RECHARGING = new BoolFlag();
+	BoolFlag FLINCH = new BoolFlag();
 	
 	ValueFlag<Integer> CHARGING_MOVE = new ValueFlag<>();
 	

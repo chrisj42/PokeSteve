@@ -218,6 +218,7 @@ public abstract class BattleInstance {
 		private void resetMove() {
 			moveIdx = -1;
 			ready = false;
+			pokemon.clearFlag(Flag.FLINCH);
 		}
 		
 		public BattleInstance getBattle() { return battle; }

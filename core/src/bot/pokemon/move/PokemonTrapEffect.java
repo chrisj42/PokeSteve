@@ -1,11 +1,9 @@
 package bot.pokemon.move;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import bot.pokemon.Stat;
 import bot.pokemon.battle.BattleInstance.Player;
-import bot.pokemon.battle.BattlePokemon;
 import bot.pokemon.battle.Flag;
 import bot.pokemon.battle.MoveContext;
 import bot.pokemon.battle.PlayerContext;
@@ -26,13 +24,13 @@ public class PokemonTrapEffect implements PokemonEffect {
 		Player p = onEnemy ? context.enemyPlayer : context.userPlayer;
 		if(p.pokemon.hasFlag(Flag.TRAP)) {
 			context.with(p).append("is already trapped by ").append(p.pokemon.getFlag(Flag.TRAP).source).append("!");
-			return EffectResult.AFFECTED; // this is about whether output was given
+			return EffectResult.RECORDED; // this is about whether output was given
 		}
 		TrapEffect effect = new TrapEffect(context.userMove);
 		p.pokemon.setFlag(Flag.TRAP, effect);
 		p.pokemon.addEffect(effect);
 		context.line(messageFetcher.apply(p));
-		return EffectResult.AFFECTED;
+		return EffectResult.RECORDED;
 	}
 	
 	public static class TrapEffect extends TimedPersistentEffect {

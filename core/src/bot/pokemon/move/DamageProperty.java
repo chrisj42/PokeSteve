@@ -42,7 +42,7 @@ public class DamageProperty {
 				context.setHadEffect();
 				context.withUser("is unaffected...");
 			}*/
-			return EffectResult.FAILURE;
+			return EffectResult.NO_OUTPUT;
 		}
 		
 		final boolean singleHit = multiHitProperty == null;
@@ -82,7 +82,7 @@ public class DamageProperty {
 			context.withUser("regained ").append(gain).append(" health!");
 		}
 		
-		return EffectResult.AFFECTED;
+		return EffectResult.RECORDED;
 	}
 	
 	private static String getEffectivenessMessage(int effectiveness) {

@@ -1,17 +1,17 @@
 package bot.pokemon.move;
 
 public enum EffectResult {
-	// because of the +2 at the end, a move that isn't completely cancelled should always do some damage, so a "NO_DAMAGE" constant is unnecassary.
+	// this is used for output purposes; does more need to be said?
 	
-	NA, // this move doesn't / didn't even attempt to cause an effect
-	FAILURE, // target is immune or the effect failed to occur
-	AFFECTED; // effect occurred i.e. damage was taken
+	NA, // nothing happened; if we end on this, then no effect occurred or will ever occur on repeated attempts
+	NO_OUTPUT, // stuff may or may not have happened, but no output was given. Most of the time nothing will have happened.
+	RECORDED; // output was given signifying what happened, or the lack of occurrence
 	
 	public EffectResult combine(EffectResult other) {
-		if(this == AFFECTED || other == AFFECTED)
-			return AFFECTED;
-		if(this == FAILURE || other == FAILURE)
-			return FAILURE;
+		if(this == RECORDED || other == RECORDED)
+			return RECORDED;
+		if(this == NO_OUTPUT || other == NO_OUTPUT)
+			return NO_OUTPUT;
 		return NA;
 	}
 }

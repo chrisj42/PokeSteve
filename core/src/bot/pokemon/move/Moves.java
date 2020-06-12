@@ -111,7 +111,12 @@ public enum Moves {
 	),
 	Slam,
 	Vine_Whip,
-	Stomp,
+	Stomp(new MoveBuilder()
+		.secondary(30).affectEnemy((context, onEnemy) -> {
+			if(context.isFirst) context.enemy.setFlag(Flag.FLINCH);
+			return EffectResult.NO_OUTPUT;
+		}).add()
+	),
 	Double_Kick,
 	Mega_Kick,
 	Jump_Kick,

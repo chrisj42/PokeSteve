@@ -40,7 +40,7 @@ public class StatProperty implements PokemonEffect {
 				context.line(player).append("'s ").append(stat).append(message);
 		});
 		
-		return EffectResult.AFFECTED;
+		return EffectResult.RECORDED;
 	}
 	
 	private static String getStatChangeMessage(int amt, boolean change) {

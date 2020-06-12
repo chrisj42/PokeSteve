@@ -61,6 +61,11 @@ public class Move {
 	}
 	
 	public void doMove(MoveContext context) {
+		if(context.user.hasFlag(Flag.FLINCH)) {
+			context.withUser("flinched!");
+			return;
+		}
+		
 		context.user.subtractPp(context.userMoveIdx);
 		context.withUser("used ").append(name).append('!');
 		
@@ -104,7 +109,7 @@ public class Move {
 				context.user.setFlag(Flag.RECHARGING);
 			
 			EffectResult result = context.userMove.damageEffect.doDamage(context);
-			if(result == EffectResult.FAILURE) {
+			if(result == EffectResult.NO_OUTPUT) {
 				context.line("It had no effect...");
 				return;
 			}
@@ -123,7 +128,7 @@ public class Move {
 			if(doSecondary && secondary.field != null)
 				result = result.combine(secondary.field.doEffects(context));
 			
-			if(result == EffectResult.FAILURE)
+			if(result == EffectResult.NO_OUTPUT)
 				context.line("But it failed!");
 			else if(result == EffectResult.NA)
 				context.line("But nothing happened...");
