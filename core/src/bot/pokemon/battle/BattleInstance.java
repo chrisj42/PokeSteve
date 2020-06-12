@@ -77,17 +77,16 @@ public abstract class BattleInstance {
 			return str.toString();
 		}).thenMany(userFlux()).flatMap(player -> {
 			if(player.pokemon.hasFlag(Flag.CHARGING_MOVE))
-				return submitAttack(player, player.pokemon.getFlag(Flag.CHARGING_MOVE));
+				return submitAttack(player, player.pokemon.getFlag(Flag.CHARGING_MOVE)+1);
 			else if(player.pokemon.hasFlag(Flag.RECHARGING))
-				return submitAttack(player, 0, false);
+				return submitAttack(player, 0);
 			return Mono.empty();
 		}).then();
 	}
 	
-	public Mono<Void> submitAttack(Player player, int moveIdx) { return submitAttack(player, moveIdx, true); }
-	private Mono<Void> submitAttack(Player player, int moveIdx, boolean checkIdx) {
+	public Mono<Void> submitAttack(Player player, int moveIdx) {
 		moveIdx--;
-		if(checkIdx && player.moveIdx >= 0)
+		if(player.moveIdx >= 0)
 			throw new UsageException(player+", you've already selected your move.");
 		
 		if(moveIdx >= 0 && player.pokemon.getPp(moveIdx) <= 0)
@@ -173,6 +172,7 @@ public abstract class BattleInstance {
 	
 	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
 		final Move move = player.getMove();
+		System.out.println("doing player move: "+player+" with move "+move+", idx "+player.moveIdx);
 		if(move != null) {
 			MoveContext context = new MoveContext(move, player, player.opponent, isFirst, msg);
 			context.doMove();
