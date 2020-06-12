@@ -3,6 +3,7 @@ package bot.pokemon;
 import java.util.Arrays;
 import java.util.EnumMap;
 
+import bot.pokemon.move.Move;
 import bot.util.Utils;
 
 import org.jetbrains.annotations.NotNull;

@@ -19,6 +19,12 @@ public final class Utils {
 		return array[randInt(0, array.length-1)];
 	}
 	
+	// classic out-of-100 chance integers
+	public static boolean chance(int chance) {
+		if(chance == 0) return true;
+		return randInt(0, 99) < chance;
+	}
+	
 	public static <T extends Comparable<T>> T clamp(T value, T min, T max) {
 		if(value.compareTo(min) < 0)
 			return min;

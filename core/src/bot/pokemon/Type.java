@@ -2,6 +2,8 @@ package bot.pokemon;
 
 import java.util.Arrays;
 
+import org.jetbrains.annotations.Nullable;
+
 import static bot.pokemon.DamageRelation.*;
 
 public enum Type {
@@ -24,6 +26,8 @@ public enum Type {
 	Dragon,
 	Dark,
 	Fairy;
+	
+	public static final Type[] values = Type.values();
 	
 	private DamageRelation[] relations;
 	
@@ -50,7 +54,12 @@ public enum Type {
 		return attacking.relations[ordinal()];
 	}
 	
-	public static final Type[] values = Type.values();
+	
+	public static DamageRelation getDamageRelation(@Nullable Type attacking, @Nullable Type defending) {
+		if(attacking == null || defending == null)
+			return Regular;
+		return attacking.getDamageTo(defending);
+	}
 	
 	static {
 		for(Type type: Type.values)

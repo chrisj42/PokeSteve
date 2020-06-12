@@ -1,17 +1,11 @@
 package bot.command.group.info;
 
-import java.text.DecimalFormat;
-
 import bot.command.ActionableCommand;
-import bot.command.ArgType;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
 import bot.pokemon.DataCore;
-import bot.pokemon.Move;
-import bot.pokemon.PokemonSpecies;
-import bot.pokemon.Stat;
-import bot.pokemon.external.Importer;
+import bot.pokemon.move.Move;
 import bot.util.UsageException;
 
 import reactor.core.publisher.Mono;

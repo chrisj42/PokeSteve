@@ -1,13 +1,10 @@
-package bot.pokemon;
+package bot.pokemon.notimpl.move;
 
 import bot.io.json.MissingPropertyException;
 import bot.io.json.NodeParser;
 import bot.io.json.node.JsonObjectNode;
-import bot.pokemon.move.ApplyStatusEffect;
-import bot.pokemon.move.DamageEffect;
+import bot.pokemon.Type;
 import bot.pokemon.move.MoveDescription;
-import bot.pokemon.move.MoveTarget;
-import bot.pokemon.move.StatEffect;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -47,8 +44,8 @@ public class Move {
 		effectChance = node.parseValueNode("effect_chance", JsonNode::intValue);
 		
 		damage = new DamageEffect(this, node, meta);
-		stat = new StatEffect(this, node, meta);
-		status = new ApplyStatusEffect(this, node, meta);
+		stat = new StatEffect(node, meta);
+		status = new ApplyStatusEffect(node, meta);
 		
 		minTurns = meta.parseValueNode("min_turns", JsonNode::intValue);
 		maxTurns = meta.parseValueNode("max_turns", JsonNode::intValue);

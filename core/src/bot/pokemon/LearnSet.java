@@ -9,6 +9,7 @@ import bot.io.json.MissingPropertyException;
 import bot.io.json.NodeParser;
 import bot.io.json.node.JsonArrayNode;
 import bot.io.json.node.JsonObjectNode;
+import bot.pokemon.move.Move;
 import bot.pokemon.move.MoveLearnMethod;
 
 import com.fasterxml.jackson.databind.JsonNode;

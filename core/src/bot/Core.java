@@ -37,6 +37,7 @@ public class Core {
 	
 	static {
 		DataCore.init();
+		System.gc(); // lots of objects are created in all the various builders; ensure that the setup objects have all been thrown away
 	}
 	
 	/*private static final HashMap<String, BiPredicate<String, Member>> prefixMap = new HashMap<>(3);

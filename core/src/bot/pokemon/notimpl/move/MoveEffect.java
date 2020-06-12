@@ -1,4 +1,4 @@
-package bot.pokemon.move;
+package bot.pokemon.notimpl.move;
 
 import java.util.LinkedList;
 

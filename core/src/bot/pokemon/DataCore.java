@@ -6,10 +6,10 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 
 import bot.io.json.MissingPropertyException;
-import bot.io.json.NodeParser;
 import bot.io.json.node.JsonArrayNode;
 import bot.io.json.node.JsonObjectNode;
-import bot.util.Ref;
+import bot.pokemon.move.Move;
+import bot.pokemon.move.Moves;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,11 +42,40 @@ public class DataCore {
 	public static final JsonArrayNode POKEMON_JSON = readList("pokemon.json");
 		
 	
-	public static final DataList<Move> MOVES = new DataList<>(Move.class, MOVE_JSON, Move::new);
+	public static final DataStore<Move> MOVES = new DataStore<>() {
+		private final HashMap<String, Move> nameMap = new HashMap<>(Moves.values.length);
+		
+		{
+			for(Moves m: Moves.values) {
+				final Move move = m.move;
+				nameMap.put(format(m.name()/*move.name*/), move);
+			}
+		}
+		
+		private String format(String name) {
+			return name.toLowerCase()
+				.replaceAll("[ \\-_]", "");
+		}
+		
+		@Override
+		public Move get(int id) {
+			return Moves.values[id-1].move;
+		}
+		
+		@Override
+		public Move get(String name) {
+			return nameMap.get(format(name));
+		}
+	};
 	
-	public static final DataList<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, SPECIES_JSON, POKEMON_JSON, PokemonSpecies::new);
+	public static final DataStore<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, SPECIES_JSON, POKEMON_JSON, PokemonSpecies::new);
 	
-	public static class DataList<T> {
+	public interface DataStore<T> {
+		T get(int id);
+		T get(String name);
+	}
+	
+	public static class DataList<T> implements DataStore<T> {
 		
 		interface NodeListParser<T> {
 			T parseNode(JsonObjectNode... nodes) throws MissingPropertyException;
@@ -95,20 +124,37 @@ public class DataCore {
 			}
 		}
 		
+		@Override
 		public T get(int id) {
 			if(id > data.length || id <= 0) return null;
 			return data[id-1];
 		}
 		
+		@Override
 		public T get(String name) {
 			return nameMap.get(name.toLowerCase());
 		}
 		
-		public Ref<T> getRef(int id) {
+		/*public Ref<T> getRef(int id) {
 			return new Ref<>(id, this::get);
 		}
 		public Ref<T> getRef(JsonObjectNode resourceNode) throws MissingPropertyException {
 			return getRef(NodeParser.getResourceId(resourceNode));
+		}*/
+	}
+	
+	private static class DataEnum<T> implements DataStore<T> {
+		
+		
+		
+		@Override
+		public T get(int id) {
+			return null;
+		}
+		
+		@Override
+		public T get(String name) {
+			return null;
 		}
 	}
 	

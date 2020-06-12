@@ -1,13 +1,14 @@
 package bot.pokemon.battle;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 
-import bot.pokemon.Move;
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
 import bot.pokemon.battle.status.StatusEffect;
 import bot.pokemon.battle.status.StatusEffects;
+import bot.pokemon.move.PersistentEffect;
 import bot.util.Utils;
 
 public class BattlePokemon {
@@ -19,9 +20,9 @@ public class BattlePokemon {
 	
 	public final Pokemon pokemon;
 	private final EnumMap<Stat, Integer> statStages;
-	private final EnumMap<StatusEffects, StatusEffect> statusEffects;
+	private final ArrayList<PersistentEffect> effects;
 	
-	public int health;
+	private int health;
 	private final int[] movePp;
 	
 	public BattlePokemon(Pokemon pokemon) {
@@ -32,7 +33,7 @@ public class BattlePokemon {
 		for(Stat stat: Stat.stageStats)
 			statStages.put(stat, 0);
 		
-		statusEffects = new EnumMap<>(StatusEffects.class);
+		effects = new ArrayList<>(4);
 		
 		movePp = new int[pokemon.moveset.length];
 		for(int i = 0; i < movePp.length; i++)
@@ -59,16 +60,17 @@ public class BattlePokemon {
 		movePp[move]--;
 	}
 	
+	public int getHealth() { return health; }
+	
+	public int alterHealth(int amount) {
+		final int prev = health;
+		health = Utils.clamp(health + amount, 0, pokemon.getStat(Stat.Health));
+		return health - prev;
+	}
+	
 	public int getSpeed() {
-		int speed = StageEquation.Main.modifyStat(pokemon.getStat(Stat.Speed), getStage(Stat.Speed));
-		
-		
-		return speed;
+		return StageEquation.Main.modifyStat(pokemon.getStat(Stat.Speed), getStage(Stat.Speed));
 	}
 	
-	// public void applyStatusEffect(StatusEffects effect, )
 	
-	public <T extends StatusEffect> T getStatusEffect(StatusEffects effect, Class<T> clazz) {
-		return clazz.cast(statusEffects.get(effect));
-	}
 }

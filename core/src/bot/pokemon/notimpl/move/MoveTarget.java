@@ -1,6 +1,4 @@
-package bot.pokemon.move;
-
-import java.util.HashMap;
+package bot.pokemon.notimpl.move;
 
 public enum MoveTarget {
 	

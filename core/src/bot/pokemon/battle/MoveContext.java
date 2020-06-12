@@ -1,6 +1,6 @@
 package bot.pokemon.battle;
 
-import bot.pokemon.Move;
+import bot.pokemon.move.Move;
 import bot.pokemon.Pokemon;
 import bot.pokemon.PokemonSpecies;
 import bot.pokemon.battle.BattleInstance.Player;
@@ -60,5 +60,9 @@ public class MoveContext {
 	
 	public StringBuilder withUser(Object string) {
 		return line(userName).append(' ').append(string);
+	}
+	
+	void doMove() {
+		userMove.doMove(this);
 	}
 }
