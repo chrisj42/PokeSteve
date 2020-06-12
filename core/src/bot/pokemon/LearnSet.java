@@ -41,16 +41,18 @@ public class LearnSet {
 			// this.moves[i] = DataCore.MOVES.getRef(moveNode.getObjectNode("move"));
 			
 			JsonArrayNode versionInfoList = moveNode.getArrayNode("version_group_details");
-			JsonObjectNode latestVersionInfo = versionInfoList.getObjectNode(versionInfoList.getLength()-1);
-			MoveLearnMethod learnMethod = MoveLearnMethod.getLearnMethod(latestVersionInfo.getObjectNode("move_learn_method").parseValueNode("name", JsonNode::textValue));
-			int level = latestVersionInfo.parseValueNode("level_learned_at", JsonNode::intValue);
-			// if(print) System.out.println("move "+this.moves[i]+" learned at "+level+" with method "+learnMethod);
-			if(learnMethod == MoveLearnMethod.LevelUp) {
+			for(int j = versionInfoList.getLength() - 1; j >= 0; j--) {
+				JsonObjectNode latestVersionInfo = versionInfoList.getObjectNode(j);
+				MoveLearnMethod learnMethod = MoveLearnMethod.getLearnMethod(latestVersionInfo.getObjectNode("move_learn_method").parseValueNode("name", JsonNode::textValue));
+				if(learnMethod != MoveLearnMethod.LevelUp)
+					continue;
+				int level = latestVersionInfo.parseValueNode("level_learned_at", JsonNode::intValue);
+				// if(print) System.out.println("move "+this.moves[i]+" learned at "+level+" with method "+learnMethod);
 				LevelUpMove lMove = new LevelUpMove(level, this.moves[i]);
 				levelUpMoveSet.add(lMove);
 				levelUpMoveMap.computeIfAbsent(level, lvl -> new TreeSet<>()).add(lMove);
-			} else if(level > 0)
-				System.err.println("move "+this.moves[i].name+" for pokemon "+species.name+" (#"+(i+1)+" in move list) is not a level up move, but has a non-zero level learned at.");
+				break;
+			}
 		}
 		
 		// if(print)
