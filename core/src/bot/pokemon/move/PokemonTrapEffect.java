@@ -47,7 +47,7 @@ public class PokemonTrapEffect implements PokemonEffect {
 		@Override
 		public boolean apply(PlayerContext context) {
 			int damage = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / 8);
-			context.withUser("took ").append(damage).append(" damage from ").append(source).append('.');
+			context.withUser("took ").append(-damage).append(" damage from ").append(source).append('.');
 			
 			return super.apply(context);
 		}
