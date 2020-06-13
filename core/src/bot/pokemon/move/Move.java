@@ -82,17 +82,17 @@ public class Move {
 		
 		if(chargeState != null) {
 			// it's taken as a given that this is the move that's charging
-			if(context.user.hasFlag(Flag.CHARGING_MOVE))
-				context.user.clearFlag(Flag.CHARGING_MOVE);
+			if(context.user.hasFlag(Flag.FORCED_MOVE))
+				context.user.clearFlag(Flag.FORCED_MOVE);
 			else {
-				context.user.setFlag(Flag.CHARGING_MOVE, context.userMoveIdx);
+				context.user.setFlag(Flag.FORCED_MOVE, context.userMoveIdx);
 				context.withUser(chargeState.prepMessage);
 				return;
 			}
 		}
 		
-		if(context.enemy.hasFlag(Flag.CHARGING_MOVE)) {
-			ChargeState state = context.enemyPokemon.moveset[context.enemy.getFlag(Flag.CHARGING_MOVE)].chargeState;
+		if(context.enemy.hasFlag(Flag.FORCED_MOVE)) {
+			ChargeState state = context.enemyPokemon.moveset[context.enemy.getFlag(Flag.FORCED_MOVE)].chargeState;
 			if(!state.affectedBy(this)) {
 				context.line("But ").append(context.enemyPlayer).append(" wasn't there!");
 				return;
@@ -115,7 +115,7 @@ public class Move {
 		else {
 			if(doesRecharge)
 				// user is going to have to recharge next turn
-				context.user.setFlag(Flag.RECHARGING);
+				context.user.setFlag(Flag.FORCED_MOVE, -1);
 			
 			EffectResult result = context.userMove.damageEffect.doDamage(context);
 			if(result == EffectResult.NO_OUTPUT) {

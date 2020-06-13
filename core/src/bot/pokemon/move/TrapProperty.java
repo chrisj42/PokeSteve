@@ -11,11 +11,11 @@ import bot.pokemon.move.PersistentEffect.TimedPersistentEffect;
 import bot.pokemon.move.PokemonEffectSet.PokemonEffect;
 import bot.util.Utils;
 
-public class PokemonTrapEffect implements PokemonEffect {
+public class TrapProperty implements PokemonEffect {
 	
 	private final Function<Player, String> messageFetcher;
 	
-	public PokemonTrapEffect(Function<Player, String> messageFetcher) {
+	public TrapProperty(Function<Player, String> messageFetcher) {
 		this.messageFetcher = messageFetcher;
 	}
 	

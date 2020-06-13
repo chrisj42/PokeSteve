@@ -1,6 +1,6 @@
 package bot.pokemon.battle;
 
-import bot.pokemon.move.PokemonTrapEffect.TrapEffect;
+import bot.pokemon.move.TrapProperty.TrapEffect;
 
 public interface Flag {
 	
@@ -9,10 +9,11 @@ public interface Flag {
 	class BoolFlag implements Flag {}
 	class ValueFlag<T> implements Flag {}
 	
-	BoolFlag RECHARGING = new BoolFlag();
 	BoolFlag FLINCH = new BoolFlag();
 	
-	ValueFlag<Integer> CHARGING_MOVE = new ValueFlag<>();
+	// used for forced moves and forced lack of moves, if the index is invalid.
+	ValueFlag<Integer> FORCED_MOVE = new ValueFlag<>();
 	
 	ValueFlag<TrapEffect> TRAP = new ValueFlag<>();
+	
 }

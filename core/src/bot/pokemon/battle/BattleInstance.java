@@ -6,7 +6,6 @@ import bot.UserState;
 import bot.pokemon.move.Move;
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
-import bot.pokemon.Stat.StageEquation;
 import bot.util.UsageException;
 import bot.util.Utils;
 
@@ -62,11 +61,14 @@ public abstract class BattleInstance {
 			
 			// here we need to check if the user is capable of choosing a move this turn; there are a number of things that could prevent the user from doing so.
 			
-			if(player.pokemon.hasFlag(Flag.CHARGING_MOVE))
-				str.append("\n__You are currently charging \"").append(player.pokemon.pokemon.moveset[player.pokemon.getFlag(Flag.CHARGING_MOVE)]).append("\" and cannot select another move.__");
-			else if(player.pokemon.hasFlag(Flag.RECHARGING))
-				str.append("\n__You are recharging from a previous move and cannot select a move this turn.__");
-			else {
+			if(player.pokemon.hasFlag(Flag.FORCED_MOVE)) {
+				int moveid = player.pokemon.getFlag(Flag.FORCED_MOVE);
+				Move move = moveid < 0 ? null : player.pokemon.pokemon.moveset[moveid];
+				if(move != null)
+					str.append("\n\"").append(move).append("\" has been auto-selected.__");
+				else
+					str.append("\n__You are recharging from a previous move and cannot select a move this turn.__");
+			} else {
 				str.append("\nSelect your move with the 'attack <move number>' command. Available moves:");
 				Move[] moves = player.pokemon.pokemon.moveset;
 				for(int i = 0; i < moves.length; i++) {
@@ -76,10 +78,8 @@ public abstract class BattleInstance {
 			}
 			return str.toString();
 		}).thenMany(userFlux()).flatMap(player -> {
-			if(player.pokemon.hasFlag(Flag.CHARGING_MOVE))
-				return submitAttack(player, player.pokemon.getFlag(Flag.CHARGING_MOVE)+1);
-			else if(player.pokemon.hasFlag(Flag.RECHARGING))
-				return submitAttack(player, 0);
+			if(player.pokemon.hasFlag(Flag.FORCED_MOVE))
+				return submitAttack(player, player.pokemon.getFlag(Flag.FORCED_MOVE)+1);
 			return Mono.empty();
 		}).then();
 	}
@@ -182,7 +182,7 @@ public abstract class BattleInstance {
 				return player.opponent; // recoil
 		} else {
 			msg.append('\n').append(player).append(" is recharging.");
-			player.pokemon.clearFlag(Flag.RECHARGING);
+			player.pokemon.clearFlag(Flag.FORCED_MOVE);
 		}
 		
 		return null;

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.ListIterator;
 
 import bot.pokemon.Pokemon;
 import bot.pokemon.Stat;
 import bot.pokemon.Stat.StageEquation;
-import bot.pokemon.battle.BattleInstance.Player;
 import bot.pokemon.battle.Flag.BoolFlag;
 import bot.pokemon.battle.Flag.ValueFlag;
 import bot.pokemon.move.ChargeState;
@@ -111,7 +109,7 @@ public class BattlePokemon {
 	
 	@Nullable
 	public ChargeState getChargeState() {
-		Integer chargeMove = getFlag(Flag.CHARGING_MOVE);
+		Integer chargeMove = getFlag(Flag.FORCED_MOVE);
 		if(chargeMove == null) return null;
 		return pokemon.moveset[chargeMove].chargeState;
 	}

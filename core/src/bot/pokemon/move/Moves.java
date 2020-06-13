@@ -92,7 +92,7 @@ public enum Moves {
 	Whirlwind, // no impl
 	Fly(m -> m.builder.charge(ChargeState.Sky)),
 	Bind(new MoveBuilder()
-		.primary().affectEnemy(new PokemonTrapEffect(p -> p+" is squeezed by "+p.getOpponent()+"!")).add()
+		.primary().affectEnemy(new TrapProperty(p -> p+" is squeezed by "+p.getOpponent()+"!")).add()
 	),
 	Slam,
 	Vine_Whip,
@@ -124,22 +124,42 @@ public enum Moves {
 		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Paralysis)).add()
 	),
 	Wrap(new MoveBuilder()
-		.primary().affectEnemy(new PokemonTrapEffect(p -> p+" was wrapped by "+p.getOpponent()+"!")).add()
+		.primary().affectEnemy(new TrapProperty(p -> p+" was wrapped by "+p.getOpponent()+"!")).add()
 	),
 	Take_Down(m -> m.damageBuilder.recoil(25)),
-	Thrash,
-	Double_Edge,
-	Tail_Whip,
-	Poison_Sting,
-	Twineedle,
-	Pin_Missile,
-	Leer,
-	Bite,
-	Growl,
-	Roar,
-	Sing,
-	Supersonic,
-	Sonic_Boom,
+	Thrash(new MoveBuilder().primary().affectSelf(PokemonEffect.THRASH).add()),
+	Double_Edge(m -> m.damageBuilder.recoil(33)),
+	Tail_Whip(new MoveBuilder()
+		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
+	),
+	Poison_Sting(new MoveBuilder()
+		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Poison)).add()
+	),
+	Twineedle(new MoveBuilder() // TODO each hit should have a chance to activate the secondary effects
+		.secondary(20).affectEnemy(new StatusProperty(StatusEffect.Poison)).add(),
+		m -> m.damageBuilder.multiHit(new MultiHitProperty(2))
+	),
+	Pin_Missile(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
+	Leer(new MoveBuilder()
+		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
+	),
+	Bite(new MoveBuilder()
+		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+	),
+	Growl(new MoveBuilder()
+		.primary().affectEnemy(StatBuilder.get(Stat.Attack, -1)).add()
+	),
+	Roar, // not impl
+	Sing(new MoveBuilder()
+		.primary().affectEnemy(new StatusProperty(StatusEffect.Sleep)).add()
+	),
+	Supersonic(new MoveBuilder()
+		.primary().affectEnemy(new StatusProperty(StatusEffect.Confusion)).add()
+	),
+	Sonic_Boom(new MoveBuilder().damage(
+		new DamageBuilder(DamageCategory.Special, (context, damageType) -> 20)
+			.create()
+	)),
 	Disable,
 	Acid,
 	Ember,
