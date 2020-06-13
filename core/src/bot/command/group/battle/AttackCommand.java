@@ -25,8 +25,8 @@ public class AttackCommand extends ActionableCommand {
 		
 		Player player = UserState.getBattle(context.user);
 		
-		int id = ArgType.INTEGER.parseArg(args[0]);
-		if(id <= 0 || id > player.pokemon.pokemon.moveset.length)
+		int id = ArgType.INTEGER.parseArg(args[0]) - 1;
+		if(id < 0 || id >= player.pokemon.pokemon.moveset.length)
 			throw new UsageException("move id does not exist.");
 		
 		return player.getBattle().submitAttack(player, id);

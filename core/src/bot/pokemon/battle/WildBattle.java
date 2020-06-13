@@ -18,11 +18,17 @@ public class WildBattle extends BattleInstance {
 	
 	@Override
 	public Mono<Void> onRoundStart() {
-		return super.onRoundStart().then(Mono.fromCallable(() -> {
-			// determine ai move
-			return Utils.randInt(1, opponent.pokemon.pokemon.moveset.length);
-		}).flatMap(
-			move -> submitAttack(opponent, move)
-		)).then();
+		return super.onRoundStart().then(Mono.just(true)
+			.flatMap(e -> {
+				// determine ai move
+				if(opponent.getMoveIdx() >= 0)
+					return Mono.empty(); // already chosen
+				int move = Utils.randInt(0, opponent.pokemon.pokemon.moveset.length-1);
+				Integer disabled = opponent.pokemon.getFlag(Flag.DISABLED_MOVE);
+				if(disabled != null && disabled == move)
+					move = (move+1) % opponent.pokemon.pokemon.moveset.length;
+				return submitAttack(opponent, move);
+			})
+		).then();
 	}
 }

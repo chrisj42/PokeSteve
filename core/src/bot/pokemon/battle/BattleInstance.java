@@ -77,20 +77,28 @@ public abstract class BattleInstance {
 				}
 			}
 			return str.toString();
-		}).thenMany(userFlux()).flatMap(player -> {
+		}).thenMany(Flux.just(player1, player2)).flatMap(player -> {
 			if(player.pokemon.hasFlag(Flag.FORCED_MOVE))
-				return submitAttack(player, player.pokemon.getFlag(Flag.FORCED_MOVE)+1);
+				return submitAttack(player, player.pokemon.getFlag(Flag.FORCED_MOVE));
 			return Mono.empty();
 		}).then();
 	}
 	
 	public Mono<Void> submitAttack(Player player, int moveIdx) {
-		moveIdx--;
 		if(player.moveIdx >= 0)
 			throw new UsageException(player+", you've already selected your move.");
 		
-		if(moveIdx >= 0 && player.pokemon.getPp(moveIdx) <= 0)
-			throw new UsageException("move "+player.pokemon.pokemon.moveset[moveIdx]+" is out of PP.");
+		if(moveIdx >= 0) {
+			if(player.pokemon.getPp(moveIdx) <= 0)
+				throw new UsageException("move " + player.pokemon.pokemon.moveset[moveIdx] + " is out of PP.");
+			
+			// check disabled
+			if(player.pokemon.hasFlag(Flag.DISABLED_MOVE)) {
+				int moveid = player.pokemon.getFlag(Flag.DISABLED_MOVE);
+				if(moveid == moveIdx)
+					throw new UsageException("move " + player.pokemon.pokemon.moveset[moveIdx] + " is disabled.");
+			}
+		}
 		
 		player.moveIdx = moveIdx;
 		player.ready = true;
@@ -171,6 +179,8 @@ public abstract class BattleInstance {
 	}
 	
 	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
+		if(player.moveIdx >= 0) // update last move used
+			player.lastMoveIdx = player.moveIdx;
 		final Move move = player.getMove();
 		// System.out.println("doing player move: "+player+" with move "+move+", idx "+player.moveIdx);
 		if(move != null) {
@@ -194,6 +204,7 @@ public abstract class BattleInstance {
 		private BattleInstance battle;
 		private boolean ready = false;
 		private int moveIdx = -1;
+		private int lastMoveIdx = -1;
 		private Player opponent;
 		
 		public Player(String name, Pokemon pokemon) {
@@ -214,6 +225,7 @@ public abstract class BattleInstance {
 		int getMoveIdx() {
 			return moveIdx;
 		}
+		public int getLastMoveIdx() { return lastMoveIdx; }
 		
 		private void resetMove() {
 			moveIdx = -1;

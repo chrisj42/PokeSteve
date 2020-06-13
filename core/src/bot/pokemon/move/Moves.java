@@ -160,7 +160,9 @@ public enum Moves {
 		new DamageBuilder(DamageCategory.Special, (context, damageType) -> 20)
 			.create()
 	)),
-	Disable,
+	Disable(new MoveBuilder()
+		.primary().affectEnemy(PokemonEffect.DISABLE).add()
+	),
 	Acid,
 	Ember,
 	Flamethrower,

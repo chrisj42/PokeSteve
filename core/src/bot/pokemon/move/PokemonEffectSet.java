@@ -38,6 +38,26 @@ public class PokemonEffectSet {
 			}
 			return EffectResult.RECORDED;
 		};
+		
+		PokemonEffect DISABLE = (context, onEnemy) -> {
+			if(context.enemy.hasFlag(Flag.DISABLED_MOVE))
+				return EffectResult.NO_OUTPUT; // "but it failed"
+			int lastMove = context.enemyPlayer.getLastMoveIdx();
+			if(lastMove < 0)
+				return EffectResult.NO_OUTPUT;
+			
+			Move move = context.enemyPokemon.moveset[lastMove];
+			context.line(context.enemyPlayer).append("'s ").append(move).append(" was disabled!");
+			context.enemy.setFlag(Flag.DISABLED_MOVE, lastMove);
+			context.enemy.addEffect(new TimedPersistentEffect(4) {
+				@Override
+				protected void onEffectEnd(PlayerContext context) {
+					context.line(context.userPlayer).append("'s ").append(move).append(" is no longer disabled!");
+					context.user.clearFlag(Flag.DISABLED_MOVE);
+				}
+			});
+			return EffectResult.RECORDED;
+		};
 	}
 	
 	private final PokemonEffect[] effects;

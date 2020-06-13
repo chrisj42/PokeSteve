@@ -14,6 +14,8 @@ public interface Flag {
 	// used for forced moves and forced lack of moves, if the index is invalid.
 	ValueFlag<Integer> FORCED_MOVE = new ValueFlag<>();
 	
+	ValueFlag<Integer> DISABLED_MOVE = new ValueFlag<>();
+	
 	ValueFlag<TrapEffect> TRAP = new ValueFlag<>();
 	
 }
