@@ -25,11 +25,12 @@ import discord4j.rest.entity.RestUser;
 import reactor.core.publisher.Mono;
 
 import static bot.command.group.world.BattleCommand.LEVELS_OPT;
+import static bot.command.group.world.SpawnCommand.LEVEL_OPT;
 
 public class DuelCommand extends ActionableCommand {
 	
 	public DuelCommand() {
-		super("duel", "start a battle with another player.", new ArgumentSet("<opponent user id>", "<your pokemon>", "<opponent pokemon>"), LEVELS_OPT);
+		super("duel", "Request a battle with another player.", new ArgumentSet("<opponent user id>", "<your pokemon>"), LEVEL_OPT);
 	}
 	
 	@Override
@@ -45,21 +46,27 @@ public class DuelCommand extends ActionableCommand {
 		return user.getData().flatMap(
 			uData -> {
 				int yourLevel = SpawnCommand.DEFAULT_LEVEL;
-				int enemyLevel = SpawnCommand.DEFAULT_LEVEL;
-				if(options.hasOption(LEVELS_OPT)) {
-					yourLevel = options.getOptionValue(LEVELS_OPT, 0, ArgType.INTEGER);
-					enemyLevel = options.getOptionValue(LEVELS_OPT, 1, ArgType.INTEGER);
+				// int enemyLevel = SpawnCommand.DEFAULT_LEVEL;
+				if(options.hasOption(LEVEL_OPT)) {
+					yourLevel = options.getOptionValue(LEVEL_OPT, 0, ArgType.INTEGER);
+					// enemyLevel = options.getOptionValue(LEVEL_OPT, 1, ArgType.INTEGER);
 				}
 				
 				Pokemon userPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon(yourLevel);
-				Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon(enemyLevel);
+				// Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon(enemyLevel);
 				User opponent = new User(Core.gateway, uData);
+				
 				if(UserState.getBattle(opponent) != null)
 					throw new UsageException("user is already in a battle.");
+				
+				UserState.requestBattle(opponent, new UserPlayer(context.channel, context.user, userPokemon));
+				
 				return user.getPrivateChannel().flatMap(cData -> {
 					PrivateChannel channel = new PrivateChannel(Core.gateway, cData);
-					PlayerBattle battle = new PlayerBattle(new UserPlayer(context.channel, context.user, userPokemon), new UserPlayer(channel, opponent, enemyPokemon));
-					return UserState.startBattle(battle);
+					return channel.createMessage(context.user.getUsername()+" wants to battle with you! Use the `accept` or `reject` commands to respond to the request.")
+						.flatMap(e -> context.channel.createMessage("requested battle with "+opponent.getUsername()).then());
+					// PlayerBattle battle = new PlayerBattle(new UserPlayer(context.channel, context.user, userPokemon), new UserPlayer(channel, opponent, enemyPokemon));
+					// return UserState.startBattle(battle);
 				});
 			}
 		);

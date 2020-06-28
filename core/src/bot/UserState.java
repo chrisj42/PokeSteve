@@ -19,7 +19,8 @@ public enum UserState {
 	Travel(Commands.HELP),
 	Search(Commands.HELP),
 	Battle(Commands.HELP, Commands.ATTACK, Commands.FLEE),
-	Trade(Commands.HELP);
+	Trade(Commands.HELP),
+	Confirm(Commands.HELP, Commands.ACCEPT, Commands.REJECT);
 	
 	public static final UserState[] values = UserState.values();
 	
@@ -32,6 +33,7 @@ public enum UserState {
 	
 	private static final HashMap<User, UserState> userStates = new HashMap<>();
 	private static final HashMap<User, UserPlayer> userBattles = new HashMap<>();
+	private static final HashMap<User, UserPlayer> duelRequests = new HashMap<>();
 	
 	public static UserState getState(User user) {
 		return userStates.computeIfAbsent(user, u -> UserState.Idle);
@@ -60,5 +62,18 @@ public enum UserState {
 			leaveBattle(((UserPlayer)player.getOpponent()).user, false);
 		userStates.put(user, UserState.Idle);
 		return player;
+	}
+	
+	public static void requestBattle(User recipient, UserPlayer requester) {
+		userStates.put(recipient, UserState.Confirm);
+		duelRequests.put(recipient, requester);
+	}
+	public static void cancelRequest(User recipient) {
+		duelRequests.remove(recipient);
+		if(userStates.get(recipient) == UserState.Confirm)
+			userStates.put(recipient, UserState.Idle);
+	}
+	public static UserPlayer getRequester(User recipient) {
+		return duelRequests.get(recipient);
 	}
 }

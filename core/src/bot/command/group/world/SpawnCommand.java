@@ -18,7 +18,7 @@ public class SpawnCommand extends ActionableCommand {
 	
 	public static int DEFAULT_LEVEL = 100;
 	
-	private static Option LEVEL_OPT = new Option("level", 'l', "select pokemon level", "<level>");
+	static final Option LEVEL_OPT = new Option("level", 'l', "select pokemon level", "<level>");
 	public SpawnCommand() {
 		super("spawn", "(debug command) spawn a wild pokemon and list information about it.", new ArgumentSet("<pokemon name or dex number>"), LEVEL_OPT);
 	}
