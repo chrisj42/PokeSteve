@@ -123,7 +123,7 @@ public class Pokemon {
 		if(expCache == 0) return Mono.just(false);
 		experience += expCache;
 		
-		StringBuilder str = new StringBuilder("Gained ").append(expCache).append(" exp!");
+		StringBuilder str = new StringBuilder();
 		
 		boolean changed = false;
 		// EnumMap<Stat, Integer> statChanges = new EnumMap<>(Stat.class);
@@ -159,10 +159,11 @@ public class Pokemon {
 		if(changed)
 			statData.forEach((stat, data) -> data.recalcStat());
 		
+		final int gained = expCache;
 		expCache = 0;
 		
 		return channel.createEmbed(emb -> emb
-			.setTitle("Gained "+expCache+" exp!")
+			.setTitle("Gained "+gained+" exp!")
 			.setDescription(str.toString())
 		).map(msg -> true);
 	}

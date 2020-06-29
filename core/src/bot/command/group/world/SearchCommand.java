@@ -10,6 +10,7 @@ import bot.command.OptionSet.OptionValues;
 import bot.data.UserData;
 import bot.util.Utils;
 import bot.world.pokemon.Pokemon;
+import bot.world.pokemon.PokemonSpecies;
 import bot.world.pokemon.battle.BattleInstance;
 import bot.world.pokemon.battle.UserPlayer;
 import bot.world.pokemon.battle.WildBattle;
@@ -29,10 +30,12 @@ public class SearchCommand extends ActionableCommand {
 		
 		UserData data = UserData.reqData(context.user);
 		
-		if(Utils.randInt(0, 1) != 0)
-			return context.channel.createMessage("You couldn't find anything.").then();
+		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
-		Pokemon wildPokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon(data.getSelectedPokemon().getLevel());
+		// if(Utils.randInt(0, 1) != 0)
+		// 	return context.channel.createMessage("You couldn't find anything.").then();
+		
+		Pokemon wildPokemon = species.spawnPokemon(data.getSelectedPokemon().getLevel());
 		
 		return context.channel.createMessage("A wild "+wildPokemon.species+" appeared!").flatMap(
 			e -> new WildBattle(new UserPlayer(context.channel, data, data.getSelectedPokemon()), wildPokemon)
