@@ -30,7 +30,7 @@ public class StarterCommand extends ActionableCommand {
 	}
 	
 	public StarterCommand() {
-		super("starter", "Pick your starter.", "<pokemon name or dex number>");
+		super("starter", "Pick your starter. Give no arguments to see all available starters.", "<pokemon name or dex number>");
 	}
 	
 	@Override

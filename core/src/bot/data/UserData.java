@@ -85,9 +85,10 @@ public class UserData {
 	// a request to battle from someone else
 	private UserPlayer incomingDuelRequest = null; // stores who it's from
 	// a request to battle that this user sent to someone else
-	private User outgoingDuelRequest = null; // stores who it's for
+	private UserData outgoingDuelRequest = null; // stores who it's for
 	private Timer outgoingRequestTimer; // tracks time until outgoing request expires.
-	private final Object duelRequestLock = new Object();
+	private final Object incomingRequestLock = new Object();
+	private final Object outgoingRequestLock = new Object();
 	
 	// new user
 	private UserData(User user) {
@@ -182,51 +183,35 @@ public class UserData {
 		save();
 	}
 	
-	private void clearOutgoingRequest() {
-		synchronized (duelRequestLock) {
-			if(outgoingRequestTimer != null) {
-				outgoingRequestTimer.stop();
-				outgoingRequestTimer = null;
-			}
-			outgoingDuelRequest = null;
-		}
-	}
-	
-	@NotNull
-	public UserPlayer flushDuelRequest() {
-		if(battlePlayer != null)
-			throw new UsageException("You cannot manage duel requests during a battle.");
-		
-		synchronized (duelRequestLock) {
-			if(incomingDuelRequest == null)
-				throw new UsageException("You don't have a pending duel request.");
-			
-			UserPlayer opponent = incomingDuelRequest;
-			reqData(incomingDuelRequest.user).clearOutgoingRequest();
-			incomingDuelRequest = null;
-			return opponent;
-		}
-	}
-	
 	public void requestDuel(User opponent, CommandContext context) {
-		synchronized (duelRequestLock) {
+		synchronized (outgoingRequestLock) {
 			if(outgoingDuelRequest != null) {
-				if(outgoingDuelRequest.getId().equals(opponent.getId()))
+				if(outgoingDuelRequest.userId.equals(opponent.getId()))
 					throw new UsageException("You have already sent a duel request to " + opponent.getUsername() + ".");
 				else
-					throw new UsageException("You already have an outgoing duel request with " + outgoingDuelRequest.getUsername() + "; cancel that one before sending another.");
+					throw new UsageException("You already have an outgoing duel request with " + outgoingDuelRequest.getUser().getUsername() + "; cancel that one before sending another.");
 			}
 			
 			UserData recipData = getData(opponent);
-			if(recipData == null || recipData.incomingDuelRequest != null || recipData.battlePlayer != null)
+			boolean available = recipData != null;
+			if(available) {
+				synchronized (recipData.incomingRequestLock) {
+					if(recipData.incomingDuelRequest != null || recipData.battlePlayer != null)
+						available = false;
+					else
+						recipData.incomingDuelRequest = new UserPlayer(context.channel, this, selectedPokemon);
+				}
+			}
+			if(!available)
 				throw new UsageException(opponent.getUsername()+" is not currently available for dueling. They are either in a battle, already have a duel request, or don't yet have a pokemon.");
 			
-			recipData.incomingDuelRequest = new UserPlayer(context.channel, this, selectedPokemon);
-			outgoingDuelRequest = opponent;
+			outgoingDuelRequest = recipData;
 			Timer t = new Timer(REQUEST_TIMEOUT_MS, e -> {
-				if(outgoingRequestTimer == null)
-					return; // was already handled
-				flushDuelRequest();
+				synchronized (outgoingRequestLock) {
+					if(outgoingRequestTimer == null)
+						return; // was already handled
+					clearOutgoingRequest();
+				}
 				context.channel.createMessage("Duel request against " + opponent.getUsername() + " timed out. Send another request if you wish to start a duel.")
 					.flatMap(msg -> opponent.getPrivateChannel())
 					.flatMap(channel -> channel.createMessage("Duel request from " + self.getUsername() + " timed out."))
@@ -234,6 +219,38 @@ public class UserData {
 			});
 			outgoingRequestTimer = t;
 			t.start();
+		}
+	}
+	
+	public UserPlayer clearIncomingRequest() { return clearIncomingRequest(true); }
+	private UserPlayer clearIncomingRequest(boolean checkOther) {
+		synchronized (incomingRequestLock) {
+			if(incomingDuelRequest == null)
+				throw new UsageException("No pending requests.");
+			
+			UserPlayer opponent = incomingDuelRequest;
+			incomingDuelRequest = null;
+			if(checkOther)
+				opponent.data.clearOutgoingRequest(false);
+			return opponent;
+		}
+	}
+	public UserData clearOutgoingRequest() { return clearOutgoingRequest(true); }
+	private UserData clearOutgoingRequest(boolean checkOther) {
+		synchronized (outgoingRequestLock) {
+			if(outgoingDuelRequest == null)
+				throw new UsageException("No outgoing requests.");
+			
+			outgoingRequestTimer.stop();
+			outgoingRequestTimer = null;
+			
+			UserData opponentData = outgoingDuelRequest;
+			outgoingDuelRequest = null;
+			
+			if(checkOther)
+				opponentData.clearIncomingRequest(false);
+			
+			return opponentData;
 		}
 	}
 	

@@ -7,6 +7,7 @@ import bot.command.ActionableCommand;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
+import bot.util.UsageException;
 import bot.world.pokemon.battle.PlayerBattle;
 import bot.world.pokemon.battle.UserPlayer;
 
@@ -22,7 +23,8 @@ public class DuelCommand extends CommandParent {
 		super("duel", "Make and manage duel requests.",
 			new DuelRequestCommand(),
 			new DuelAcceptCommand(),
-			new DuelRejectCommand()
+			new DuelRejectCommand(),
+			new DuelCancelCommand()
 		);
 		// super("duel", "Request a battle with another player.", new ArgumentSet("<opponent user id>", "<your pokemon>"), LEVEL_OPT);
 	}
@@ -36,50 +38,25 @@ public class DuelCommand extends CommandParent {
 		
 		@Override
 		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-			if(args.length < 3)
-				throw new ArgumentCountException(3 - args.length);
+			if(args.length == 0)
+				throw new ArgumentCountException(1);
 			
 			UserData selfData = UserData.reqData(context.user);
 			
 			Snowflake opponentId = Snowflake.of(args[0]);
-			RestUser opponentUser = Core.client.getUserById(opponentId);
-			return opponentUser.getData().flatMap(
-				uData -> {
-					// int yourLevel = SpawnCommand.DEFAULT_LEVEL;
-					// int enemyLevel = SpawnCommand.DEFAULT_LEVEL;
-				/*if(options.hasOption(LEVEL_OPT)) {
-					yourLevel = options.getOptionValue(LEVEL_OPT, 0, ArgType.INTEGER);
-					// enemyLevel = options.getOptionValue(LEVEL_OPT, 1, ArgType.INTEGER);
-				}*/
-					
-					// Pokemon userPokemon = ArgType.POKEMON.parseArg(args[1]).spawnPokemon(yourLevel);
-					// Pokemon enemyPokemon = ArgType.POKEMON.parseArg(args[2]).spawnPokemon(enemyLevel);
-					User opponent = new User(Core.gateway, uData);
-					selfData.requestDuel(opponent, context);
-					
-					return opponentUser.getPrivateChannel().flatMap(cData -> {
-						PrivateChannel channel = new PrivateChannel(Core.gateway, cData);
-						return channel.createMessage(context.user.getUsername()+" wants to battle with you! Type `duel accept` to start the battle or `duel reject` to refuse the request.")
-							.flatMap(e -> context.channel.createMessage("Requested duel with "+opponent.getUsername()).then());
-						// PlayerBattle battle = new PlayerBattle(new UserPlayer(context.channel, context.user, userPokemon), new UserPlayer(channel, opponent, enemyPokemon));
-						// return UserState.startBattle(battle);
-					});
-				}
-			);
+			RestUser restOpponent = Core.client.getUserById(opponentId);
+			return restOpponent.getData().flatMap(uData -> {
+				User opponent = new User(Core.gateway, uData);
+				selfData.requestDuel(opponent, context);
+				
+				return opponent.getPrivateChannel()
+					.flatMap(channel -> channel.createMessage(context.user.getUsername()+" wants to battle with you! Type `duel accept` to start the battle or `duel reject` to refuse the request.")
+					)
+					.flatMap(msg -> context.channel.createMessage("Sent "+opponent.getUsername()+" a duel request."))
+					.then();
+			});
 		}
 	}
-	
-	/*public static class DuelStatusCommand extends ActionableCommand {
-		
-		public DuelStatusCommand() {
-			super("status", "Check if you have a duel pending.");
-		}
-		
-		@Override
-		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
-			return null;
-		}
-	}*/
 	
 	public static class DuelAcceptCommand extends ActionableCommand {
 		
@@ -90,9 +67,13 @@ public class DuelCommand extends CommandParent {
 		@Override
 		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
 			UserData data = UserData.reqData(context.user);
-			UserPlayer opponent = data.flushDuelRequest();
+			if(data.getBattlePlayer() != null)
+				throw new UsageException("Cannot accept duel requests during a battle.");
 			
+			UserPlayer opponent = data.clearIncomingRequest();
 			return context.channel.createMessage("Accepted duel request from "+opponent.user.getUsername()+".")
+				.flatMap(msg -> opponent.user.getPrivateChannel())
+				.flatMap(channel -> channel.createMessage(context.user.getUsername()+" accepted your duel request."))
 				.flatMap(msg -> new PlayerBattle(opponent,
 					new UserPlayer(context.channel, data, data.getSelectedPokemon())
 				).startBattle());
@@ -108,10 +89,27 @@ public class DuelCommand extends CommandParent {
 		@Override
 		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
 			UserData data = UserData.reqData(context.user);
-			UserPlayer opp = data.flushDuelRequest();
-			return context.channel.createMessage("Rejected duel request from "+opp.user.getUsername()+".")
-				.flatMap(msg -> opp.user.getPrivateChannel())
+			UserPlayer opponent = data.clearIncomingRequest();
+			return context.channel.createMessage("Rejected duel request from "+opponent.user.getUsername()+".")
+				.flatMap(msg -> opponent.user.getPrivateChannel())
 				.flatMap(channel -> channel.createMessage(context.user.getUsername()+" rejected your duel request."))
+				.then();
+		}
+	}
+	
+	public static class DuelCancelCommand extends ActionableCommand {
+		
+		public DuelCancelCommand() {
+			super("cancel", "Cancel a duel request you recently made.");
+		}
+		
+		@Override
+		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
+			UserData data = UserData.reqData(context.user);
+			UserData opponentData = data.clearOutgoingRequest();
+			return context.channel.createMessage("Cancelled duel request to "+opponentData.getUser().getUsername()+".")
+				.flatMap(msg -> opponentData.getUser().getPrivateChannel())
+				.flatMap(channel -> channel.createMessage(context.user.getUsername()+" cancelled their duel request."))
 				.then();
 		}
 	}
