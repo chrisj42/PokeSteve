@@ -23,6 +23,7 @@ import bot.world.pokemon.battle.UserPlayer;
 
 import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.User;
+import discord4j.core.spec.EmbedCreateSpec;
 
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -127,7 +128,17 @@ public class UserData {
 	
 	public User getUser() { return self; }
 	
+	public void buildStatistics(EmbedCreateSpec e) {
+		e.setTitle("User Statistics");
+		e.setAuthor(self.getUsername(), null, self.getAvatarUrl());
+		e.addField("Wins", String.valueOf(wins), true);
+		e.addField("Losses", String.valueOf(losses), true);
+		e.addField("Ties", String.valueOf(ties), true);
+	}
+	
+	
 	// POKEMON MANAGEMENT
+	
 	
 	private void ensureSelectedPokemon() { ensureSelectedPokemon("attempt to fetch selected pokemon of User "+userId+" while selected pokemon is null; setting to starter/first"); }
 	private void ensureSelectedPokemon(String onNull) {

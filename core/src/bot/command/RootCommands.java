@@ -12,6 +12,7 @@ import bot.command.group.debug.SpawnCommand;
 import bot.command.group.info.DexCommand;
 import bot.command.group.info.HelpCommand;
 import bot.command.group.info.MoveCommand;
+import bot.command.group.info.StatsCommand;
 import bot.command.group.pokemon.PokemonCommand;
 import bot.command.group.pokemon.StarterCommand;
 import bot.command.group.world.DuelCommand;
@@ -28,6 +29,7 @@ public enum RootCommands {
 	HELP(new HelpCommand()),
 	DEX(new DexCommand()),
 	MOVE(new MoveCommand()),
+	STATS(new StatsCommand()),
 	
 	// pokemon
 	STARTER(new StarterCommand()),
