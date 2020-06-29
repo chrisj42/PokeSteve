@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -153,6 +154,10 @@ public class UserData {
 	@Nullable
 	public CaughtPokemon getPokemon(int catchId) {
 		return caughtPokemon.get(catchId);
+	}
+	
+	public NavigableMap<Integer, CaughtPokemon> getPokemonFrom(int idOffset) {
+		return caughtPokemon.tailMap(idOffset, true);
 	}
 	
 	public void addPokemon(Pokemon pokemon) {

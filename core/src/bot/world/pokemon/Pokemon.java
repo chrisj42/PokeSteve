@@ -233,6 +233,11 @@ public class Pokemon {
 			e.setFooter("Owned by "+owner.getUser().getUsername(), owner.getUser().getAvatarUrl());
 		}
 		
+		public void buildListEntry(StringBuilder str) {
+			str.append("**").append(species.name).append("** - id: ").append(catchId)
+				.append(" - Lv. ").append(super.level);
+		}
+		
 		@Override
 		public int compareTo(@NotNull Pokemon.CaughtPokemon o) {
 			return Integer.compare(catchId, o.catchId);
