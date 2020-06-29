@@ -97,7 +97,7 @@ public class PokemonSpecies {
 				gender = Gender.Male;
 		}
 		
-		return new Pokemon(this, level, Utils.pickRandom(Nature.values), gender, learnableMoves.getDefaultMoveset(level));
+		return new Pokemon(this, level, Utils.pickRandom(Nature.values), gender);
 	}
 	
 	private static final DecimalFormat spriteDexFormat = new DecimalFormat("000");

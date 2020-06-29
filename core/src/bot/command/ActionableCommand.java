@@ -46,7 +46,7 @@ public abstract class ActionableCommand extends Command {
 		OptionValues optionValues = options.parseOptions(context);
 		
 		try {
-			String[] argValues = arguments.parseArguments(context, false);
+			String[] argValues = context.getRemainingArgs().toArray(new String[0]);
 			return execute(context, optionValues, argValues);
 		} catch(ArgumentCountException e) {
 			throw new UsageException(e.missingArgs + " argument" + (e.missingArgs == 1 ? " is" : "s are")+" missing.");

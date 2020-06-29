@@ -19,15 +19,14 @@ public class AttackCommand extends ActionableCommand {
 	
 	@Override
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-		if(args.length == 0)
-			throw new ArgumentCountException(1);
+		requireArgs(1, args);
 		
 		Player player = UserData.reqData(context.user).getBattlePlayer();
 		if(player == null)
 			throw new UsageException("You are not in a battle.");
 		
 		int id = ArgType.INTEGER.parseArg(args[0]) - 1;
-		if(id < 0 || id >= player.pokemon.pokemon.moveset.length)
+		if(id < 0 || id >= player.pokemon.pokemon.getMoveCount())
 			throw new UsageException("move id does not exist.");
 		
 		return player.getBattle().submitAttack(player, id);

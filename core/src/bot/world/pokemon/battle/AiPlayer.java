@@ -13,10 +13,10 @@ public class AiPlayer extends Player {
 	}
 	
 	int selectMove() {
-		/*int move = Utils.randInt(0, getOpponent().pokemon.pokemon.moveset.length-1);
+		/*int move = Utils.randInt(0, getOpponent().pokemon.pokemon.getMoveCount()-1);
 		Integer disabled = getOpponent().pokemon.getFlag(Flag.DISABLED_MOVE);
 		if(disabled != null && disabled == move)
-			move = (move+1) % getOpponent().pokemon.pokemon.moveset.length;
+			move = (move+1) % getOpponent().pokemon.pokemon.getMoveCount();
 		return move;*/
 		Integer rand = Utils.pickRandom(pokemon.getAvailableMoves());
 		return rand == null ? -1 : rand;

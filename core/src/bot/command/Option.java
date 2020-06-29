@@ -40,7 +40,7 @@ public class Option implements Comparable<Option> {
 	
 	public String[] parseOptionArgs(CommandContext context, String referenceString) {
 		try {
-			return args.parseArguments(context, true);
+			return args.parseArguments(context);
 		} catch(ArgumentCountException e) {
 			throw new UsageException("option "+referenceString+" is missing at least one argument.");
 		}

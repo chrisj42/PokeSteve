@@ -6,6 +6,7 @@ import bot.data.DataCore;
 import bot.world.pokemon.PokemonSpecies;
 import bot.world.pokemon.external.Importer;
 import bot.util.UsageException;
+import bot.world.pokemon.move.Move;
 
 public class ArgType<T> {
 	
@@ -27,6 +28,13 @@ public class ArgType<T> {
 		}
 		
 		return species;
+	});
+	
+	public static final ArgType<Move> MOVE = new ArgType<>(val -> {
+		Move move = DataCore.MOVES.get(val);
+		if(move == null)
+			throw new UsageException("Could not find move with name \""+val+"\".");
+		return move;
 	});
 	
 	private final Function<String, T> argParser;

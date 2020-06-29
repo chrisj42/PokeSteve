@@ -46,7 +46,7 @@ public class PokemonEffectSet {
 			if(lastMove < 0)
 				return EffectResult.NO_OUTPUT;
 			
-			Move move = context.enemyPokemon.moveset[lastMove];
+			Move move = context.enemyPokemon.getMove(lastMove);
 			context.line(context.enemyPlayer).append("'s ").append(move).append(" was disabled!");
 			context.enemy.setFlag(Flag.DISABLED_MOVE, lastMove);
 			context.enemy.addEffect(new TimedPersistentEffect(4) {

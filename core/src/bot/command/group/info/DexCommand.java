@@ -20,8 +20,7 @@ public class DexCommand extends ActionableCommand {
 	
 	@Override
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-		if(args.length < 1)
-			throw new ArgumentCountException(1);
+		requireArgs(1, args);
 		
 		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		

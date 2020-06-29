@@ -18,8 +18,7 @@ public class MoveCommand extends ActionableCommand {
 	
 	@Override
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-		if(args.length < 1)
-			throw new ArgumentCountException(1);
+		requireArgs(1, args);
 		
 		Move move = DataCore.MOVES.get(args[0]);
 		if(move == null)

@@ -1,5 +1,7 @@
 package bot.command;
 
+import bot.command.ArgumentSet.ArgumentCountException;
+
 import reactor.core.publisher.Mono;
 
 public abstract class Command {
@@ -33,5 +35,10 @@ public abstract class Command {
 	@Override
 	public String toString() {
 		return name+"-command";
+	}
+	
+	public static void requireArgs(int count, String[] args) throws ArgumentCountException {
+		if(args.length < count)
+			throw new ArgumentSet.ArgumentCountException(count - args.length);
 	}
 }

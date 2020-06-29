@@ -2,9 +2,13 @@ package bot.world.pokemon;
 
 import java.text.DecimalFormat;
 import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 import bot.data.DataCore;
 import bot.data.UserData;
+import bot.util.UsageException;
+import bot.world.pokemon.LearnSet.LevelUpMove;
 import bot.world.pokemon.StatData.SerialStatData;
 import bot.world.pokemon.move.Move;
 import bot.util.POJO;
@@ -26,11 +30,12 @@ public class Pokemon {
 	public final Nature nature;
 	public final Gender gender;
 	private final EnumMap<Stat, StatData> statData;
-	public final Move[] moveset;
+	private Move[] moveset;
 	private int level;
 	private int experience;
 	
 	private int expCache; // exp to be added
+	private final TreeSet<Move> movePool = new TreeSet<>();
 	
 	// for catching pokemon and loading data
 	private Pokemon(@NotNull PokemonSpecies species, int level, int experience, Nature nature, Gender gender, Move[] moveset, EnumMap<Stat, StatData> statData) {
@@ -41,18 +46,21 @@ public class Pokemon {
 		this.gender = gender;
 		this.moveset = moveset;
 		this.statData = statData;
+		species.learnableMoves.getMovePool(level).forEach(lMove -> movePool.add(lMove.move));
 	}
 	// wild pokemon
-	public Pokemon(@NotNull PokemonSpecies species, int level, Nature nature, Gender gender, Move[] moveset) {
+	public Pokemon(@NotNull PokemonSpecies species, int level, Nature nature, Gender gender) {
 		this(species, level,
 			species.growthRate.getExpRequirement(level),
-			nature, gender, moveset, new EnumMap<>(Stat.class)
+			nature, gender,
+			species.learnableMoves.getDefaultMoveset(level),
+			new EnumMap<>(Stat.class)
 		);
 		
-		for(Move move: moveset) {
+		/*for(Move move: moveset) {
 			if(move == null)
 				System.err.println("pokemon "+species+" has nulls in moveset");
-		}
+		}*/
 		
 		for(Stat stat: Stat.persistStats)
 			statData.put(stat, new StatData(this, stat));
@@ -63,17 +71,17 @@ public class Pokemon {
 		prevForm.statData.forEach((stat, data) -> statData.put(stat, new StatData(this, stat, data)));
 	}
 	public Pokemon(SerialPokemon data) {
-		species = DataCore.POKEMON.get(data.dex);
-		nature = Utils.values(Nature.class)[data.nature];
-		gender = Utils.values(Gender.class)[data.gender];
-		level = data.level;
-		experience = data.experience;
+		this(DataCore.POKEMON.get(data.dex),
+			data.level, data.experience,
+			Utils.values(Nature.class)[data.nature],
+			Utils.values(Gender.class)[data.gender],
+			new Move[data.moveset.length],
+			new EnumMap<>(Stat.class)
+		);
 		
-		moveset = new Move[data.moveset.length];
 		for(int i = 0; i < moveset.length; i++)
 			moveset[i] = DataCore.MOVES.get(data.moveset[i]);
 		
-		statData = new EnumMap<>(Stat.class);
 		for(int i = 0; i < Stat.persistStats.length; i++)
 			statData.put(Stat.persistStats[i], new StatData(this, Stat.persistStats[i], data.statData[i]));
 	}
@@ -83,6 +91,25 @@ public class Pokemon {
 	}
 	
 	public int getLevel() { return level; }
+	
+	public int getMoveCount() { return moveset.length; }
+	public Move getMove(int idx) { return moveset[idx]; }
+	
+	public void replaceMove(Move toLearn, Move toReplace) {
+		if(!movePool.contains(toLearn))
+			throw new UsageException(species.name+" cannot learn the move "+toLearn.getName()+".");
+		int idx = -1;
+		for(int i = 0; i < moveset.length; i++) {
+			if(moveset[i] == toReplace) {
+				idx = i;
+				break;
+			}
+		}
+		if(idx < 0)
+			throw new UsageException(species.name+" does not have the move "+toReplace.getName()+" in its move set.");
+		
+		moveset[idx] = toLearn;
+	}
 	
 	// when this pokemon defeats the given one
 	public void onDefeat(Pokemon other) {
@@ -98,13 +125,35 @@ public class Pokemon {
 		StringBuilder str = new StringBuilder("Gained ").append(expCache).append(" exp!");
 		
 		boolean changed = false;
+		// EnumMap<Stat, Integer> statChanges = new EnumMap<>(Stat.class);
+		LinkedList<String> statChanges = new LinkedList<>();
 		while(level < MAX_LEVEL && experience >= species.growthRate.getExpRequirement(level+1)) {
 			level++;
 			changed = true;
-			str.append("\n").append(species).append(" grew to level ").append(level).append("!");
-			Move[] newMoves = species.learnableMoves.getNewMoves(level);
-			for(Move move: newMoves)
-				str.append("\n").append(species).append(" learned ").append(move).append("!");
+			str.append("\n").append(species.name).append(" grew to level ").append(level).append("!");
+			// statChanges.clear();
+			statData.forEach((stat, data) -> {
+				int prev = data.getStatValue();
+				data.recalcStat();
+				int cur = data.getStatValue();
+				final int diff = cur - prev;
+				if(diff != 0) {
+					// statChanges.put(stat, diff);
+					statChanges.add("+"+diff+" "+stat);
+				}
+			});
+			str.append("\n").append(String.join(", ", statChanges));
+			statChanges.clear();
+			for(LevelUpMove lMove: species.learnableMoves.getNewMoves(level)) {
+				final Move move = lMove.move;
+				movePool.add(move);
+				str.append("\n").append(species.name).append(" learned ").append(move).append("!");
+				if(moveset.length < 4) {
+					moveset = Utils.append(moveset, move);
+					str.append("\n").append(move.getName()).append(" has been added to the move set.");
+				} else
+					str.append("\nUse `pokemon learn \"").append(move.getName()).append("\" \"<move to replace>\"` to add it to the move set.");
+			}
 		}
 		if(changed)
 			statData.forEach((stat, data) -> data.recalcStat());
@@ -112,7 +161,7 @@ public class Pokemon {
 		expCache = 0;
 		
 		return channel.createEmbed(emb -> emb
-			.setTitle("You win!")
+			.setTitle("Gained "+expCache+" exp!")
 			.setDescription(str.toString())
 		).map(msg -> true);
 	}
@@ -148,7 +197,7 @@ public class Pokemon {
 			data -> "+"+data.getEV()
 		)), true);
 		
-		Iterable<String> moveNames = Utils.map(species.learnableMoves.getMovePool(level), lmove -> lmove.move.name);
+		Iterable<String> moveNames = Utils.map(movePool, move -> move.name);
 		e.addField("Move pool", String.join(", ", moveNames), false);
 	}
 	

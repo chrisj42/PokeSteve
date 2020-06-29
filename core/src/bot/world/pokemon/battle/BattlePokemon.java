@@ -46,18 +46,18 @@ public class BattlePokemon {
 		
 		effects = new ArrayList<>(4);
 		
-		movePp = new int[pokemon.moveset.length];
+		movePp = new int[pokemon.getMoveCount()];
 		for(int i = 0; i < movePp.length; i++)
-			movePp[i] = pokemon.moveset[i].pp;
+			movePp[i] = pokemon.getMove(i).pp;
 	}
 	
 	public List<Integer> getAvailableMoves() {
-		ArrayList<Integer> availableMoves = new ArrayList<>(pokemon.moveset.length);
+		ArrayList<Integer> availableMoves = new ArrayList<>(pokemon.getMoveCount());
 		
 		if(hasFlag(Flag.FORCED_MOVE)) {
 			availableMoves.add(getFlag(Flag.FORCED_MOVE));
 		} else {
-			for(int i = 0; i < pokemon.moveset.length; i++) {
+			for(int i = 0; i < pokemon.getMoveCount(); i++) {
 				if(getPp(i) > 0)
 					availableMoves.add(i);
 			}
@@ -131,6 +131,6 @@ public class BattlePokemon {
 	public ChargeState getChargeState() {
 		Integer chargeMove = getFlag(Flag.FORCED_MOVE);
 		if(chargeMove == null) return null;
-		return pokemon.moveset[chargeMove].chargeState;
+		return pokemon.getMove(chargeMove).chargeState;
 	}
 }

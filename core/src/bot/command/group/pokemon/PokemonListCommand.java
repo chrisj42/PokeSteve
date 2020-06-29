@@ -14,9 +14,8 @@ public class PokemonListCommand extends ActionableCommand {
 	}
 	
 	@Override
-	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-		if(args.length == 0)
-			throw new ArgumentCountException(1);
+	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
+		// requireArgs(1, args);
 		
 		return context.channel.createMessage("not yet implemented").then();
 	}

@@ -58,8 +58,7 @@ public class PokemonCommand extends CommandParent {
 		
 		@Override
 		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
-			if(args.length == 0)
-				throw new ArgumentCountException(1);
+			requireArgs(1, args);
 			
 			final int catchId = ArgType.INTEGER.parseArg(args[0]);
 			

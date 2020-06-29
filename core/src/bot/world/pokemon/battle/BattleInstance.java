@@ -76,7 +76,7 @@ public abstract class BattleInstance {
 			boolean canSelect = availableMoves.size() >= 2;
 			if(!canSelect) {
 				int moveid = availableMoves.size() == 1 ? availableMoves.get(0) : -1;
-				Move move = moveid < 0 ? null : player.pokemon.pokemon.moveset[moveid];
+				Move move = moveid < 0 ? null : player.pokemon.pokemon.getMove(moveid);
 				if(move != null) {
 					if(player.pokemon.hasFlag(Flag.FORCED_MOVE)) // something forced this one-move-only choice
 						str.append("\n__\"").append(move).append("\" has been auto-selected.__");
@@ -92,15 +92,15 @@ public abstract class BattleInstance {
 			
 			if(canSelect) {
 				str.append("\nSelect your move with the `attack <move number>` command. Available moves:");
-				Move[] moves = player.pokemon.pokemon.moveset;
-				for(int i = 0; i < moves.length; i++) {
+				for(int i = 0; i < player.pokemon.pokemon.getMoveCount(); i++) {
 					boolean available = availableMoves.contains(i);
+					final Move move = player.pokemon.pokemon.getMove(i);
 					str.append("\n");
 					if(!available) str.append("~~");
 					str.append(i + 1).append(". ");
-					str.append(moves[i]);
+					str.append(move);
 					if(!available) str.append("~~");
-					str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(moves[i].pp);
+					str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(move.pp);
 				}
 			}
 			return str.toString();
@@ -121,13 +121,13 @@ public abstract class BattleInstance {
 		
 		if(moveIdx >= 0) {
 			if(player.pokemon.getPp(moveIdx) <= 0)
-				throw new UsageException("move " + player.pokemon.pokemon.moveset[moveIdx] + " is out of PP.");
+				throw new UsageException("move " + player.pokemon.pokemon.getMove(moveIdx) + " is out of PP.");
 			
 			// check disabled
 			if(player.pokemon.hasFlag(Flag.DISABLED_MOVE)) {
 				int moveid = player.pokemon.getFlag(Flag.DISABLED_MOVE);
 				if(moveid == moveIdx)
-					throw new UsageException("move " + player.pokemon.pokemon.moveset[moveIdx] + " is disabled.");
+					throw new UsageException("move " + player.pokemon.pokemon.getMove(moveIdx) + " is disabled.");
 			}
 		}
 		
@@ -267,7 +267,7 @@ public abstract class BattleInstance {
 				// or struggling
 				return Moves.Struggle.getMove();
 			}
-			return pokemon.pokemon.moveset[moveIdx];
+			return pokemon.pokemon.getMove(moveIdx);
 		}
 		
 		int getMoveIdx() {

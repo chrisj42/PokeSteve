@@ -15,9 +15,10 @@ import bot.world.pokemon.move.DamageProperty.DamageBuilder;
 import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.util.Utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class Move {
+public class Move implements Comparable<Move> {
 	
 	public final String name;
 	public final int id;
@@ -92,7 +93,7 @@ public class Move {
 		}
 		
 		if(context.enemy.hasFlag(Flag.FORCED_MOVE)) {
-			ChargeState state = context.enemyPokemon.moveset[context.enemy.getFlag(Flag.FORCED_MOVE)].chargeState;
+			ChargeState state = context.enemyPokemon.getMove(context.enemy.getFlag(Flag.FORCED_MOVE)).chargeState;
 			if(!state.affectedBy(this)) {
 				context.line("But ").append(context.enemyPlayer).append(" wasn't there!");
 				return;
@@ -237,5 +238,10 @@ public class Move {
 				.damage(new DamageBuilder(damageType, new PercentageDamage(100, false))
 					.create());
 		}
+	}
+	
+	@Override
+	public int compareTo(@NotNull Move o) {
+		return Integer.compare(id, o.id);
 	}
 }

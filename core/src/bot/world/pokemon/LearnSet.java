@@ -1,7 +1,11 @@
 package bot.world.pokemon;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.NavigableSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import bot.data.DataCore;
 import bot.data.json.MissingPropertyException;
@@ -19,9 +23,9 @@ public class LearnSet {
 	
 	private static final TreeSet<LevelUpMove> EMPTY_SET = new TreeSet<>();
 	
-	private final Move[] moves;
+	private final HashSet<Move> allMoves;
 	private final TreeSet<LevelUpMove> levelUpMoveSet;
-	private final TreeMap<Integer, TreeSet<LevelUpMove>> levelUpMoveMap;
+	private final TreeMap<Integer, TreeSet<LevelUpMove>> splitMoveMap;
 	
 	// @SuppressWarnings("unchecked")
 	public LearnSet(PokemonSpecies species, JsonArrayNode moves) throws MissingPropertyException {
@@ -29,16 +33,18 @@ public class LearnSet {
 		
 		// if(print) System.out.println("moves: "+moves.getLength());
 		
+		allMoves = new HashSet<>(moves.getLength());
 		levelUpMoveSet = new TreeSet<>();
-		levelUpMoveMap = new TreeMap<>();
-		this.moves = new Move[moves.getLength()];
-		for(int i = 0; i < this.moves.length; i++) {
+		splitMoveMap = new TreeMap<>();
+		// this.allMoves = new Move[moves.getLength()];
+		for(int i = 0; i < moves.getLength(); i++) {
 			JsonObjectNode moveNode = moves.getObjectNode(i);
-			this.moves[i] = DataCore.MOVES.get(NodeParser.getResourceId(moveNode.getObjectNode("move")));
-			if(this.moves[i] == null) {
+			final Move move = DataCore.MOVES.get(NodeParser.getResourceId(moveNode.getObjectNode("move")));
+			if(move == null) {
 				System.err.println("note: move "+i+" for pokemon "+species+" is null, skipping (resource name was "+moveNode.getObjectNode("move").parseValueNode("name", JsonNode::textValue)+")");
 				continue;
 			}
+			allMoves.add(move);
 			// this.moves[i] = DataCore.MOVES.getRef(moveNode.getObjectNode("move"));
 			
 			JsonArrayNode versionInfoList = moveNode.getArrayNode("version_group_details");
@@ -49,9 +55,9 @@ public class LearnSet {
 					continue;
 				int level = latestVersionInfo.parseValueNode("level_learned_at", JsonNode::intValue);
 				// if(print) System.out.println("move "+this.moves[i]+" learned at "+level+" with method "+learnMethod);
-				LevelUpMove lMove = new LevelUpMove(level, this.moves[i]);
+				LevelUpMove lMove = new LevelUpMove(level, move);
 				levelUpMoveSet.add(lMove);
-				levelUpMoveMap.computeIfAbsent(level, lvl -> new TreeSet<>()).add(lMove);
+				splitMoveMap.computeIfAbsent(level, l -> new TreeSet<>()).add(lMove);
 				break;
 			}
 		}
@@ -60,20 +66,19 @@ public class LearnSet {
 		// 	System.out.println("pokemon "+species.name+" levelup map:"+levelUpMoveMap);
 	}
 	
+	/*public TreeMap<Integer, TreeSet<LevelUpMove>> getMoveMap() {
+		return splitMoveMap;
+	}*/
+	
 	@NotNull
 	public NavigableSet<LevelUpMove> getMovePool(int level) {
-		Entry<Integer, TreeSet<LevelUpMove>> lastMoves = levelUpMoveMap.floorEntry(level);
-		return lastMoves == null
-			? EMPTY_SET
-			: levelUpMoveSet.headSet(lastMoves.getValue().last(), true);
+		Entry<Integer, TreeSet<LevelUpMove>> lastMoves = splitMoveMap.floorEntry(level);
+		return lastMoves == null ? EMPTY_SET :
+			levelUpMoveSet.headSet(lastMoves.getValue().last(), true);
 	}
 	
-	public Move[] getNewMoves(int level) {
-		LinkedList<Move> newMoves = new LinkedList<>();
-		TreeSet<LevelUpMove> moveSet = levelUpMoveMap.get(level);
-		if(moveSet != null)
-			moveSet.forEach(m -> newMoves.add(m.move));
-		return newMoves.toArray(new Move[0]);
+	public TreeSet<LevelUpMove> getNewMoves(int level) {
+		return splitMoveMap.getOrDefault(level, EMPTY_SET);
 	}
 	
 	public Move[] getDefaultMoveset(int level) {
