@@ -286,7 +286,7 @@ public abstract class BattleInstance {
 		abstract Mono<Void> onFinish(BattleResult result);
 		
 		public String getDescriptor() {
-			return "Lv. "+pokemon.pokemon.getLevel()+" "+pokemon.pokemon.species.name;
+			return (pokemon.pokemon.hasNickname() ? pokemon.pokemon.getName()+", " : "")+"Lv. "+pokemon.pokemon.getLevel()+" "+pokemon.pokemon.species.name;
 		}
 		
 		@Override

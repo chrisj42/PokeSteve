@@ -15,9 +15,10 @@ public class PokemonCommand extends CommandParent {
 	
 	public PokemonCommand() {
 		super("pokemon", "Manage your caught pokemon.",
+			new PokemonListCommand(),
 			new PokemonSelectCommand(),
 			new PokemonInfoCommand(),
-			new PokemonListCommand(),
+			new PokemonNicknameCommand(),
 			new PokemonLearnCommand()
 		);
 	}
@@ -65,7 +66,7 @@ public class PokemonCommand extends CommandParent {
 			UserData data = UserData.reqData(context.user);
 			CaughtPokemon pokemon = data.selectPokemon(catchId);
 			
-			return context.channel.createMessage("You selected your level "+pokemon.getLevel()+" "+pokemon.species.name+".").then();
+			return context.channel.createMessage("You selected your level "+pokemon.getLevel()+" "+pokemon.species.name+(pokemon.hasNickname() ? ", "+pokemon.getName() : "")+".").then();
 		}
 	}
 }

@@ -34,12 +34,13 @@ public class Pokemon {
 	private Move[] moveset;
 	private int level;
 	private int experience;
+	private String nickname;
 	
 	private int expCache; // exp to be added
 	private final TreeSet<Move> movePool = new TreeSet<>();
 	
 	// for catching pokemon and loading data
-	private Pokemon(@NotNull PokemonSpecies species, int level, int experience, Nature nature, Gender gender, Move[] moveset, EnumMap<Stat, StatData> statData) {
+	private Pokemon(@NotNull PokemonSpecies species, int level, int experience, Nature nature, Gender gender, Move[] moveset, EnumMap<Stat, StatData> statData, String nickname) {
 		this.species = species;
 		this.level = level;
 		this.experience = experience;
@@ -47,6 +48,7 @@ public class Pokemon {
 		this.gender = gender;
 		this.moveset = moveset;
 		this.statData = statData;
+		this.nickname = nickname;
 		species.learnableMoves.getMovePool(level).forEach(lMove -> movePool.add(lMove.move));
 	}
 	// wild pokemon
@@ -55,7 +57,7 @@ public class Pokemon {
 			species.growthRate.getExpRequirement(level),
 			nature, gender,
 			species.learnableMoves.getDefaultMoveset(level),
-			new EnumMap<>(Stat.class)
+			new EnumMap<>(Stat.class), null
 		);
 		
 		/*for(Move move: moveset) {
@@ -68,7 +70,7 @@ public class Pokemon {
 	}
 	// on evolution
 	private Pokemon(Pokemon prevForm, @NotNull PokemonSpecies evo) {
-		this(evo, prevForm.level, prevForm.experience, prevForm.nature, prevForm.gender, prevForm.moveset, new EnumMap<>(Stat.class));
+		this(evo, prevForm.level, prevForm.experience, prevForm.nature, prevForm.gender, prevForm.moveset, new EnumMap<>(Stat.class), prevForm.nickname);
 		prevForm.statData.forEach((stat, data) -> statData.put(stat, new StatData(this, stat, data)));
 	}
 	public Pokemon(SerialPokemon data) {
@@ -77,7 +79,8 @@ public class Pokemon {
 			Utils.values(Nature.class)[data.nature],
 			Utils.values(Gender.class)[data.gender],
 			new Move[data.moveset.length],
-			new EnumMap<>(Stat.class)
+			new EnumMap<>(Stat.class),
+			data.nickname
 		);
 		
 		for(int i = 0; i < moveset.length; i++)
@@ -85,6 +88,14 @@ public class Pokemon {
 		
 		for(int i = 0; i < Stat.persistStats.length; i++)
 			statData.put(Stat.persistStats[i], new StatData(this, Stat.persistStats[i], data.statData[i]));
+	}
+	
+	public String getName() {
+		return nickname == null ? species.name : nickname;
+	}
+	public boolean hasNickname() { return nickname != null; }
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 	public int getStat(Stat stat) {
@@ -98,7 +109,7 @@ public class Pokemon {
 	
 	public void replaceMove(Move toLearn, Move toReplace) {
 		if(!movePool.contains(toLearn))
-			throw new UsageException(species.name+" cannot learn the move "+toLearn.getName()+".");
+			throw new UsageException(getName()+" cannot learn the move "+toLearn.getName()+".");
 		int idx = -1;
 		for(int i = 0; i < moveset.length; i++) {
 			if(moveset[i] == toReplace) {
@@ -107,7 +118,7 @@ public class Pokemon {
 			}
 		}
 		if(idx < 0)
-			throw new UsageException(species.name+" does not have the move "+toReplace.getName()+" in its move set.");
+			throw new UsageException(getName()+" does not have the move "+toReplace.getName()+" in its move set.");
 		
 		moveset[idx] = toLearn;
 	}
@@ -131,7 +142,7 @@ public class Pokemon {
 		while(level < MAX_LEVEL && experience >= species.growthRate.getExpRequirement(level+1)) {
 			level++;
 			changed = true;
-			str.append("\n").append(species.name).append(" grew to level ").append(level).append("!");
+			str.append("\n").append(getName()).append(" grew to level ").append(level).append("!");
 			// statChanges.clear();
 			statData.forEach((stat, data) -> {
 				int prev = data.getStatValue();
@@ -148,7 +159,7 @@ public class Pokemon {
 			for(LevelUpMove lMove: species.learnableMoves.getNewMoves(level)) {
 				final Move move = lMove.move;
 				movePool.add(move);
-				str.append("\n").append(species.name).append(" learned ").append(move).append("!");
+				str.append("\n").append(getName()).append(" learned ").append(move).append("!");
 				if(moveset.length < 4) {
 					moveset = Utils.append(moveset, move);
 					str.append("\n").append(move.getName()).append(" has been added to the move set.");
@@ -171,8 +182,12 @@ public class Pokemon {
 	// private static final DecimalFormat statFormat = new DecimalFormat("00");
 	// private static final int MAX_STAT_NAME_LEN = 18;
 	public void buildEmbed(EmbedCreateSpec e) {
-		e.setTitle("Lv. "+level+" "+species.name);
+		e.setTitle("Lv. "+level+" "+species.name+(nickname != null ? " AKA "+nickname : ""));
 		e.setThumbnail(species.getSpritePath());
+		
+		// if(nickname != null)
+		// 	e.addField(, false);
+		
 		// e.addField("Level", String.valueOf(level), true);
 		if(level < 100) {
 			final int expMin = species.growthRate.getExpRequirement(level);
@@ -215,7 +230,7 @@ public class Pokemon {
 		
 		// catch constructor
 		public CaughtPokemon(Pokemon pokemon, UserData ownerData, int catchId) {
-			super(pokemon.species, pokemon.level, pokemon.experience, pokemon.nature, pokemon.gender, pokemon.moveset, pokemon.statData);
+			super(pokemon.species, pokemon.level, pokemon.experience, pokemon.nature, pokemon.gender, pokemon.moveset, pokemon.statData, pokemon.nickname);
 			this.owner = ownerData;
 			this.catchId = catchId;
 		}
@@ -234,8 +249,10 @@ public class Pokemon {
 		}
 		
 		public void buildListEntry(StringBuilder str) {
-			str.append("**").append(species.name).append("** - id: ").append(catchId)
-				.append(" - Lv. ").append(super.level);
+			str.append("**").append(getName()).append("**");
+			str.append(" - ID: ").append(catchId);
+			if(hasNickname()) str.append(" - ").append(species.name);
+			str.append(" - Lv. ").append(super.level);
 		}
 		
 		@Override
@@ -254,6 +271,7 @@ public class Pokemon {
 		public int[] moveset;
 		public SerialStatData[] statData;
 		public int catchId;
+		public String nickname;
 		
 		public SerialPokemon() {}
 		public SerialPokemon(CaughtPokemon caught) {
@@ -264,6 +282,7 @@ public class Pokemon {
 			gender = pokemon.gender.ordinal();
 			level = pokemon.level;
 			experience = pokemon.experience;
+			nickname = pokemon.nickname;
 			moveset = Utils.map(int[].class, pokemon.moveset, m -> m.id);
 			
 			statData = new SerialStatData[Stat.persistStats.length];
