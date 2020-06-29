@@ -16,7 +16,7 @@ public class Option implements Comparable<Option> {
 	private final String help;
 	
 	public Option(String name, char abbrev, String description, String... args) {
-		this(name, abbrev, description, new ArgumentSet(args));
+		this(name, abbrev, description, ArgumentSet.get(args));
 	}
 	public Option(String name, char abbrev, String description, ArgumentSet args) {
 		this.name = name;
@@ -25,7 +25,7 @@ public class Option implements Comparable<Option> {
 		
 		String usage = "--" + name + /*"|-" + abbrev +*/ (args.hasArgs() ? " " : "") + args.getUsage();
 		
-		this.help = usage + "\n\t" + description;
+		this.help = "`" + usage + "`\n\t" + description;
 	}
 	
 	@Override

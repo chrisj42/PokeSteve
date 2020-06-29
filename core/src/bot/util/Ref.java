@@ -2,8 +2,6 @@ package bot.util;
 
 import java.util.function.Function;
 
-import bot.pokemon.PokemonSpecies;
-
 public class Ref<T> {
 	
 	// used to ease serialization of POJO objects

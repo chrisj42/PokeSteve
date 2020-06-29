@@ -4,8 +4,8 @@ import bot.command.ActionableCommand;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
-import bot.pokemon.DataCore;
-import bot.pokemon.move.Move;
+import bot.data.DataCore;
+import bot.world.pokemon.move.Move;
 import bot.util.UsageException;
 
 import reactor.core.publisher.Mono;

@@ -1,13 +1,12 @@
 package bot.command.group.battle;
 
-import bot.UserState;
+import bot.data.UserData;
 import bot.command.ActionableCommand;
 import bot.command.ArgType;
 import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
-import bot.pokemon.battle.BattleInstance;
-import bot.pokemon.battle.BattleInstance.Player;
+import bot.world.pokemon.battle.BattleInstance.Player;
 import bot.util.UsageException;
 
 import reactor.core.publisher.Mono;
@@ -23,7 +22,9 @@ public class AttackCommand extends ActionableCommand {
 		if(args.length == 0)
 			throw new ArgumentCountException(1);
 		
-		Player player = UserState.getBattle(context.user);
+		Player player = UserData.reqData(context.user).getBattlePlayer();
+		if(player == null)
+			throw new UsageException("You are not in a battle.");
 		
 		int id = ArgType.INTEGER.parseArg(args[0]) - 1;
 		if(id < 0 || id >= player.pokemon.pokemon.moveset.length)

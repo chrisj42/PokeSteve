@@ -1,8 +1,5 @@
 package bot.command;
 
-import bot.command.ArgumentSet.ArgumentCountException;
-import bot.command.group.system.HelpCommand;
-
 import reactor.core.publisher.Mono;
 
 public abstract class Command {
@@ -16,6 +13,9 @@ public abstract class Command {
 	public String getName() { return name; }
 	
 	public abstract Mono<Void> execute(CommandContext context);
+	
+	public abstract String getDescription();
+	public abstract String getUsage();
 	
 	public abstract String getHelp();
 	

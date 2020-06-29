@@ -19,7 +19,7 @@ public abstract class ActionableCommand extends Command {
 	private final String helpString;
 	
 	protected ActionableCommand(String name, String description, String... arguments) {
-		this(name, description, arguments.length == 0 ? ArgumentSet.NO_ARGS : new ArgumentSet(arguments));
+		this(name, description, ArgumentSet.get(arguments));
 	}
 	protected ActionableCommand(String name, String description, ArgumentSet arguments, Option... options) {
 		this(name, description, arguments, options.length == 0 ? OptionSet.NO_OPTS : new OptionSet(options));
@@ -38,11 +38,11 @@ public abstract class ActionableCommand extends Command {
 		
 		this.usage = usage;
 		
-		this.helpString = "Usage: `"+usage+"`\n" + description + (options.hasOptions() ? "\n" : "")+options.getHelp();
+		this.helpString = "Usage: `"+usage+"`\n" + description + (options.hasOptions() ? "\n\n" : "")+options.getHelp();
 	}
 	
 	@Override
-	public Mono<Void> execute(CommandContext context) {
+	public final Mono<Void> execute(CommandContext context) {
 		OptionValues optionValues = options.parseOptions(context);
 		
 		try {
@@ -61,11 +61,13 @@ public abstract class ActionableCommand extends Command {
 		return helpString;
 	}
 	
-	protected String getDescription() {
+	@Override
+	public String getDescription() {
 		return description;
 	}
 	
-	protected String getUsage() {
+	@Override
+	public String getUsage() {
 		return usage;
 	}
 }

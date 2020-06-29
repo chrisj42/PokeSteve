@@ -1,4 +1,4 @@
-package bot.pokemon.external;
+package bot.world.pokemon.external;
 
 import java.io.File;
 import java.io.IOException;

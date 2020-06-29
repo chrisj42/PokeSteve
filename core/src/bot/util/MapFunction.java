@@ -1,6 +1,6 @@
 package bot.util;
 
-import bot.io.json.MissingPropertyException;
+import bot.data.json.MissingPropertyException;
 
 public interface MapFunction<T, R> {
 	

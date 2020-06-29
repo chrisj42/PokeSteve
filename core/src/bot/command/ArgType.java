@@ -2,9 +2,9 @@ package bot.command;
 
 import java.util.function.Function;
 
-import bot.pokemon.DataCore;
-import bot.pokemon.PokemonSpecies;
-import bot.pokemon.external.Importer;
+import bot.data.DataCore;
+import bot.world.pokemon.PokemonSpecies;
+import bot.world.pokemon.external.Importer;
 import bot.util.UsageException;
 
 public class ArgType<T> {

@@ -1,16 +1,15 @@
 package bot;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.stream.Collector;
 
 import bot.command.Command;
 import bot.command.CommandContext;
-import bot.command.CommandSet;
-import bot.io.DataFile;
-import bot.io.json.MissingPropertyException;
-import bot.pokemon.DataCore;
+import bot.command.RootCommands;
+import bot.data.DataCore;
+import bot.data.DataFile;
+import bot.data.UserData;
+import bot.data.json.MissingPropertyException;
 import bot.util.UsageException;
 
 import discord4j.common.util.Snowflake;
@@ -18,7 +17,6 @@ import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
 import discord4j.discordjson.json.gateway.StatusUpdate;
@@ -28,34 +26,23 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Core {
-	
 	/*
 		something to keep in mind: I definitely want to maintain relative order of messages in the same DM, but across multiple it shouldn't matter (until servers perhaps)
 	 */
 	
 	private Core() {}
 	
+	public static final ObjectMapper jsonMapper = new ObjectMapper();
+	
+	public static final Snowflake devId = Snowflake.of("281644307553845248");
+	
 	static {
 		DataCore.init();
 		System.gc(); // lots of objects are created in all the various builders; ensure that the setup objects have all been thrown away
 	}
 	
-	/*private static final HashMap<String, BiPredicate<String, Member>> prefixMap = new HashMap<>(3);
-	private static void addPrefix(String prefix, Predicate<Member> userCheck) {
-		Predicate<String> regexTest = Pattern.compile("^"+prefix).asPredicate();
-		prefixMap.put(prefix, (str, member) -> regexTest.test(str) && userCheck.test(member));
-	}
-	static {
-		addPrefix("!ps", Utils::matchBot);
-	}*/
-	
 	public static DiscordClient client;
 	public static GatewayDiscordClient gateway;
-	public static BotData data;
-	
-	public static CommandSet getRootCommands(User user) {
-		return UserState.getState(user).commands;
-	}
 	
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
@@ -64,31 +51,25 @@ public class Core {
 	public static HashSet<Snowflake> MEMBERS = new HashSet<>();
 	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
-		// ReadOnlyJsonTraversal auth = new ReadOnlyJsonTraversal(DataFile.AUTH);
-		// final String token = auth.getPropertyValue("token", JsonNode::textValue);
 		final String token = DataFile.AUTH.readJson().getValueNode("token").parseValue(JsonNode::textValue);
-		
-		// read bot config
-		data = null;//BotData.load();
-		
-		// addPrefix(data.prefix, member -> Utils.matchBot(member)/* || Owners.Chris.is(member)*/);
 		
 		// create client
 		client = DiscordClient.create(token);
 		gateway = client.login().block();
-			// .setInitialPresence(Presence.online(Activity.playing("with pokemans")))
 		
 		if(gateway == null)
 			throw new NullPointerException("gateway is null");
 		
-		gateway.updatePresence(StatusUpdate.builder()
-			.status("DM \"help\" to get started!")
-			.afk(false)
-			.build()
-		);
+		UserData.load();
 		
 		gateway.on(ReadyEvent.class)
 			.map(ready -> {
+				gateway.updatePresence(StatusUpdate.builder()
+					.status("DM \"help\" to get started!")
+					.afk(false)
+					.build()
+				);
+				
 				gateway.requestMembers(Snowflake.of(GUILD_ID))
 					.map(User::getId).collectList()
 					.subscribe(list -> MEMBERS.addAll(list));
@@ -125,7 +106,7 @@ public class Core {
 		// System.out.println("DM message");
 		
 		// return context.channel.createMessage("hello!").then();
-		Command cmd = Command.tryParseSubCommand(getRootCommands(context.user), context);
+		Command cmd = Command.tryParseSubCommand(RootCommands.getCommandsFor(context.user), context);
 		// System.out.println("basic command: "+cmd);
 		if(cmd == null)
 			return Mono.empty();

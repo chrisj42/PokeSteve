@@ -4,11 +4,15 @@ public class ArgumentSet {
 	
 	public static final ArgumentSet NO_ARGS = new ArgumentSet();
 	
+	public static ArgumentSet get(String... args) {
+		return args.length == 0 ? NO_ARGS : new ArgumentSet(args);
+	}
+	
 	private final String[] args;
 	
 	private final String usage;
 	
-	public ArgumentSet(String... args) {
+	private ArgumentSet(String... args) {
 		this.args = args;
 		
 		this.usage = String.join(" ", args);
