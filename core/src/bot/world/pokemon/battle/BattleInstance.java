@@ -66,8 +66,8 @@ public abstract class BattleInstance {
 		return broadcast(player -> {
 			StringBuilder str = new StringBuilder("**__Next Round__**\n");
 			Player opponent = ((Player)player).opponent;
-			str.append("Opponent: ").append(opponent).append(opponent instanceof UserPlayer ? " ("+opponent.pokemon.pokemon.species+")" : "").append(" - Health: ").append(opponent.pokemon.getHealth()).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
-			str.append("\nYour pokemon: ").append(player.pokemon.pokemon.species);
+			str.append("Opponent: ").append(opponent.getDescriptor()).append(" - Health: ").append(opponent.pokemon.getHealth()).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
+			str.append("\nYour pokemon: Lv. ").append(player.pokemon.pokemon.getLevel()).append(" ").append(player.pokemon.pokemon.species);
 			str.append(" - Health: ").append(player.pokemon.getHealth()).append("/").append(player.pokemon.pokemon.getStat(Stat.Health));
 			
 			// here we need to check if the user is capable of choosing a move this turn; there are a number of things that could prevent the user from doing so.
@@ -284,6 +284,10 @@ public abstract class BattleInstance {
 		public BattleInstance getBattle() { return battle; }
 		
 		abstract Mono<Void> onFinish(BattleResult result);
+		
+		public String getDescriptor() {
+			return "Lv. "+pokemon.pokemon.getLevel()+" "+pokemon.pokemon.species.name;
+		}
 		
 		@Override
 		public String toString() {

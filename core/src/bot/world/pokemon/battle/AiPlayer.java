@@ -25,4 +25,8 @@ public class AiPlayer extends Player {
 	@Override
 	Mono<Void> onFinish(BattleResult result) { return Mono.empty(); }
 	
+	@Override
+	public String getDescriptor() {
+		return "Wild "+super.getDescriptor();
+	}
 }

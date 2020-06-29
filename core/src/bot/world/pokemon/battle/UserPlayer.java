@@ -29,4 +29,9 @@ public class UserPlayer extends Player {
 				return Mono.empty();
 			});
 	}
+	
+	@Override
+	public String getDescriptor() {
+		return "("+user.getUsername()+") "+super.getDescriptor();
+	}
 }
