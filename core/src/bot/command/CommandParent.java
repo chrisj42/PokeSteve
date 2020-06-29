@@ -37,7 +37,7 @@ public class CommandParent extends Command {
 			help.append(" (default is `").append(defaultCommand.getName()).append("`)");
 			// help.append("\nIf none are given, `").append(defaultCommand.getName()).append("` is assumed.");
 		for(Command sub: subCommands)
-			help.append("\n`").append(sub.getUsage()).append("`\n\t").append(sub.getDescription());
+			help.append("\n\n`").append(sub.getUsage()).append("`\n\t").append(sub.getDescription());
 		
 		this.help = help.toString();
 	}
