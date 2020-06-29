@@ -3,6 +3,7 @@ package bot.world.pokemon;
 import java.text.DecimalFormat;
 import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.NavigableSet;
 import java.util.TreeSet;
 
 import bot.data.DataCore;
@@ -199,6 +200,11 @@ public class Pokemon {
 		
 		Iterable<String> moveNames = Utils.map(movePool, move -> move.name);
 		e.addField("Move pool", String.join(", ", moveNames), false);
+		
+		NavigableSet<LevelUpMove> nextMoves = species.learnableMoves.getFutureMoves(level);
+		LevelUpMove nextMove = nextMoves.isEmpty() ? null : nextMoves.first();
+		if(nextMove != null)
+			e.addField("Next move at:", "Level "+nextMove.level, true);
 	}
 	
 	

@@ -77,6 +77,14 @@ public class LearnSet {
 			levelUpMoveSet.headSet(lastMoves.getValue().last(), true);
 	}
 	
+	// opposite of getMovePool, gets the as-yet-unlearned moves.
+	@NotNull
+	public NavigableSet<LevelUpMove> getFutureMoves(int level) {
+		Entry<Integer, TreeSet<LevelUpMove>> lastMoves = splitMoveMap.floorEntry(level);
+		return lastMoves == null ? EMPTY_SET :
+			levelUpMoveSet.tailSet(lastMoves.getValue().last(), false);
+	}
+	
 	public TreeSet<LevelUpMove> getNewMoves(int level) {
 		return splitMoveMap.getOrDefault(level, EMPTY_SET);
 	}
