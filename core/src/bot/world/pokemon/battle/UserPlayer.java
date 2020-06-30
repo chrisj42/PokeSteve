@@ -14,7 +14,7 @@ public class UserPlayer extends Player {
 	public final UserData data;
 	
 	public UserPlayer(MessageChannel channel, UserData userData, Pokemon pokemon) {
-		super(userData.getUser().getUsername(), pokemon);
+		super(pokemon);
 		this.channel = channel;
 		this.user = userData.getUser();
 		this.data = userData;
@@ -31,7 +31,5 @@ public class UserPlayer extends Player {
 	}
 	
 	@Override
-	public String getDescriptor() {
-		return "("+user.getUsername()+") "+super.getDescriptor();
-	}
+	public String getPlayerName() { return user.getUsername(); }
 }

@@ -15,7 +15,7 @@ public class PlayerContext {
 	public final Pokemon enemyPokemon;
 	public final PokemonSpecies enemySpecies;
 	
-	public final StringBuilder msg;
+	private final StringBuilder msg;
 	
 	public PlayerContext(Player user, Player enemy, StringBuilder msg) {
 		this.msg = msg;

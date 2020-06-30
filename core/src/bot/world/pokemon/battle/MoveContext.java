@@ -34,7 +34,7 @@ public class MoveContext extends PlayerContext {
 	
 	// public boolean hadEffect() { return hadEffect; }
 	
-	void doMove() {
-		userMove.doMove(this);
+	String doMove() {
+		return userMove.doMove(this);
 	}
 }

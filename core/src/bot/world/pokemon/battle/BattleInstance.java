@@ -1,10 +1,11 @@
 package bot.world.pokemon.battle;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-import bot.data.UserData;
 import bot.world.pokemon.move.Move;
 import bot.world.pokemon.Pokemon;
 import bot.world.pokemon.Stat;
@@ -12,6 +13,10 @@ import bot.util.UsageException;
 import bot.util.Utils;
 import bot.world.pokemon.move.Moves;
 
+import discord4j.core.object.entity.User;
+import discord4j.core.spec.EmbedCreateSpec;
+import discord4j.core.spec.MessageCreateSpec;
+import discord4j.discordjson.json.EmbedFieldData;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -40,17 +45,19 @@ public abstract class BattleInstance {
 			.map(UserPlayer.class::cast);
 	}
 	
-	public Mono<Void> broadcast(String message) {
-		return broadcast(p -> message);
+	public Mono<Void> broadcastMessage(String message) { return broadcastMessage(p -> message); }
+	public Mono<Void> broadcastMessage(Function<UserPlayer, String> messageFetcher) {
+		return broadcastImpl(player -> player.channel.createMessage(messageFetcher.apply(player)));
 	}
-	public Mono<Void> broadcast(Function<UserPlayer, String> messageFetcher) {
-		return userFlux()
-			// .map(player -> player.channel)
-			.flatMap(player -> {
-				String message = messageFetcher.apply(player);
-				return player.channel.createMessage(message);
-			})
-			.then();
+	public Mono<Void> broadcastMessage(Consumer<MessageCreateSpec> messageMaker) {
+		return broadcastImpl(p -> p.channel.createMessage(messageMaker));
+	}
+	public Mono<Void> broadcastEmbed(Consumer<EmbedCreateSpec> embed) { return broadcastEmbed((p, e) -> embed.accept(e)); }
+	public Mono<Void> broadcastEmbed(BiConsumer<UserPlayer, EmbedCreateSpec> embedFetcher) {
+		return broadcastImpl(player -> player.channel.createEmbed(e -> embedFetcher.accept(player, e)));
+	}
+	private <T> Mono<Void> broadcastImpl(Function<UserPlayer, Mono<T>> messageSender) {
+		return userFlux().flatMap(messageSender).then();
 	}
 	
 	public Mono<Void> startBattle() {
@@ -63,15 +70,16 @@ public abstract class BattleInstance {
 	
 	public Mono<Void> onRoundStart() {
 		// send appropriate messages to all active players
-		return broadcast(player -> {
-			StringBuilder str = new StringBuilder("**__Next Round__**\n");
+		return broadcastEmbed((player, e) -> {
+			e.setTitle("Next Round");
 			Player opponent = ((Player)player).opponent;
-			str.append("Opponent: ").append(opponent.getDescriptor()).append(" - Health: ").append(opponent.pokemon.getHealth()).append("/").append(opponent.pokemon.pokemon.getStat(Stat.Health));
-			str.append("\nYour pokemon: Lv. ").append(player.pokemon.pokemon.getLevel()).append(" ").append(player.pokemon.pokemon.species);
-			str.append(" - Health: ").append(player.pokemon.getHealth()).append("/").append(player.pokemon.pokemon.getStat(Stat.Health));
+			
+			e.addField("Opponent", opponent.getDescriptor()+"\n"+opponent.getHealthDisplay(), false);
+			e.addField("Your Pokemon", player.getDescriptor()+"\n"+player.getHealthDisplay(), false);
 			
 			// here we need to check if the user is capable of choosing a move this turn; there are a number of things that could prevent the user from doing so.
 			
+			StringBuilder str = new StringBuilder();
 			List<Integer> availableMoves = player.pokemon.getAvailableMoves();
 			boolean canSelect = availableMoves.size() >= 2;
 			if(!canSelect) {
@@ -79,19 +87,19 @@ public abstract class BattleInstance {
 				Move move = moveid < 0 ? null : player.pokemon.pokemon.getMove(moveid);
 				if(move != null) {
 					if(player.pokemon.hasFlag(Flag.FORCED_MOVE)) // something forced this one-move-only choice
-						str.append("\n__\"").append(move).append("\" has been auto-selected.__");
+						str.append("__\"").append(move).append("\" has been auto-selected.__");
 					else // having only one move was just bad luck
 						canSelect = true; // let the player select, even if there's only one choice
 					// 	str.append("\n__\"").append(move).append("\" is the only available move and has been selected automatically.__");
 				}
 				else if(player.pokemon.hasFlag(Flag.REST_MESSAGE))
-					str.append("\n__").append(player.pokemon.getFlag(Flag.REST_MESSAGE)).append("__");
+					str.append("__").append(player.pokemon.getFlag(Flag.REST_MESSAGE)).append("__");
 				else // if there's no move and no message, then it's the struggle message
-					str.append("\n__You don't have any available moves. Struggle will be used.__");
+					str.append("__You don't have any available moves. Struggle will be used.__");
 			}
 			
 			if(canSelect) {
-				str.append("\nSelect your move with the `attack <move number>` command. Available moves:");
+				str.append("Select your move with the `attack <move number>` command. Available moves:");
 				for(int i = 0; i < player.pokemon.pokemon.getMoveCount(); i++) {
 					boolean available = availableMoves.contains(i);
 					final Move move = player.pokemon.pokemon.getMove(i);
@@ -103,7 +111,9 @@ public abstract class BattleInstance {
 					str.append(" - PP: ").append(player.pokemon.getPp(i)).append("/").append(move.pp);
 				}
 			}
-			return str.toString();
+			
+			e.addField("Move Selection", str.toString(), false);
+			
 		}).thenMany(Flux.just(player1, player2)).flatMap(player -> {
 			List<Integer> availableMoves = player.pokemon.getAvailableMoves();
 			if(availableMoves.size() == 0) // no available moves
@@ -134,27 +144,24 @@ public abstract class BattleInstance {
 		player.moveIdx = moveIdx;
 		player.ready = true;
 		
-		return broadcast(player+" is ready.").then(
-			Mono.fromCallable(() -> player.opponent.ready)
-			.flatMap(ready -> {
-				if(ready) return doRound().then(
-					Mono.fromCallable(() -> running)
-					.flatMap(hasBattle -> {
-						if(hasBattle)
-							return onRoundStart();
-						return Mono.empty();
-					})
-				);
-				if(player instanceof UserPlayer)
-					return ((UserPlayer)player).channel.createMessage("Waiting on "+player.opponent).then();
-				return Mono.empty();
+		return broadcastMessage(player+" is ready.").then(
+			Mono.defer(() -> {
+				if(player.opponent.ready)
+					return doRound()
+						.filter(Boolean::booleanValue)
+						.flatMap(e -> onRoundStart());
+				else {
+					if(player instanceof UserPlayer)
+						return ((UserPlayer)player).channel.createMessage("Waiting on "+player.opponent).then();
+					return Mono.empty();
+				}
 			})
 		);
 	}
 	
 	// both pokemon have selected their moves
 	// TODO later this will return a RichEmbed
-	private Mono<Void> doRound() {
+	private Mono<Boolean> doRound() {
 		@Nullable final Move move1 = player1.getMove();
 		@Nullable final Move move2 = player2.getMove();
 		final int priority1 = move1 != null ? move1.priority : 0;
@@ -176,57 +183,80 @@ public abstract class BattleInstance {
 		} else
 			first = Utils.randInt(0, 1) == 0 ? player1 : player2;
 		
-		StringBuilder msg = new StringBuilder();
-		
-		Player winner = doMove(first, true, msg);
+		ArrayList<String> fieldTitles = new ArrayList<>(3);
+		ArrayList<String> fieldValues = new ArrayList<>(3);
+		// TODO add some message embeds to the move logs; each move will either have its own embed or its own
+		Player winner = doMove(first, true, fieldTitles, fieldValues);
 		if(winner == null)
-			winner = doMove(first.opponent, false, msg);
+			winner = doMove(first.opponent, false, fieldTitles, fieldValues);
 		
+		StringBuilder msg = new StringBuilder(); // post move effects only
 		first.pokemon.processEffects(new PlayerContext(first, first.opponent, msg));
 		first.opponent.pokemon.processEffects(new PlayerContext(first.opponent, first, msg));
+		if(msg.length() > 0) {
+			fieldTitles.add("Effects");
+			fieldValues.add(msg.toString());
+		}
+		
 		// another win check in case the trailing effects caused someone to feint
 		if(winner == null && first.pokemon.getHealth() <= 0)
 			winner = first.opponent;
 		else if(winner == null && first.opponent.pokemon.getHealth() <= 0)
 			winner = first;
 		
-		Mono<Void> postMono = null;
+		final Mono<Void> postMono;
+		final String endMsg;
 		if(winner != null) {
 			if(winner.pokemon.getHealth() > 0) {
-				msg.append("\n***").append(winner).append(" wins!***");
+				endMsg = "***"+winner+" wins!***";
 				winner.pokemon.pokemon.onDefeat(winner.opponent.pokemon.pokemon);
 				postMono = winner.onFinish(BattleResult.WIN).then(
 					winner.opponent.onFinish(BattleResult.LOSE)
 				);
 			} else {
-				msg.append("\n***Both pokemon have fainted...***");
+				endMsg = "***Both pokemon have fainted...***";
 				postMono = winner.onFinish(BattleResult.TIE).then(
 					winner.opponent.onFinish(BattleResult.TIE)
 				);
 			}
 			running = false;
+		} else {
+			endMsg = null;
+			postMono = Mono.empty();
 		}
 		
 		player1.resetMove();
 		player2.resetMove();
 		
-		return broadcast(msg.toString()).then(postMono == null ? Mono.empty() : postMono);
+		return broadcastEmbed(spec -> {
+			spec.setTitle("Turn Results");
+			for(int i = 0; i < fieldTitles.size(); i++)
+				spec.addField(fieldTitles.get(i), fieldValues.get(i), false);
+		}).then(Mono.defer(() -> {
+			if(endMsg != null)
+				return broadcastMessage(endMsg).then(postMono);
+			return postMono;
+		})).then(Mono.fromCallable(() -> running));
 	}
 	
-	private Player doMove(Player player, boolean isFirst, StringBuilder msg) {
+	private Player doMove(Player player, boolean isFirst, List<String> fieldTitles, List<String> fieldValues) {
 		if(player.moveIdx >= 0) // update last move used
 			player.lastMoveIdx = player.moveIdx;
 		final Move move = player.getMove();
 		// System.out.println("doing player move: "+player+" with move "+move+", idx "+player.moveIdx);
 		if(move != null) {
+			StringBuilder msg = new StringBuilder();
 			MoveContext context = new MoveContext(move, player, player.opponent, isFirst, msg);
-			context.doMove();
+			final String titleText = context.doMove();
+			fieldTitles.add(titleText);
+			fieldValues.add(msg.toString());
 			if(context.enemy.getHealth() <= 0)
 				return player;
 			else if(context.user.getHealth() <= 0)
 				return player.opponent; // recoil
 		} else {
-			msg.append('\n').append(player).append(" is recharging.");
+			fieldTitles.add(player.pokemon.pokemon.getName()+" is recharging.");
+			fieldValues.add("zzz...");
 			player.pokemon.clearFlag(Flag.FORCED_MOVE);
 		}
 		
@@ -234,14 +264,14 @@ public abstract class BattleInstance {
 	}
 	
 	public Mono<Void> forfeit(UserPlayer player) {
-		return broadcast(player.name+" has fled the battle.").then(Flux.merge(
+		return broadcastMessage(player+" has fled the battle.").then(Flux.merge(
 			player.onFinish(BattleResult.LOSE), 
 			player.getOpponent().onFinish(BattleResult.WIN)
 		).then());
 	}
 	
 	public static abstract class Player {
-		public final String name;
+		// public final String name;
 		public final BattlePokemon pokemon;
 		private BattleInstance battle;
 		private boolean ready = false;
@@ -249,8 +279,8 @@ public abstract class BattleInstance {
 		private int lastMoveIdx = -1;
 		private Player opponent;
 		
-		public Player(String name, Pokemon pokemon) {
-			this.name = name;
+		public Player(Pokemon pokemon) {
+			// this.name = name;
 			this.pokemon = new BattlePokemon(pokemon);
 		}
 		
@@ -285,13 +315,17 @@ public abstract class BattleInstance {
 		
 		abstract Mono<Void> onFinish(BattleResult result);
 		
-		public String getDescriptor() {
+		abstract String getPlayerName();
+		
+		String getDescriptor() {
 			return (pokemon.pokemon.hasNickname() ? pokemon.pokemon.getName()+", " : "")+"Lv. "+pokemon.pokemon.getLevel()+" "+pokemon.pokemon.species.name;
 		}
 		
-		@Override
-		public String toString() {
-			return name;
+		String getHealthDisplay() {
+			return "HP: "+pokemon.getHealth()+"/"+pokemon.pokemon.getStat(Stat.Health);
 		}
+		
+		@Override
+		public String toString() { return getPlayerName(); }
 	}
 }

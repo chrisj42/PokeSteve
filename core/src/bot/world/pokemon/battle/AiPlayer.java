@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 public class AiPlayer extends Player {
 	
 	public AiPlayer(Pokemon pokemon) {
-		super("Wild "+pokemon.species, pokemon);
+		super(pokemon);
 	}
 	
 	int selectMove() {
@@ -26,7 +26,7 @@ public class AiPlayer extends Player {
 	Mono<Void> onFinish(BattleResult result) { return Mono.empty(); }
 	
 	@Override
-	public String getDescriptor() {
-		return "Wild "+super.getDescriptor();
+	public String getPlayerName() {
+		return "Wild "+pokemon.pokemon.species.name;
 	}
 }

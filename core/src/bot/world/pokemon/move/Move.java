@@ -67,18 +67,18 @@ public class Move implements Comparable<Move> {
 		return accuracyProp.getAccuracy(context);
 	}
 	
-	public void doMove(MoveContext context) {
+	// returns title of embed field
+	public String doMove(MoveContext context) {
 		if(context.user.hasFlag(Flag.FLINCH)) {
-			context.withUser("flinched!");
-			return;
+			return context.userPokemon.getName() + " flinched!";
 		}
 		
 		context.user.subtractPp(context.userMoveIdx);
-		context.withUser("used ").append(name).append('!');
+		final String titleText = context.userPokemon.getName() + " used " + name+'!';
 		
 		if(moveCondition != null && !moveCondition.apply(context)) {
 			context.line("But it failed!");
-			return;
+			return titleText;
 		}
 		
 		if(chargeState != null) {
@@ -88,7 +88,7 @@ public class Move implements Comparable<Move> {
 			else {
 				context.user.setFlag(Flag.FORCED_MOVE, context.userMoveIdx);
 				context.withUser(chargeState.prepMessage);
-				return;
+				return titleText;
 			}
 		}
 		
@@ -96,7 +96,7 @@ public class Move implements Comparable<Move> {
 			ChargeState state = context.enemyPokemon.getMove(context.enemy.getFlag(Flag.FORCED_MOVE)).chargeState;
 			if(!state.affectedBy(this)) {
 				context.line("But ").append(context.enemyPlayer).append(" wasn't there!");
-				return;
+				return titleText;
 			}
 		}
 		
@@ -123,7 +123,7 @@ public class Move implements Comparable<Move> {
 			EffectResult result = context.userMove.damageEffect.doDamage(context);
 			if(result == EffectResult.NO_OUTPUT) {
 				context.line("It had no effect...");
-				return;
+				return titleText;
 			}
 			
 			final boolean doSecondary = secondaryChance == 0 || Utils.randInt(0, 99) < secondaryChance;
@@ -145,6 +145,8 @@ public class Move implements Comparable<Move> {
 			else if(result == EffectResult.NA)
 				context.line("But nothing happened...");
 		}
+		
+		return titleText;
 	}
 	
 	static class MoveBuilder {
