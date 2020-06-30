@@ -1,7 +1,6 @@
 package bot;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import bot.command.Command;
 import bot.command.CommandContext;
@@ -19,8 +18,8 @@ import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
-import discord4j.discordjson.json.gateway.StatusUpdate;
-import reactor.core.publisher.Flux;
+import discord4j.core.object.presence.Activity;
+import discord4j.core.object.presence.Presence;
 import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -56,7 +55,9 @@ public class Core {
 		final String token = DataFile.AUTH.readJson().getValueNode("token").parseValue(JsonNode::textValue);
 		
 		// create client
+		System.out.println("creating client...");
 		client = DiscordClient.create(token);
+		System.out.println("logging in...");
 		gateway = client.login().block();
 		
 		if(gateway == null)
@@ -68,12 +69,9 @@ public class Core {
 			.subscribe(ready -> {
 				Core.self = ready.getSelf();
 				System.out.println("Logged in as " + self.getUsername());
-				/*gateway.updatePresence(StatusUpdate.builder()
-					.status("DM \"help\" to get started!")
-					.build()
-				)
+				gateway.updatePresence(Presence.online(Activity.playing("with pokemans")))
 					.then(Mono.fromRunnable(() -> System.out.println("presence updated")))
-					.subscribe();*/
+					.subscribe();
 			});
 		
 		gateway.on(MessageCreateEvent.class)
