@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+import bot.Core;
 import bot.data.DataCore;
 import bot.data.UserData;
 import bot.util.UsageException;
@@ -183,7 +184,7 @@ public class Pokemon {
 	// private static final int MAX_STAT_NAME_LEN = 18;
 	public void buildEmbed(EmbedCreateSpec e) {
 		e.setTitle("Lv. "+level+" "+species.name+(nickname != null ? " AKA "+nickname : ""));
-		e.setThumbnail(species.getSpritePath());
+		e.setImage(species.getSpritePath());
 		
 		// if(nickname != null)
 		// 	e.addField(, false);
@@ -245,7 +246,8 @@ public class Pokemon {
 		public void buildEmbed(EmbedCreateSpec e) {
 			super.buildEmbed(e);
 			e.setDescription("Catch ID - #" + catchId);
-			e.setFooter("Owned by "+owner.getUser().getUsername(), owner.getUser().getAvatarUrl());
+			e.setFooter("Owned by "+owner.getUser().getUsername(), Core.self.getAvatarUrl());
+			e.setThumbnail(owner.getUser().getAvatarUrl());
 		}
 		
 		public void buildListEntry(StringBuilder str) {

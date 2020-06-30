@@ -20,6 +20,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
 import discord4j.discordjson.json.gateway.StatusUpdate;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,12 +44,13 @@ public class Core {
 	
 	public static DiscordClient client;
 	public static GatewayDiscordClient gateway;
+	public static User self;
 	
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
 	// guild id of friend lounge; cannot duel those not in this server, just to ensure that we don't accidentally DM random people lol
-	private static final String GUILD_ID = "613836711134494721";
-	public static HashSet<Snowflake> MEMBERS = new HashSet<>();
+	// private static final String GUILD_ID = "613836711134494721";
+	// public static HashSet<Snowflake> MEMBERS = new HashSet<>();
 	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
 		final String token = DataFile.AUTH.readJson().getValueNode("token").parseValue(JsonNode::textValue);
@@ -63,20 +65,16 @@ public class Core {
 		UserData.load();
 		
 		gateway.on(ReadyEvent.class)
-			.map(ready -> {
-				gateway.updatePresence(StatusUpdate.builder()
+			.subscribe(ready -> {
+				Core.self = ready.getSelf();
+				System.out.println("Logged in as " + self.getUsername());
+				/*gateway.updatePresence(StatusUpdate.builder()
 					.status("DM \"help\" to get started!")
-					.afk(false)
 					.build()
-				);
-				
-				gateway.requestMembers(Snowflake.of(GUILD_ID))
-					.map(User::getId).collectList()
-					.subscribe(list -> MEMBERS.addAll(list));
-				return ready;
-				
-			})
-			.subscribe(ready -> System.out.println("Logged in as " + ready.getSelf().getUsername()));
+				)
+					.then(Mono.fromRunnable(() -> System.out.println("presence updated")))
+					.subscribe();*/
+			});
 		
 		gateway.on(MessageCreateEvent.class)
 			.flatMap(Core::createContext)
