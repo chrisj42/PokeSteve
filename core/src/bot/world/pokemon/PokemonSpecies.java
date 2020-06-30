@@ -122,7 +122,15 @@ public class PokemonSpecies {
 				+"\nSp. Attack  - "+getBaseStat(Stat.SpAttack)
 				+"\nSp. Defense - "+getBaseStat(Stat.SpDefense)
 				+"\nSpeed       - "+getBaseStat(Stat.Speed)
-			, false);
+			, true);
+		e.addField("EV Bonuses", ""
+				+"Health       +"+baseDefeatEVs.get(Stat.Health)
+				+"\nAttack       +"+baseDefeatEVs.get(Stat.Attack)
+				+"\nDefense      +"+baseDefeatEVs.get(Stat.Defense)
+				+"\nSp. Attack   +"+baseDefeatEVs.get(Stat.SpAttack)
+				+"\nSp. Defense  +"+baseDefeatEVs.get(Stat.SpDefense)
+				+"\nSpeed        +"+baseDefeatEVs.get(Stat.Speed)
+			, true);
 		e.setImage(getSpritePath());
 	}
 	
