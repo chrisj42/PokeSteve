@@ -64,6 +64,9 @@ public class PokemonCommand extends CommandParent {
 			final int catchId = ArgType.INTEGER.parseArg(args[0]);
 			
 			UserData data = UserData.reqData(context.user);
+			if(data.getBattlePlayer() != null)
+				throw new UsageException("Cannot select pokemon during a battle.");
+			
 			CaughtPokemon pokemon = data.selectPokemon(catchId);
 			
 			return context.channel.createMessage("You selected your level "+pokemon.getLevel()+" "+pokemon.species.name+(pokemon.hasNickname() ? ", "+pokemon.getName() : "")+".").then();
