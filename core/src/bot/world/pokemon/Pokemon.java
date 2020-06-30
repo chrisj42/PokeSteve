@@ -208,13 +208,14 @@ public class Pokemon {
 		
 		e.addField("Move set", String.join(", ", Utils.map(String[].class, moveset, Move::getName)), false);
 		
-		e.addField("Stats", String.join("\n", Utils.map(String[].class, statData.entrySet(), entry -> { 
-			final String statName = entry.getKey().toString();
-			final String statValue = String.valueOf(entry.getValue().getStatValue());
-			return statName + ": "
-				// + " ".repeat(MAX_STAT_NAME_LEN - statName.length() - statValue.length())
-				+ statValue;
-		})), true);
+		e.addField("Stats", ""
+				+"Health - "+getStat(Stat.Health)
+				+"\nAttack - "+getStat(Stat.Attack)
+				+"\nDefense - "+getStat(Stat.Defense)
+				+"\nSp. Attack - "+getStat(Stat.SpAttack)
+				+"\nSp. Defense - "+getStat(Stat.SpDefense)
+				+"\nSpeed - "+getStat(Stat.Speed),
+			true);
 		e.addField("IVs", String.join("\n", Utils.map(String[].class, statData.values(),
 			data -> data.getIV()+" / 31"
 		)), true);
