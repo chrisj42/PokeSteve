@@ -10,6 +10,7 @@ import bot.Core;
 import bot.data.DataCore;
 import bot.data.UserData;
 import bot.util.UsageException;
+import bot.world.pokemon.EvolutionChain.LevelUpEvolution;
 import bot.world.pokemon.LearnSet.LevelUpMove;
 import bot.world.pokemon.StatData.SerialStatData;
 import bot.world.pokemon.move.Move;
@@ -217,11 +218,15 @@ public class Pokemon {
 		
 		Iterable<String> moveNames = Utils.map(movePool, move -> move.name);
 		e.addField("Move pool", String.join(", ", moveNames), false);
+		// e.addField("Move pool", "Pound, Slam, Leer, Absorb, Mega Drain, Agility, Quick Attack, Screech, Detect, Giga Drain, Pursuit, Endeavor, Energy Ball, Quick Guard", false);
 		
 		NavigableSet<LevelUpMove> nextMoves = species.learnableMoves.getFutureMoves(level);
 		LevelUpMove nextMove = nextMoves.isEmpty() ? null : nextMoves.first();
 		if(nextMove != null)
 			e.addField("Next move at:", "Level "+nextMove.level, true);
+		LevelUpEvolution evo = species.getEvolution();
+		if(evo != null)
+			e.addField("Evolves into "+DataCore.POKEMON.get(evo.nextSpeciesDex)+":", "Level "+evo.minLevel, true);
 	}
 	
 	
@@ -235,6 +240,12 @@ public class Pokemon {
 			this.owner = ownerData;
 			this.catchId = catchId;
 		}
+		// evo constructor
+		public CaughtPokemon(CaughtPokemon prevForm, @NotNull PokemonSpecies evo) {
+			super(prevForm, evo);
+			this.owner = prevForm.owner;
+			this.catchId = prevForm.catchId;
+		}
 		// load constructor
 		public CaughtPokemon(SerialPokemon data, UserData ownerData) {
 			super(data);
@@ -247,7 +258,7 @@ public class Pokemon {
 			super.buildEmbed(e);
 			e.setDescription("Catch ID - #" + catchId);
 			e.setFooter("Owned by "+owner.getUser().getUsername(), Core.self.getAvatarUrl());
-			e.setThumbnail(owner.getUser().getAvatarUrl());
+			// e.setAuthor(owner.getUser().getUsername(), null, owner.getUser().getAvatarUrl());
 		}
 		
 		public void buildListEntry(StringBuilder str) {

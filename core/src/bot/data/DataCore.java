@@ -7,8 +7,10 @@ import java.util.HashMap;
 
 import bot.Core;
 import bot.data.json.MissingPropertyException;
+import bot.data.json.NodeParser;
 import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
+import bot.util.Ref;
 import bot.world.pokemon.EvolutionChain;
 import bot.world.pokemon.PokemonSpecies;
 import bot.world.pokemon.move.Move;
@@ -73,14 +75,21 @@ public class DataCore {
 		}
 	};
 	
-	public static final DataStore<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, SPECIES_JSON, POKEMON_JSON, PokemonSpecies::new);
+	public static final DataStore<EvolutionChain> EVO_CHAINS = new DataList<>(EvolutionChain.class, EVO_CHAIN_JSON, node -> node.getNode().isNull() ? null : new EvolutionChain(node));
 	
-	public static final DataStore<EvolutionChain> EVO_CHAINS = new DataList<>(EvolutionChain.class, EVO_CHAIN_JSON, EvolutionChain::new);
+	public static final DataStore<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, SPECIES_JSON, POKEMON_JSON, PokemonSpecies::new);
 	
 	public interface DataStore<T> {
 		T get(int id);
 		T get(String name);
 		int getSize();
+		
+		default Ref<T> getRef(int id) {
+			return new Ref<>(id, this::get);
+		}
+		default Ref<T> getRef(JsonObjectNode resourceNode) throws MissingPropertyException {
+			return getRef(NodeParser.getResourceId(resourceNode));
+		}
 	}
 	
 	public static class DataList<T> implements DataStore<T> {
@@ -125,6 +134,7 @@ public class DataCore {
 					for(int j = 0; j < nodes.length; j++)
 						dnodes[j] = nodes[j].getObjectNode(i);
 					data[i] = parser.parseNode(dnodes);
+					if(data[i] == null) continue;
 				} catch(MissingPropertyException e) {
 					throw new RuntimeException("Error while parsing data "+i, e);
 				}
@@ -147,13 +157,6 @@ public class DataCore {
 		public int getSize() {
 			return data.length;
 		}
-		
-		/*public Ref<T> getRef(int id) {
-			return new Ref<>(id, this::get);
-		}
-		public Ref<T> getRef(JsonObjectNode resourceNode) throws MissingPropertyException {
-			return getRef(NodeParser.getResourceId(resourceNode));
-		}*/
 	}
 	
 	public static void init() {}

@@ -15,6 +15,7 @@ import bot.command.CommandContext;
 import bot.util.POJO;
 import bot.util.UsageException;
 import bot.util.Utils;
+import bot.world.pokemon.EvolutionChain.LevelUpEvolution;
 import bot.world.pokemon.Pokemon;
 import bot.world.pokemon.Pokemon.CaughtPokemon;
 import bot.world.pokemon.Pokemon.SerialPokemon;
@@ -163,6 +164,20 @@ public class UserData {
 			throw new UsageException("Could not find pokemon with id "+catchId);
 		this.selectedPokemon = pokemon;
 		return pokemon;
+	}
+	
+	// returns the evolved pokemon
+	public CaughtPokemon checkEvolution(CaughtPokemon pokemon) {
+		LevelUpEvolution evo = pokemon.species.getEvolution();
+		if(evo == null || evo.minLevel > pokemon.getLevel()) return null;
+		// evolve
+		CaughtPokemon evolved = new CaughtPokemon(pokemon, DataCore.POKEMON.get(evo.nextSpeciesDex));
+		caughtPokemon.put(evolved.catchId, evolved); // replaces the previous evolution
+		catchDex.add(evolved.species.dex);
+		if(selectedPokemon == pokemon)
+			selectedPokemon = evolved;
+		save();
+		return evolved;
 	}
 	
 	@Nullable

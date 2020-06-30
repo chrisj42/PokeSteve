@@ -6,11 +6,14 @@ import java.util.TreeMap;
 
 import bot.Core;
 import bot.data.json.MissingPropertyException;
+import bot.data.json.NodeParser;
 import bot.data.json.node.JsonArrayNode;
+import bot.world.pokemon.EvolutionChain;
 import bot.world.pokemon.PokemonSpecies;
 import bot.util.UsageException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class Importer {
 	
@@ -71,9 +74,13 @@ class Importer {
 	 */
 	
 	public static void main(String[] args) throws IOException, MissingPropertyException {
-		JsonArrayNode root = new JsonArrayNode(Core.jsonMapper.readTree(new File("moves.json")));
-		System.out.print("moves: ");
-		for(int i = 0; i < root.getLength(); i++)
-			System.out.print(root.getObjectNode(i).getValueNode("name").parseValue(JsonNode::textValue)+", ");
+		JsonArrayNode root = new JsonArrayNode(new ObjectMapper().readTree(new File("evolution-chain.json")));
+		// System.out.print("moves: ");
+		// System.out.println("evo chains:");
+		EvolutionChain[] chains = NodeParser.parseObjectArray(root, EvolutionChain.class);
+	}
+	
+	private static void temp() {
+		
 	}
 }

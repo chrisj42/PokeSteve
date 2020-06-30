@@ -3,11 +3,14 @@ package bot.world.pokemon;
 import java.text.DecimalFormat;
 import java.util.EnumMap;
 
+import bot.data.DataCore;
 import bot.data.json.MissingPropertyException;
 import bot.data.json.NodeParser;
 import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
+import bot.util.Ref;
 import bot.util.Utils;
+import bot.world.pokemon.EvolutionChain.LevelUpEvolution;
 
 import discord4j.core.spec.EmbedCreateSpec;
 
@@ -26,7 +29,7 @@ public class PokemonSpecies {
 	public final LearnSet learnableMoves;
 	
 	// private final Ref<PokemonSpecies> evolvesFrom;
-	// private final Ref<EvolutionChain> evoChain;
+	private final Ref<EvolutionChain> evoChain;
 	// private final EggGroup[] eggGroups;
 	final GrowthRate growthRate;
 	
@@ -43,6 +46,7 @@ public class PokemonSpecies {
 		dex = snode.parseValueNode("id", JsonNode::intValue);
 		flavorText = NodeParser.getEnglishNode(snode.getArrayNode("flavor_text_entries"), false).parseValueNode("flavor_text", JsonNode::textValue).replaceAll("[\n\r]", " ");
 		genus = NodeParser.getEnglishNode(snode.getArrayNode("genera"), true).parseValueNode("genus", JsonNode::textValue);
+		evoChain = DataCore.EVO_CHAINS.getRef(NodeParser.getResourceId(snode.getObjectNode("evolution_chain")));
 		
 		JsonObjectNode spriteNode = pnode.getObjectNode("sprites");
 		frontSpriteUrl = spriteNode.parseValueNode("front_default", JsonNode::textValue);
@@ -85,6 +89,10 @@ public class PokemonSpecies {
 		int ev = baseDefeatEVs.getOrDefault(data.getStatType(), 0);
 		if(ev != 0)
 			data.addEV(ev);
+	}
+	
+	public LevelUpEvolution getEvolution() {
+		return evoChain.resolve().getEvoFor(dex);
 	}
 	
 	public Pokemon spawnPokemon(int level) {

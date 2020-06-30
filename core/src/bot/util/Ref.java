@@ -11,6 +11,8 @@ public class Ref<T> {
 	
 	private final int id;
 	private final Function<Integer, T> resolver;
+	private boolean resolved = false;
+	private T value;
 	
 	public Ref(int id, Function<Integer, T> resolver) {
 		this.id = id;
@@ -18,6 +20,10 @@ public class Ref<T> {
 	}
 	
 	public T resolve() {
-		return resolver.apply(id);
+		if(!resolved) {
+			resolved = true;
+			value = resolver.apply(id);
+		}
+		return value;
 	}
 }
