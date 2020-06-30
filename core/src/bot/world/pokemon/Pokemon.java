@@ -39,7 +39,7 @@ public class Pokemon {
 	private int experience;
 	private String nickname;
 	
-	private int expCache; // exp to be added
+	private Pokemon defeatedCache; // defeated pokemon to be processed
 	private final TreeSet<Move> movePool = new TreeSet<>();
 	
 	// for catching pokemon and loading data
@@ -130,23 +130,26 @@ public class Pokemon {
 	
 	// when this pokemon defeats the given one
 	public void onDefeat(Pokemon other) {
-		statData.forEach((stat, data) -> other.species.addDefeatEV(data));
-		
-		expCache = (int) (other.species.baseDefeatExp * other.level / 5 * Math.pow(2*other.level + 10, 2.5) / Math.pow(other.level + level + 10, 2.5) + 1);
+		defeatedCache = other;
 	}
 	
 	public Mono<Boolean> addExp(MessageChannel channel) {
-		if(expCache == 0) return Mono.just(false);
-		experience += expCache;
+		if(defeatedCache == null) return Mono.just(false);
+		final Pokemon defeated = defeatedCache;
+		defeatedCache = null;
+		final int expGain = (int) (defeated.species.baseDefeatExp * defeated.level / 5 * Math.pow(2*defeated.level + 10, 2.5) / Math.pow(defeated.level + level + 10, 2.5) + 1);
+		
+		experience += expGain;
+		statData.forEach((stat, data) -> defeated.species.addDefeatEV(data));
 		
 		StringBuilder str = new StringBuilder();
 		
-		boolean changed = false;
+		// boolean changed = false;
 		// EnumMap<Stat, Integer> statChanges = new EnumMap<>(Stat.class);
 		LinkedList<String> statChanges = new LinkedList<>();
 		while(level < MAX_LEVEL && experience >= species.growthRate.getExpRequirement(level+1)) {
 			level++;
-			changed = true;
+			// changed = true;
 			str.append("\n").append(getName()).append(" grew to level ").append(level).append("!");
 			// statChanges.clear();
 			statData.forEach((stat, data) -> {
@@ -172,14 +175,14 @@ public class Pokemon {
 					str.append("\nUse `pokemon learn \"").append(move.getName()).append("\" \"<move to replace>\"` to add it to the move set.");
 			}
 		}
-		if(changed)
-			statData.forEach((stat, data) -> data.recalcStat());
+		// if(changed)
+		statData.forEach((stat, data) -> data.recalcStat());
 		
-		final int gained = expCache;
-		expCache = 0;
+		if(this instanceof CaughtPokemon)
+			((CaughtPokemon)this).owner.save();
 		
 		return channel.createEmbed(emb -> emb
-			.setTitle("Gained "+gained+" exp!")
+			.setTitle("Gained "+expGain+" exp!")
 			.setDescription(str.toString())
 		).map(msg -> true);
 	}
