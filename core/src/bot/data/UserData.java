@@ -133,7 +133,7 @@ public class UserData {
 		e.setTitle("User Statistics");
 		e.setAuthor(self.getUsername(), null, self.getAvatarUrl());
 		e.addField("Pokedex completion", catchDex.size()+"/"+DataCore.POKEMON.getSize()+" pokemon caught.", false);
-		e.addField("Total pokemon owned", String.valueOf(caughtPokemon.size()), false);
+		e.addField("Pokemon currently owned", String.valueOf(caughtPokemon.size()), false);
 		
 		e.addField("Wins", String.valueOf(wins), true);
 		e.addField("Losses", String.valueOf(losses), true);
