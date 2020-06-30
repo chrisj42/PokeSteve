@@ -36,7 +36,7 @@ public class PlayerContext {
 	}
 	
 	public StringBuilder with(Player player) {
-		return line(player).append(' ');
+		return line(player.pokemon.pokemon.getName()).append(' ');
 	}
 	
 	public StringBuilder withUser(Object string) {
