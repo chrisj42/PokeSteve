@@ -9,6 +9,8 @@ import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
 import bot.util.Utils;
 
+import discord4j.core.spec.EmbedCreateSpec;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class PokemonSpecies {
@@ -39,7 +41,7 @@ public class PokemonSpecies {
 		name = Utils.capitalizeFirst(snode.parseValueNode("name", JsonNode::textValue));
 		// System.out.println("loading pokemon "+name);
 		dex = snode.parseValueNode("id", JsonNode::intValue);
-		flavorText = NodeParser.getEnglishNode(snode.getArrayNode("flavor_text_entries"), false).parseValueNode("flavor_text", JsonNode::textValue);
+		flavorText = NodeParser.getEnglishNode(snode.getArrayNode("flavor_text_entries"), false).parseValueNode("flavor_text", JsonNode::textValue).replaceAll("[\n\r]", " ");
 		genus = NodeParser.getEnglishNode(snode.getArrayNode("genera"), true).parseValueNode("genus", JsonNode::textValue);
 		
 		JsonObjectNode spriteNode = pnode.getObjectNode("sprites");
@@ -98,6 +100,22 @@ public class PokemonSpecies {
 		}
 		
 		return new Pokemon(this, level, Utils.pickRandom(Nature.values), gender);
+	}
+	
+	public void buildDexEntry(EmbedCreateSpec e) {
+		final String title = "#"+dex+" - "+name;
+		e.setTitle(title).setFooter(title, null);
+		e.addField("Typing", primaryType+(secondaryType == null ? "" : " | "+secondaryType), false);
+		e.addField(genus, flavorText, false);
+		e.addField("Base Stats", ""
+				+"Health      - "+getBaseStat(Stat.Health)
+				+"\nAttack      - "+getBaseStat(Stat.Attack)
+				+"\nDefense     - "+getBaseStat(Stat.Defense)
+				+"\nSp. Attack  - "+getBaseStat(Stat.SpAttack)
+				+"\nSp. Defense - "+getBaseStat(Stat.SpDefense)
+				+"\nSpeed       - "+getBaseStat(Stat.Speed)
+			, false);
+		e.setImage(getSpritePath());
 	}
 	
 	private static final DecimalFormat spriteDexFormat = new DecimalFormat("000");
