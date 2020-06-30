@@ -1,4 +1,4 @@
-package bot.pokemon.external;
+package bot.world.pokemon.external;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class Importer {
 		
 		// download a list straight from PokeAPI
 		
-		DataImports.AllMoves.downloadData();
+		DataImports.EvoChains.downloadData();
 	}
 	
 	public static String readData(String urlPrefix, String urlSuffix, int maxIdx) {

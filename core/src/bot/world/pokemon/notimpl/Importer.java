@@ -1,4 +1,4 @@
-package bot.world.pokemon.external;
+package bot.world.pokemon.notimpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import bot.util.UsageException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class Importer {
+class Importer {
 	
 	/*
 		classes in this package are similar to those in the main pokemon package, but instead they all take JsonNodes that expect the format of PokeAPI's data
@@ -21,7 +21,7 @@ public class Importer {
 	
 	private Importer() {}
 	
-	public static final int MAX_DEX_NUMBER = 807;
+	private static final int MAX_DEX_NUMBER = 807;
 	// public static final int MAX_DEX_NUMBER = 151;
 	
 	// some methods and such to import pokemon data from PokeAPI

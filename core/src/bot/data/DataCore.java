@@ -9,6 +9,7 @@ import bot.Core;
 import bot.data.json.MissingPropertyException;
 import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
+import bot.world.pokemon.EvolutionChain;
 import bot.world.pokemon.PokemonSpecies;
 import bot.world.pokemon.move.Move;
 import bot.world.pokemon.move.Moves;
@@ -39,7 +40,7 @@ public class DataCore {
 	
 	public static final JsonArrayNode SPECIES_JSON = readList("pokemon-species.json");
 	public static final JsonArrayNode POKEMON_JSON = readList("pokemon.json");
-		
+	public static final JsonArrayNode EVO_CHAIN_JSON = readList("evolution-chain.json");
 	
 	public static final DataStore<Move> MOVES = new DataStore<>() {
 		private final HashMap<String, Move> nameMap = new HashMap<>(Moves.values.length);
@@ -57,6 +58,11 @@ public class DataCore {
 		}
 		
 		@Override
+		public int getSize() {
+			return Moves.values.length;
+		}
+		
+		@Override
 		public Move get(int id) {
 			return Moves.values[id-1].getMove();
 		}
@@ -69,9 +75,12 @@ public class DataCore {
 	
 	public static final DataStore<PokemonSpecies> POKEMON = new DataList<>(PokemonSpecies.class, SPECIES_JSON, POKEMON_JSON, PokemonSpecies::new);
 	
+	public static final DataStore<EvolutionChain> EVO_CHAINS = new DataList<>(EvolutionChain.class, EVO_CHAIN_JSON, EvolutionChain::new);
+	
 	public interface DataStore<T> {
 		T get(int id);
 		T get(String name);
+		int getSize();
 	}
 	
 	public static class DataList<T> implements DataStore<T> {
@@ -134,27 +143,17 @@ public class DataCore {
 			return nameMap.get(name.toLowerCase());
 		}
 		
+		@Override
+		public int getSize() {
+			return data.length;
+		}
+		
 		/*public Ref<T> getRef(int id) {
 			return new Ref<>(id, this::get);
 		}
 		public Ref<T> getRef(JsonObjectNode resourceNode) throws MissingPropertyException {
 			return getRef(NodeParser.getResourceId(resourceNode));
 		}*/
-	}
-	
-	private static class DataEnum<T> implements DataStore<T> {
-		
-		
-		
-		@Override
-		public T get(int id) {
-			return null;
-		}
-		
-		@Override
-		public T get(String name) {
-			return null;
-		}
 	}
 	
 	public static void init() {}

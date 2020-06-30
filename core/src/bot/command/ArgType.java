@@ -3,9 +3,8 @@ package bot.command;
 import java.util.function.Function;
 
 import bot.data.DataCore;
-import bot.world.pokemon.PokemonSpecies;
-import bot.world.pokemon.external.Importer;
 import bot.util.UsageException;
+import bot.world.pokemon.PokemonSpecies;
 import bot.world.pokemon.move.Move;
 
 public class ArgType<T> {
@@ -20,7 +19,7 @@ public class ArgType<T> {
 			int dexNumber = Integer.parseInt(val);
 			species = DataCore.POKEMON.get(dexNumber);
 			if(species == null)
-				throw new UsageException("Could not find a pokemon with the pokedex number "+dexNumber+". Note that this bot only knows of pokemon up to generation 7, where the national dex ends on #"+Importer.MAX_DEX_NUMBER+".");
+				throw new UsageException("Could not find a pokemon with the pokedex number "+dexNumber+". Note that this bot only knows of pokemon up to generation 7, where the national dex ends on #807.");
 		} catch(NumberFormatException e) {
 			species = DataCore.POKEMON.get(val);
 			if(species == null)

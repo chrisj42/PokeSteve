@@ -7,21 +7,23 @@ import java.util.Collections;
 
 public enum DataImports {
 	
-	Gen1Moves("move", "gen1", 165),
+	// Gen1Moves("move", "gen1", 165),
 	
 	AllMoves("move", null, 746),
 	
-	Gen1PokemonSpecies("pokemon-species", "gen1", 151),
+	// Gen1PokemonSpecies("pokemon-species", "gen1", 151),
 	
-	Gen1Pokemon("pokemon", "gen1", 151),
+	// Gen1Pokemon("pokemon", "gen1", 151),
 	
 	AllPokemonSpecies("pokemon-species", null, 807),
 	
 	AllPokemon("pokemon", null, 807),
 	
-	Gen1Encounters("encounters", "pokemon", "/encounters", "gen1", 151),
+	// Gen1Encounters("encounters", "pokemon", "/encounters", "gen1", 151),
 	
-	Gen1EvoChains("evolution-chain", "gen1", 78),
+	// Gen1EvoChains("evolution-chain", "gen1", 78),
+	
+	EvoChains("evolution-chain", null, 419),
 	
 	Locations("location", null, 781),
 	

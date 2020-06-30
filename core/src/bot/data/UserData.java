@@ -20,7 +20,6 @@ import bot.world.pokemon.Pokemon.CaughtPokemon;
 import bot.world.pokemon.Pokemon.SerialPokemon;
 import bot.world.pokemon.battle.BattleResult;
 import bot.world.pokemon.battle.UserPlayer;
-import bot.world.pokemon.external.Importer;
 
 import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.User;
@@ -132,7 +131,7 @@ public class UserData {
 	public void buildStatistics(EmbedCreateSpec e) {
 		e.setTitle("User Statistics");
 		e.setAuthor(self.getUsername(), null, self.getAvatarUrl());
-		e.addField("Pokedex completion", catchDex.size()+"/"+Importer.MAX_DEX_NUMBER+" pokemon caught.", false);
+		e.addField("Pokedex completion", catchDex.size()+"/"+DataCore.POKEMON.getSize()+" pokemon caught.", false);
 		e.addField("Total pokemon owned", String.valueOf(caughtPokemon.size()), false);
 		
 		e.addField("Wins", String.valueOf(wins), true);
