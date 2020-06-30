@@ -37,7 +37,7 @@ public class UserPlayer extends Player {
 					else
 						return channel.createEmbed(e -> e
 							.setTitle(pokemon.getName()+" is evolving!")
-							.setDescription(pokemon.getName()+" evolved into "+evolved.species.name+"!")
+							.setDescription(pokemon.getName()+" evolved into "+evolved.species.name+"!\nType `pokemon info` to see the new moves and stats!")
 							.setThumbnail(pokemon.species.getSpritePath())
 							.setImage(evolved.species.getSpritePath())
 						).then();
