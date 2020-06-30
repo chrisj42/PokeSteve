@@ -1,6 +1,7 @@
 package bot.world.pokemon;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.NavigableSet;
@@ -112,6 +113,8 @@ public class Pokemon {
 	public void replaceMove(Move toLearn, Move toReplace) {
 		if(!movePool.contains(toLearn))
 			throw new UsageException(getName()+" cannot learn the move "+toLearn.getName()+".");
+		if(Arrays.asList(moveset).contains(toLearn))
+			throw new UsageException(getName()+" already knows the move "+toLearn.getName()+".");
 		int idx = -1;
 		for(int i = 0; i < moveset.length; i++) {
 			if(moveset[i] == toReplace) {
