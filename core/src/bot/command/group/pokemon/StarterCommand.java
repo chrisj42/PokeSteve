@@ -20,13 +20,15 @@ import reactor.core.publisher.Mono;
 public class StarterCommand extends ActionableCommand {
 	
 	private static final int[] GEN_OFFSETS = {1, 152, 252, 387, 495, 650, 722};
-	private final static TreeMap<Integer, PokemonSpecies> STARTER_POKEMON = new TreeMap<>();
+	private static final TreeMap<Integer, PokemonSpecies> STARTER_POKEMON = new TreeMap<>();
+	private static final String STARTER_POKEMON_STRING;
 	static {
 		for(int off: GEN_OFFSETS) {
 			STARTER_POKEMON.put(off, DataCore.POKEMON.get(off));
 			STARTER_POKEMON.put(off+3, DataCore.POKEMON.get(off+3));
 			STARTER_POKEMON.put(off+6, DataCore.POKEMON.get(off+6));
 		}
+		STARTER_POKEMON_STRING = String.join(", ", Utils.map(STARTER_POKEMON.values(), PokemonSpecies::toString));
 	}
 	
 	public StarterCommand() {
@@ -34,9 +36,9 @@ public class StarterCommand extends ActionableCommand {
 	}
 	
 	@Override
-	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
+	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
 		if(args.length == 0)
-			throw new UsageException("Available starters: "+String.join(", ", Utils.map(STARTER_POKEMON.values(), PokemonSpecies::toString)));
+			throw new UsageException("Available starters: "+STARTER_POKEMON_STRING);
 		
 		UserData data = UserData.getData(context.user);
 		if(data != null)
@@ -45,10 +47,10 @@ public class StarterCommand extends ActionableCommand {
 		PokemonSpecies starter = ArgType.POKEMON.parseArg(args[0]);
 		
 		if(!STARTER_POKEMON.containsKey(starter.dex))
-			throw new UsageException("That is not a valid starter pokemon.");
+			throw new UsageException("That is not a valid starter pokemon. Valid starters are anything from this list: "+STARTER_POKEMON_STRING);
 		
 		UserData.createData(context.user, starter.spawnPokemon(1));
 		
-		return context.channel.createMessage("Congrats, you now have a level 1 "+starter+"!").then();
+		return context.channel.createMessage("Congrats, you now have a level 1 "+starter+"! Type `pokemon info` to see it!").then();
 	}
 }
