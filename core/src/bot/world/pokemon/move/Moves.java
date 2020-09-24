@@ -11,13 +11,10 @@ import bot.world.pokemon.DamageCategory;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.MoveContext;
-import bot.world.pokemon.battle.status.StatusEffect;
+import bot.world.pokemon.battle.status.StatusAilment;
 import bot.world.pokemon.move.DamageCalculator.ClassicDamage;
 import bot.world.pokemon.move.DamageCalculator.PercentageDamage;
 import bot.world.pokemon.move.DamageProperty.DamageBuilder;
-import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
-import bot.world.pokemon.move.PokemonEffectSet.PokemonEffect;
-import bot.world.pokemon.move.StatProperty.StatBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -55,19 +52,13 @@ public enum Moves {
 	Mega_Punch,
 	Pay_Day,
 	Fire_Punch(b -> b
-		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffect.Burn))
-		.add()
+		.secondary(10, new StatusEffect(StatusAilment.Burn))
 	),
 	Ice_Punch(b -> b
-		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffect.Freeze))
-		.add()
+		.secondary(10, new StatusEffect(StatusAilment.Freeze))
 	),
 	Thunder_Punch(b -> b
-		.secondary(10)
-		.affectEnemy(new StatusProperty(StatusEffect.Paralysis))
-		.add()
+		.secondary(10, new StatusEffect(StatusAilment.Paralysis))
 	),
 	Scratch,
 	Vice_Grip,
@@ -76,7 +67,7 @@ public enum Moves {
 	),
 	Razor_Wind(b -> b.charge(ChargeState.Normal)),
 	Swords_Dance(b -> b
-		.primary().affectSelf(StatBuilder.get(Stat.Attack, 2)).add()
+		.primary(new StatEffect(Stat.Attack, 2, false))
 	),
 	Cut,
 	Gust(b -> b
@@ -90,12 +81,12 @@ public enum Moves {
 	Whirlwind, // no impl
 	Fly(b -> b.charge(ChargeState.Sky)),
 	Bind(b -> b
-		.primary().affectEnemy(new TrapProperty(p -> p+" is squeezed by "+p.getOpponent()+"!")).add()
+		.primary(new TrapEffect(" is squeezed by "))
 	),
 	Slam,
 	Vine_Whip,
 	Stomp(b -> b
-		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+		.secondary(30, MoveEffect.FLINCH)
 	),
 	Double_Kick(
 		b -> b.damageEffect.multiHit(new MultiHitProperty(2))
@@ -103,75 +94,73 @@ public enum Moves {
 	Mega_Kick,
 	Jump_Kick(b -> b.onMiss(context -> {
 		int dam = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / 2);
-		context.withUser("crashed to the ground and took ").append(-dam).append(" damage!");
+		context.withUser(" crashed to the ground and took ").append(-dam).append(" damage!");
 	})),
 	Rolling_Kick(b -> b
-		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+		.secondary(30, MoveEffect.FLINCH)
 	),
 	Sand_Attack(b -> b
-		.primary().affectEnemy(StatBuilder.get(Stat.Accuracy, -1)).add()
+		.primary(new StatEffect(Stat.Accuracy, -1, true))
 	),
 	Headbutt(b -> b
-		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+		.secondary(30, MoveEffect.FLINCH)
 	),
 	Horn_Attack,
 	Fury_Attack(b -> b.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)),
 	Horn_Drill(b -> b.ohko(DamageCategory.Physical)),
 	Tackle,
 	Body_Slam(b -> b
-		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Paralysis)).add()
+		.secondary(30, new StatusEffect(StatusAilment.Paralysis))
 	),
 	Wrap(b -> b
-		.primary().affectEnemy(new TrapProperty(p -> p+" was wrapped by "+p.getOpponent()+"!")).add()
+		.primary(new TrapEffect(" was wrapped by "))
 	),
 	Take_Down(b -> b.damageEffect.recoil(25)),
-	Thrash(b -> b
-		.primary().affectSelf(PokemonEffect.THRASH).add()
-	),
+	Thrash(b -> b.primary(MoveEffect.THRASH)),
 	Double_Edge(b -> b.damageEffect.recoil(33)),
 	Tail_Whip(b -> b
-		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
+		.primary(new StatEffect(Stat.Defense, -1, true))
 	),
 	Poison_Sting(b -> b
-		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Poison)).add()
+		.secondary(30, new StatusEffect(StatusAilment.Poison))
 	),
 	Twineedle(b -> b // TODO each hit should have a chance to activate the secondary effects
-		.secondary(20).affectEnemy(new StatusProperty(StatusEffect.Poison)).add()
+		.secondary(20, new StatusEffect(StatusAilment.Poison))
 		.damageEffect.multiHit(new MultiHitProperty(2))
 	),
 	Pin_Missile(b -> b
 		.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)
 	),
 	Leer(b -> b
-		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
+		.primary(new StatEffect(Stat.Defense, -1, true))
 	),
 	Bite(b -> b
-		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
+		.secondary(30, MoveEffect.FLINCH)
 	),
 	Growl(b -> b
-		.primary().affectEnemy(StatBuilder.get(Stat.Attack, -1)).add()
+		.primary(new StatEffect(Stat.Attack, -1, true))
 	),
 	Roar, // not impl
 	Sing(b -> b
-		.primary().affectEnemy(new StatusProperty(StatusEffect.Sleep)).add()
+		.primary(new StatusEffect(StatusAilment.Sleep))
 	),
 	Supersonic(b -> b
-		.primary().affectEnemy(new StatusProperty(StatusEffect.Confusion)).add()
+		.primary(new StatusEffect(StatusAilment.Confusion))
 	),
 	Sonic_Boom(b -> b
 		.damageEffect.behavior((context, damageType) -> 20)
 	),
 	Disable(b -> b
-		.primary().affectEnemy(PokemonEffect.DISABLE).add()
+		.primary(MoveEffect.DISABLE)
 	),
 	Acid(b -> b
-		.secondary(10).affectEnemy(StatBuilder.get(Stat.SpDefense, -1)).add()
+		.secondary(10, new StatEffect(Stat.SpDefense, -1, true))
 	),
 	Ember(b -> b
-		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
+		.secondary(10, new StatusEffect(StatusAilment.Burn))
 	),
 	Flamethrower(b -> b
-		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
+		.secondary(10, new StatusEffect(StatusAilment.Burn))
 	),
 	Mist, // TODO prevention of stat-lowering effects
 	Water_Gun,
@@ -184,19 +173,19 @@ public enum Moves {
 		})
 	),
 	Ice_Beam(b -> b
-		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
+		.secondary(10, new StatusEffect(StatusAilment.Freeze))
 	),
 	Blizzard(b -> b
-		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
+		.secondary(10, new StatusEffect(StatusAilment.Freeze))
 	), // TODO 100% accuracy during hail. (100 - accuracy)% chance to break through protect and detect
 	Psybeam(b -> b
-		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Confusion)).add()
+		.secondary(10, new StatusEffect(StatusAilment.Confusion))
 	),
 	Bubble_Beam(b -> b
-		.secondary(10).affectEnemy(StatBuilder.get(Stat.Speed, -1)).add()
+		.secondary(10, new StatEffect(Stat.Speed, -1, true))
 	),
 	Aurora_Beam(b -> b
-		.secondary(10).affectEnemy(StatBuilder.get(Stat.Attack, -1)).add()
+		.secondary(10, new StatEffect(Stat.Attack, -1, true))
 	),
 	Hyper_Beam(b -> b.recharge()),
 	Peck,
@@ -973,21 +962,7 @@ public enum Moves {
 	
 	public static final Moves[] values = Moves.values();
 	
-	// private final String name;
-	// private MoveDescription description;
-	// private int accuracy;
-	// private int pp;
-	// private Type type;
-	// private int priority;
-	// private DamageProperty classicDamage;
-	// private DamageBuilder damageBuilder;
-	// private int secondaryChance;
-	// private EffectGroupBuilder secondary;
-	
 	private Move move;
-	// private final MoveBuilder builder;
-	// private final Consumer<Moves> valueEditor;
-	
 	private final Consumer<MoveBuilder> initFunc;
 	
 	Moves() { this(b -> {}); }
@@ -1005,16 +980,13 @@ public enum Moves {
 	// post-enum def initialization
 	static {
 		for(Moves move: Moves.values) {
-			// move.valueEditor.accept(move);
-			// if(move.classicDamage == null && move.damageBuilder != null)
-			// 	move.classicDamage = move.damageBuilder.create();
-			// move.move = move.builder.create(move);
 			MoveBuilder b = new MoveBuilder(move);
 			move.initFunc.accept(b);
 			move.move = b.create();
 		}
 	}
 	
+	/** @noinspection UnusedReturnValue*/
 	static class MoveBuilder {
 		
 		private String name;
@@ -1030,25 +1002,11 @@ public enum Moves {
 		private boolean doesRecharge;
 		private AccuracyProperty accuracyProp;
 		private DamageBuilder damageEffect;
-		private EffectGroupBuilder primary;
-		private EffectGroupBuilder secondary;
+		private MoveEffect[] primaryEffects;
+		private MoveEffect[] secondaryEffects;
 		private int secondaryChance;
 		private Function<MoveContext, Boolean> moveCondition;
 		private Consumer<MoveContext> onMoveMiss;
-		
-		// MoveBuilder(Type type, int pp) {  this(null, type, pp); }
-		// MoveBuilder(Type type, int pp, int accuracy) {  this(null, type, pp, accuracy); }
-		// MoveBuilder(@Nullable String name, Type type, int pp) { this(name, type, pp, 0); }
-		// MoveBuilder(@Nullable String name, Type type, int pp, int accuracy) {
-		// MoveBuilder() {  this((String)null); }
-		// MoveBuilder(int accuracy) {  this(null, accuracy); }
-		// MoveBuilder(@Nullable String name) { this(name, 0); }
-		/*MoveBuilder(@Nullable String name) {
-			this.name = name;
-			// doesCharge = false;
-			doesRecharge = false;
-			secondaryChance = -1;
-		}*/
 		
 		MoveBuilder(Moves moveEnum) {
 			// some defaults
@@ -1073,9 +1031,7 @@ public enum Moves {
 				
 				int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 2;
 				DamageCategory damageType = damageTypeId >= 0 ? DamageCategory.values[damageTypeId] : null;
-				/*
-					damageEffect = DamageProperty.NO_DAMAGE;
-				else*/if(damageType != null) {
+				if(damageType != null) {
 					int power = node.parseValueNode("power", JsonNode::intValue);
 					int critRateBonus = meta.parseValueNode("crit_rate", JsonNode::intValue);
 					damageEffect = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus));
@@ -1097,8 +1053,8 @@ public enum Moves {
 				accuracy, accuracyProp,
 				damageEffect == null ? DamageProperty.NO_DAMAGE : damageEffect.create(),
 				moveCondition, onMoveMiss,
-				primary == null ? null : primary.create(),
-				secondary == null ? null : secondary.create(),
+				primaryEffects == null ? MoveEffect.NONE : primaryEffects,
+				secondaryEffects == null ? MoveEffect.NONE : secondaryEffects,
 				secondaryChance
 			);
 		}
@@ -1133,20 +1089,13 @@ public enum Moves {
 			return this;
 		}
 		
-		EffectGroupBuilder primary() {
-			return new EffectGroupBuilder(this, true);
-		}
-		EffectGroupBuilder secondary(int chance) {
-			secondaryChance = chance;
-			return new EffectGroupBuilder(this, false);
-		}
-		
-		MoveBuilder primary(EffectGroupBuilder effects) {
-			this.primary = effects;
+		MoveBuilder primary(MoveEffect... effects) {
+			primaryEffects = effects;
 			return this;
 		}
-		MoveBuilder secondary(EffectGroupBuilder effects) {
-			this.secondary = effects;
+		MoveBuilder secondary(int chance, MoveEffect... effects) {
+			secondaryChance = chance;
+			secondaryEffects = effects;
 			return this;
 		}
 		

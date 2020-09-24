@@ -36,7 +36,7 @@ public class PlayerContext {
 	}
 	
 	public StringBuilder with(Player player) {
-		return line(player.pokemon.pokemon.getName()).append(' ');
+		return line(player.pokemon.pokemon.getName());
 	}
 	
 	public StringBuilder withUser(Object string) {
@@ -45,5 +45,9 @@ public class PlayerContext {
 	
 	public StringBuilder withEnemy(Object string) {
 		return with(enemyPlayer).append(string);
+	}
+	
+	public StringBuilder withPlayer(boolean user, Object string) {
+		return user ? withUser(string) : withEnemy(string);
 	}
 }

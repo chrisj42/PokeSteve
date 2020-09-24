@@ -3,16 +3,12 @@ package bot.world.pokemon.move;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import bot.world.pokemon.DamageCategory;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.Stat.StageEquation;
 import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.BattlePokemon;
 import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.MoveContext;
-import bot.world.pokemon.move.DamageCalculator.PercentageDamage;
-import bot.world.pokemon.move.DamageProperty.DamageBuilder;
-import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,11 +29,11 @@ public class Move implements Comparable<Move> {
 	@NotNull public final DamageProperty damageEffect;
 	private final Function<MoveContext, Boolean> moveCondition;
 	private final Consumer<MoveContext> onMoveMiss;
-	public final EffectGroup primary;
-	public final EffectGroup secondary;
+	public final MoveEffect[] primaryEffects;
+	public final MoveEffect[] secondaryEffects;
 	public final int secondaryChance;
 	
-	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, @Nullable AccuracyProperty accuracyProp, @NotNull DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, Consumer<MoveContext> onMoveMiss, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
+	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, @Nullable AccuracyProperty accuracyProp, @NotNull DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, Consumer<MoveContext> onMoveMiss, MoveEffect[] primaryEffects, MoveEffect[] secondaryEffects, int secondaryChance) {
 		this.name = name;
 		this.id = id;
 		this.description = description;
@@ -51,8 +47,8 @@ public class Move implements Comparable<Move> {
 		this.damageEffect = damageEffect;
 		this.moveCondition = moveCondition;
 		this.onMoveMiss = onMoveMiss;
-		this.primary = primary == null ? EffectGroup.NO_EFFECTS : primary;
-		this.secondary = secondary == null ? EffectGroup.NO_EFFECTS : secondary;
+		this.primaryEffects = primaryEffects;
+		this.secondaryEffects = secondaryEffects;
 		this.secondaryChance = secondaryChance;
 	}
 	
@@ -95,7 +91,7 @@ public class Move implements Comparable<Move> {
 		if(context.enemy.hasFlag(Flag.FORCED_MOVE)) {
 			ChargeState state = context.enemyPokemon.getMove(context.enemy.getFlag(Flag.FORCED_MOVE)).chargeState;
 			if(!state.affectedBy(this)) {
-				context.line("But ").append(context.enemyPlayer).append(" wasn't there!");
+				context.line("But ").append(context.enemyPokemon.getName()).append(" wasn't there!");
 				return titleText;
 			}
 		}
@@ -127,18 +123,12 @@ public class Move implements Comparable<Move> {
 			}
 			
 			final boolean doSecondary = secondaryChance == 0 || Utils.randInt(0, 99) < secondaryChance;
-			if(primary.enemy != null)
-				result = result.combine(primary.enemy.doEffects(context, true));
-			if(doSecondary && secondary.enemy != null)
-				result = result.combine(secondary.enemy.doEffects(context, true));
-			if(primary.self != null)
-				result = result.combine(primary.self.doEffects(context, false));
-			if(doSecondary && secondary.self != null)
-				result = result.combine(secondary.self.doEffects(context, false));
-			if(primary.field != null)
-				result = result.combine(primary.field.doEffects(context));
-			if(doSecondary && secondary.field != null)
-				result = result.combine(secondary.field.doEffects(context));
+			for(MoveEffect effect: primaryEffects)
+				result = result.combine(effect.doEffect(context));
+			if(doSecondary) {
+				for(MoveEffect effect: secondaryEffects)
+					result = result.combine(effect.doEffect(context));
+			}
 			
 			if(result == EffectResult.NO_OUTPUT)
 				context.line("But it failed!");

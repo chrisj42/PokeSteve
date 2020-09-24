@@ -1,6 +1,6 @@
 package bot.world.pokemon.battle;
 
-import bot.world.pokemon.move.TrapProperty.TrapEffect;
+import bot.world.pokemon.move.TrapEffect.PersistentTrapEffect;
 
 public interface Flag {
 	
@@ -20,6 +20,6 @@ public interface Flag {
 	// so far, used for recharging
 	ValueFlag<String> REST_MESSAGE = new ValueFlag<>();
 	
-	ValueFlag<TrapEffect> TRAP = new ValueFlag<>();
+	ValueFlag<PersistentTrapEffect> TRAP = new ValueFlag<>();
 	
 }

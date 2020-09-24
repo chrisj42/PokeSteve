@@ -10,11 +10,11 @@ public enum ChargeState {
 	// each state has a different capacity to get affected by weather and other moves.
 	// sometimes moves are negated, sometimes they double in power.
 	
-	Normal(true, "is charging up!", (Moves[]) null),
-	Sky(true, "flew up high!", Moves.Gust, Moves.Hurricane, Moves.Sky_Uppercut, Moves.Smack_Down, Moves.Thousand_Arrows, Moves.Thunder, Moves.Twister),
-	Underground(false, "dug a hole!", Moves.Earthquake, Moves.Magnitude),
-	Underwater(false, "dived underwater!", Moves.Surf, Moves.Whirlpool),
-	Invisible(true, "disappeared!");
+	Normal(true, " is charging up!", (Moves[]) null),
+	Sky(true, " flew up high!", Moves.Gust, Moves.Hurricane, Moves.Sky_Uppercut, Moves.Smack_Down, Moves.Thousand_Arrows, Moves.Thunder, Moves.Twister),
+	Underground(false, " dug a hole!", Moves.Earthquake, Moves.Magnitude),
+	Underwater(false, " dived underwater!", Moves.Surf, Moves.Whirlpool),
+	Invisible(true, " disappeared!");
 	
 	public final boolean affectedByWeather;
 	public final String prepMessage;

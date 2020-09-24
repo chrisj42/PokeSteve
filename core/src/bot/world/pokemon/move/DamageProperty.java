@@ -75,14 +75,14 @@ public class DamageProperty {
 		
 		context.enemy.alterHealth(-damage); // intentionally not using the returned value
 		context.enemyPlayer.setLastDamage(damage);
-		context.withEnemy("took ").append(damage).append(" damage!");
+		context.withEnemy(" took ").append(damage).append(" damage!");
 		
 		if(drainPercent > 0) {
 			int gain = context.user.alterHealth(damage * drainPercent / 100);
 			if(gain > 0)
-				context.withUser("regained ").append(gain).append(" health!");
+				context.withUser(" regained ").append(gain).append(" health!");
 			else if(gain < 0)
-				context.withUser("took ").append(-gain).append(" recoil damage!");
+				context.withUser(" took ").append(-gain).append(" recoil damage!");
 		}
 		
 		return EffectResult.RECORDED;

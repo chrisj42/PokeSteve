@@ -1,6 +1,6 @@
 package bot.world.pokemon.battle.status;
 
-public enum StatusEffect {
+public enum StatusAilment {
 	Paralysis("was paralyzed!", "is paralyzed! It can't move!", "is no longer paralyzed."),
 	Sleep("fell asleep!", "is fast asleep.", "woke up!"),
 	Freeze("has been frozen!", "is frozen solid!", "thawed out."),
@@ -12,12 +12,14 @@ public enum StatusEffect {
 	HealBlock, NoTypeImmunity, LeechSeed, Embargo, PerishSong,
 	Ingrain, Silence;
 	
-	public static final StatusEffect[] values = StatusEffect.values();
+	public static final StatusAilment[] values = StatusAilment.values();
 	
-	private String statusAttain, statusAffect, statusRemove;
+	public final String statusAttain, statusAffect, statusRemove;
 	
-	StatusEffect() {}
-	StatusEffect(String statusAttain, String statusAffect, String statusRemove) {
+	// this constructor will be phased out
+	StatusAilment() { this(null, null, null); }
+	
+	StatusAilment(String statusAttain, String statusAffect, String statusRemove) {
 		this.statusAttain = statusAttain;
 		this.statusAffect = statusAffect;
 		this.statusRemove = statusRemove;
