@@ -32,10 +32,11 @@ public class SearchCommand extends ActionableCommand {
 		
 		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
-		// if(Utils.randInt(0, 1) != 0)
-		// 	return context.channel.createMessage("You couldn't find anything.").then();
+		int centralLevel = data.getSelectedPokemon().getLevel();
+		int offset = centralLevel / 5;
+		int level = centralLevel + Utils.randInt(-offset, offset);
 		
-		Pokemon wildPokemon = species.spawnPokemon(data.getSelectedPokemon().getLevel());
+		Pokemon wildPokemon = species.spawnPokemon(level);
 		
 		return context.channel.createMessage("A wild "+wildPokemon.species+" appeared!").flatMap(
 			e -> new WildBattle(new UserPlayer(context.channel, data, data.getSelectedPokemon()), wildPokemon)
