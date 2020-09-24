@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import bot.data.json.MissingPropertyException;
 import bot.data.json.NodeParser;
+import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
 import bot.world.pokemon.DamageCategory;
 import bot.data.DataCore;
@@ -944,7 +945,7 @@ public enum Moves {
 	private DamageProperty classicDamage;
 	private DamageBuilder damageBuilder;
 	private int secondaryChance;
-	// EffectGroup secondary;
+	// private EffectGroupBuilder secondary;
 	
 	private Move move;
 	private final MoveBuilder builder;
@@ -984,7 +985,9 @@ public enum Moves {
 				int power = node.parseValueNode("power", JsonNode::intValue);
 				int critRateBonus = meta.parseValueNode("crit_rate", JsonNode::intValue);
 				damageBuilder = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus));
-				// classicDamage = damageBuilder.create();
+				// check for stat changes
+				// actually don't because the database is simply too unreliable
+				// JsonArrayNode statChanges = node.getArrayNode("stat_changes");
 			}
 			
 			// secondaryChance = node.parseValueNode("effect_chance", JsonNode::intValue);
@@ -1043,8 +1046,8 @@ public enum Moves {
 		private Boolean doesRecharge;
 		private AccuracyProperty accuracyProp;
 		private DamageBuilder damageEffect;
-		private EffectGroup primary;
-		private EffectGroup secondary;
+		private EffectGroupBuilder primary;
+		private EffectGroupBuilder secondary;
 		private Integer secondaryChance;
 		private Function<MoveContext, Boolean> moveCondition;
 		private Consumer<MoveContext> onMoveMiss;
@@ -1065,7 +1068,17 @@ public enum Moves {
 		
 		Move create(Moves moveEnum) {
 			String name = this.name == null ? moveEnum.name().replaceAll("_", " ").trim() : this.name;
-			return new Move(name, moveEnum.ordinal()+1, moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, doesCharge, doesRecharge, moveEnum.accuracy, accuracyProp, damageEffect == null ? moveEnum.classicDamage : 	damageEffect.create(), moveCondition, onMoveMiss, primary, secondary, secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance);
+			return new Move(name, moveEnum.ordinal()+1,
+				moveEnum.description, moveEnum.type,
+				moveEnum.pp, moveEnum.priority,
+				doesCharge, doesRecharge,
+				moveEnum.accuracy, accuracyProp,
+				damageEffect == null ? moveEnum.classicDamage : damageEffect.create(),
+				moveCondition, onMoveMiss,
+				primary == null ? null : primary.create(),
+				secondary == null ? null : secondary.create(),
+				secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance
+			);
 		}
 		
 		MoveBuilder accuracy(AccuracyProperty prop) {
@@ -1106,11 +1119,11 @@ public enum Moves {
 			return new EffectGroupBuilder(this, false);
 		}
 		
-		MoveBuilder primary(EffectGroup effects) {
+		MoveBuilder primary(EffectGroupBuilder effects) {
 			this.primary = effects;
 			return this;
 		}
-		MoveBuilder secondary(EffectGroup effects) {
+		MoveBuilder secondary(EffectGroupBuilder effects) {
 			this.secondary = effects;
 			return this;
 		}

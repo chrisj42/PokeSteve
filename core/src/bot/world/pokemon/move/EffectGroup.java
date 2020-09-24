@@ -61,7 +61,7 @@ public class EffectGroup {
 		}
 		
 		MoveBuilder add() {
-			return primary ? move.primary(create()) : move.secondary(create());
+			return primary ? move.primary(this) : move.secondary(this);
 		}
 		
 		private PokemonEffectSet getPSet(LinkedList<PokemonEffect> effects) {
