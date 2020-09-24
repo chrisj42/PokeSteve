@@ -29,15 +29,15 @@ public class Move implements Comparable<Move> {
 	public final ChargeState chargeState;
 	private final boolean doesRecharge;
 	private final int accuracy;
-	private final AccuracyProperty accuracyProp;
-	public final DamageProperty damageEffect;
+	@Nullable private final AccuracyProperty accuracyProp;
+	@NotNull public final DamageProperty damageEffect;
 	private final Function<MoveContext, Boolean> moveCondition;
 	private final Consumer<MoveContext> onMoveMiss;
 	public final EffectGroup primary;
 	public final EffectGroup secondary;
 	public final int secondaryChance;
 	
-	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, AccuracyProperty accuracyProp, DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, Consumer<MoveContext> onMoveMiss, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
+	public Move(String name, int id, MoveDescription description, Type type, int pp, int priority, ChargeState chargeState, boolean doesRecharge, int accuracy, @Nullable AccuracyProperty accuracyProp, @NotNull DamageProperty damageEffect, Function<MoveContext, Boolean> moveCondition, Consumer<MoveContext> onMoveMiss, EffectGroup primary, EffectGroup secondary, int secondaryChance) {
 		this.name = name;
 		this.id = id;
 		this.description = description;

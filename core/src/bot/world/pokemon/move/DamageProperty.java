@@ -13,7 +13,7 @@ public class DamageProperty {
 	
 	public static final DamageProperty NO_DAMAGE = new DamageBuilder(null, null).create();
 	
-	private final DamageCategory damageType;
+	public final DamageCategory damageType;
 	private final DamageCalculator damageBehavior;
 	private final MultiHitProperty multiHitProperty;
 	private final int drainPercent;
@@ -74,6 +74,7 @@ public class DamageProperty {
 		}
 		
 		context.enemy.alterHealth(-damage); // intentionally not using the returned value
+		context.enemyPlayer.setLastDamage(damage);
 		context.withEnemy("took ").append(damage).append(" damage!");
 		
 		if(drainPercent > 0) {

@@ -1,16 +1,13 @@
 package bot.world.pokemon.move;
 
-import javax.xml.crypto.dsig.Transform;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import bot.data.DataCore;
 import bot.data.json.MissingPropertyException;
 import bot.data.json.NodeParser;
-import bot.data.json.node.JsonArrayNode;
 import bot.data.json.node.JsonObjectNode;
 import bot.world.pokemon.DamageCategory;
-import bot.data.DataCore;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.MoveContext;
@@ -21,13 +18,8 @@ import bot.world.pokemon.move.DamageProperty.DamageBuilder;
 import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.world.pokemon.move.PokemonEffectSet.PokemonEffect;
 import bot.world.pokemon.move.StatProperty.StatBuilder;
-import bot.world.pokemon.notimpl.move.DamageEffect;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.w3c.dom.css.Counter;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public enum Moves {
 	
@@ -197,19 +189,43 @@ public enum Moves {
 	Blizzard(b -> b
 		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
 	), // TODO 100% accuracy during hail. (100 - accuracy)% chance to break through protect and detect
-	Psybeam,
-	Bubble_Beam,
-	Aurora_Beam,
-	Hyper_Beam,
+	Psybeam(b -> b
+		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Confusion)).add()
+	),
+	Bubble_Beam(b -> b
+		.secondary(10).affectEnemy(StatBuilder.get(Stat.Speed, -1)).add()
+	),
+	Aurora_Beam(b -> b
+		.secondary(10).affectEnemy(StatBuilder.get(Stat.Attack, -1)).add()
+	),
+	Hyper_Beam(b -> b.recharge()),
 	Peck,
 	Drill_Peck,
-	Submission,
-	Low_Kick,
-	Counter,
-	Seismic_Toss,
+	Submission(b -> b.damageEffect.recoil(25)),
+	Low_Kick, // power increases with weight; not going to implement
+	Counter(b -> b
+		.condition(context -> {
+			// only works if used second after a physical attack
+			if(context.isFirst) return false;
+			Move eMove = context.enemyMove;
+			if(eMove == null) return false;
+			return eMove.damageEffect.damageType == DamageCategory.Physical;
+		})
+		.damageEffect.ignoreTypeBonuses() // ignores type bonuses (aside from immunity)
+		.behavior((context, damageType) -> {
+			// deals double the damage taken
+			return context.userPlayer.getLastDamage() * 2;
+		})
+	),
+	Seismic_Toss(b -> b
+		.damageEffect.behavior((context, damageType) -> {
+			// deals damage equal to the user's level
+			return context.userPokemon.getLevel();
+		}).ignoreTypeBonuses() // ignores type bonuses, except for immunity
+	),
 	Strength,
-	Absorb,
-	Mega_Drain,
+	Absorb(b -> b.damageEffect.drain(50)),
+	Mega_Drain(b -> b.damageEffect.drain(50)),
 	Leech_Seed,
 	Growth,
 	Razor_Leaf,

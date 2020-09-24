@@ -278,6 +278,7 @@ public abstract class BattleInstance {
 		private int moveIdx = -1;
 		private int lastMoveIdx = -1;
 		private Player opponent;
+		private int lastDamageTaken;
 		
 		public Player(Pokemon pokemon) {
 			// this.name = name;
@@ -305,9 +306,15 @@ public abstract class BattleInstance {
 		}
 		public int getLastMoveIdx() { return lastMoveIdx; }
 		
+		public void setLastDamage(int damage) {
+			this.lastDamageTaken = damage;
+		}
+		public int getLastDamage() { return lastDamageTaken; }
+		
 		private void resetMove() {
 			moveIdx = -1;
 			ready = false;
+			lastDamageTaken = -1;
 			pokemon.clearFlag(Flag.FLINCH);
 		}
 		
