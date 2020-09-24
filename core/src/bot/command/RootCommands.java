@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import bot.Core;
 import bot.command.group.battle.AttackCommand;
+import bot.command.group.battle.CatchCommand;
 import bot.command.group.battle.FleeCommand;
 import bot.command.group.debug.SpawnCommand;
 import bot.command.group.info.DexCommand;
@@ -42,6 +43,7 @@ public enum RootCommands {
 	// battle
 	ATTACK(new AttackCommand()),
 	FLEE(new FleeCommand()),
+	CATCH(new CatchCommand()),
 	
 	// debug
 	SPAWN(new SpawnCommand());

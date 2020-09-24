@@ -320,7 +320,7 @@ public abstract class BattleInstance {
 		
 		public BattleInstance getBattle() { return battle; }
 		
-		abstract Mono<Void> onFinish(BattleResult result);
+		abstract Mono<Void> onFinish(@Nullable BattleResult result);
 		
 		abstract String getPlayerName();
 		

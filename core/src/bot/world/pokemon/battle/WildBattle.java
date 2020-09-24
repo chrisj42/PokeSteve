@@ -3,6 +3,7 @@ package bot.world.pokemon.battle;
 import bot.util.UsageException;
 import bot.world.pokemon.Pokemon;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class WildBattle extends BattleInstance {
@@ -30,6 +31,13 @@ public class WildBattle extends BattleInstance {
 					return Mono.empty();
 				}
 			})
+		).then();
+	}
+	
+	public Mono<Void> onPokemonCaught() {
+		return Flux.merge(
+			player.onFinish(null),
+			wildPokemon.onFinish(null)
 		).then();
 	}
 }

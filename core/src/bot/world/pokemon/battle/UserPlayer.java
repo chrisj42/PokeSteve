@@ -9,6 +9,8 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 import reactor.core.publisher.Mono;
 
+import org.jetbrains.annotations.Nullable;
+
 public class UserPlayer extends Player {
 	public final MessageChannel channel;
 	public final User user;
@@ -25,7 +27,7 @@ public class UserPlayer extends Player {
 	}
 	
 	@Override
-	Mono<Void> onFinish(BattleResult result) {
+	Mono<Void> onFinish(@Nullable BattleResult result) {
 		data.onBattleEnd(result);
 		return caughtPokemon.addExp(channel)
 			.flatMap(change -> {

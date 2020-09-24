@@ -206,11 +206,13 @@ public class UserData {
 	public void setBattlePlayer(@NotNull UserPlayer player) {
 		battlePlayer = player;
 	}
-	public void onBattleEnd(BattleResult result) {
-		switch(result) {
-			case WIN: wins++; break;
-			case LOSE: losses++; break;
-			case TIE: ties++; break;
+	public void onBattleEnd(@Nullable BattleResult result) {
+		if(result != null) {
+			switch(result) {
+				case WIN: wins++; break;
+				case LOSE: losses++; break;
+				case TIE: ties++; break;
+			}
 		}
 		battlePlayer = null;
 		
