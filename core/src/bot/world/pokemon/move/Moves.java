@@ -167,15 +167,35 @@ public enum Moves {
 	Disable(new MoveBuilder()
 		.primary().affectEnemy(PokemonEffect.DISABLE).add()
 	),
-	Acid,
-	Ember,
-	Flamethrower,
-	Mist,
+	Acid(new MoveBuilder()
+		.secondary(10).affectEnemy(StatBuilder.get(Stat.SpDefense, -1)).add()
+	),
+	Ember(new MoveBuilder()
+		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
+	),
+	Flamethrower(new MoveBuilder()
+		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
+	),
+	Mist, // TODO prevention of stat-lowering effects
 	Water_Gun,
 	Hydro_Pump,
-	Surf,
-	Ice_Beam,
-	Blizzard,
+	Surf(new MoveBuilder()
+		.damage(new DamageBuilder(DamageCategory.Special, new ClassicDamage(90, 0) {
+			@Override
+			protected int getPower(MoveContext context) {
+				int base = super.getPower(context);
+				if(context.enemy.getChargeState() == ChargeState.Underwater)
+					base *= 2; // power doubled if target underwater
+				return base;
+			}
+		}))
+	),
+	Ice_Beam(new MoveBuilder()
+		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
+	),
+	Blizzard(new MoveBuilder()
+		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
+	), // TODO 100% accuracy during hail. (100 - accuracy)% chance to break through protect and detect
 	Psybeam,
 	Bubble_Beam,
 	Aurora_Beam,
