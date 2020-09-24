@@ -47,7 +47,7 @@ public class TrapEffect implements MoveEffect {
 		}
 		
 		@Override
-		protected void onEffectEnd(PlayerContext context) {
+		public void onEffectEnd(PlayerContext context) {
 			context.user.clearFlag(Flag.TRAP);
 			context.withUser(" is no longer trapped by ").append(source).append('.');
 		}

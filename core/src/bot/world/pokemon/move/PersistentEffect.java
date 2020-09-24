@@ -10,6 +10,8 @@ public interface PersistentEffect {
 	// returns true to continue effect, false to end the effect.
 	boolean apply(PlayerContext context);
 	
+	default void onEffectEnd(PlayerContext context) {}
+	
 	abstract class TimedPersistentEffect implements PersistentEffect {
 		
 		private int turnDuration; // number of turns where this effect persists
@@ -21,13 +23,10 @@ public interface PersistentEffect {
 		@Override
 		public boolean apply(PlayerContext context) {
 			turnDuration--;
-			if(turnDuration <= 0) {
-				onEffectEnd(context);
-				return false;
-			}
-			return true;
+			return turnDuration > 0;
 		}
 		
-		protected abstract void onEffectEnd(PlayerContext context);
+		@Override
+		public abstract void onEffectEnd(PlayerContext context);
 	}
 }

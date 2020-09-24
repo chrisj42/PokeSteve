@@ -1,5 +1,6 @@
 package bot.world.pokemon.battle;
 
+import bot.world.pokemon.move.PersistentEffect;
 import bot.world.pokemon.move.TrapEffect.PersistentTrapEffect;
 
 public interface Flag {
@@ -22,4 +23,5 @@ public interface Flag {
 	
 	ValueFlag<PersistentTrapEffect> TRAP = new ValueFlag<>();
 	
+	ValueFlag<PersistentEffect> LEECH_SEED = new ValueFlag<>();
 }

@@ -1,6 +1,8 @@
 package bot.world.pokemon.move;
 
 import bot.util.Utils;
+import bot.world.pokemon.Stat;
+import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.MoveContext;
 import bot.world.pokemon.battle.PlayerContext;
@@ -25,7 +27,7 @@ public interface MoveEffect {
 			context.user.setFlag(Flag.FORCED_MOVE, context.userMoveIdx);
 			context.user.addEffect(new TimedPersistentEffect(Utils.randInt(2, 3)) {
 				@Override
-				protected void onEffectEnd(PlayerContext context) {
+				public void onEffectEnd(PlayerContext context) {
 					context.withUser(" stopped thrashing about.");
 					context.user.clearFlag(Flag.FORCED_MOVE);
 					// TODO cause confusion
@@ -47,11 +49,34 @@ public interface MoveEffect {
 		context.enemy.setFlag(Flag.DISABLED_MOVE, lastMove);
 		context.enemy.addEffect(new TimedPersistentEffect(4) {
 			@Override
-			protected void onEffectEnd(PlayerContext context) {
+			public void onEffectEnd(PlayerContext context) {
 				context.withUser("'s ").append(move).append(" is no longer disabled!");
 				context.user.clearFlag(Flag.DISABLED_MOVE);
 			}
 		});
+		return EffectResult.RECORDED;
+	};
+	
+	MoveEffect LEECH_SEED = context -> {
+		if(context.enemy.hasFlag(Flag.LEECH_SEED))
+			return EffectResult.NO_OUTPUT;
+		
+		// no effect on grass pokemon
+		if(context.enemySpecies.primaryType == Type.Grass || context.enemySpecies.secondaryType == Type.Grass)
+			return EffectResult.NO_OUTPUT;
+		
+		context.withEnemy(" was seeded!");
+		PersistentEffect effect = pcontext -> {
+			int drain = pcontext.user.alterHealth(-pcontext.userPokemon.getStat(Stat.Health) / 8);
+			int heal = pcontext.enemy.alterHealth(drain);
+			pcontext.withUser(" was drained by leech seed!");
+			if(heal > 0)
+				pcontext.withEnemy(" regained health!");
+			return true; // only stops when switched out, normally, so essentially never
+		};
+		context.enemy.setFlag(Flag.LEECH_SEED, effect);
+		context.enemy.addEffect(effect);
+		
 		return EffectResult.RECORDED;
 	};
 }

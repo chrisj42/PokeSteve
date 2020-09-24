@@ -124,7 +124,13 @@ public class BattlePokemon {
 	}
 	
 	public void processEffects(PlayerContext context) {
-		effects.removeIf(effect -> !effect.apply(context));
+		effects.removeIf(effect -> {
+			if(!effect.apply(context)) {
+				effect.onEffectEnd(context);
+				return false;
+			}
+			return true;
+		});
 	}
 	
 	@Nullable

@@ -10,6 +10,7 @@ import bot.data.json.node.JsonObjectNode;
 import bot.world.pokemon.DamageCategory;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.Type;
+import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.MoveContext;
 import bot.world.pokemon.battle.status.StatusAilment;
 import bot.world.pokemon.move.DamageCalculator.ClassicDamage;
@@ -215,7 +216,9 @@ public enum Moves {
 	Strength,
 	Absorb(b -> b.damageEffect.drain(50)),
 	Mega_Drain(b -> b.damageEffect.drain(50)),
-	Leech_Seed,
+	Leech_Seed(b -> b // extra functions relating to abilities
+		.primary(MoveEffect.LEECH_SEED)
+	),
 	Growth,
 	Razor_Leaf,
 	Solar_Beam,
