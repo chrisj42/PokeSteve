@@ -37,7 +37,7 @@ public class CatchCommand extends ActionableCommand {
 		float healthPercent = player.getOpponent().pokemon.getHealth() / (float) player.getOpponent().pokemon.pokemon.getStat(Stat.Health);
 		
 		float chance = ((1 - healthPercent) * CHANCE_PER_HEALTH) + BASE_CHANCE;
-		System.out.println("chance of catching with "+healthPercent+" health: "+chance);
+		// System.out.println("chance of catching with "+healthPercent+" health: "+chance);
 		if(Math.random() < chance) {
 			// caught
 			UserData.reqData(context.user).addPokemon(player.getOpponent().pokemon.pokemon);
