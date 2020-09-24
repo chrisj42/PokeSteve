@@ -34,13 +34,25 @@ public interface DamageCalculator {
 		
 		private final int power;
 		private final int critBonus;
+		private PowerModifier powerMod;
+		
+		@FunctionalInterface
+		interface PowerModifier {
+			int getPower(MoveContext context, int basePower);
+		}
 		
 		ClassicDamage(int power, int critBonus) {
 			this.power = power;
 			this.critBonus = critBonus;
 		}
 		
+		void modifyPower(PowerModifier modifier) {
+			powerMod = modifier;
+		}
+		
 		protected int getPower(MoveContext context) {
+			if(powerMod != null)
+				return powerMod.getPower(context, power);
 			return power;
 		}
 		

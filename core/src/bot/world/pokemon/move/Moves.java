@@ -1,5 +1,7 @@
 package bot.world.pokemon.move;
 
+import javax.xml.crypto.dsig.Transform;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -19,9 +21,12 @@ import bot.world.pokemon.move.DamageProperty.DamageBuilder;
 import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.world.pokemon.move.PokemonEffectSet.PokemonEffect;
 import bot.world.pokemon.move.StatProperty.StatBuilder;
+import bot.world.pokemon.notimpl.move.DamageEffect;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.w3c.dom.css.Counter;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum Moves {
@@ -53,147 +58,143 @@ public enum Moves {
 	// gen 1
 	Pound,
 	Karate_Chop,
-	Double_Slap(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
-	Comet_Punch(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
+	Double_Slap(b -> b.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)),
+	Comet_Punch(b -> b.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)),
 	Mega_Punch,
 	Pay_Day,
-	Fire_Punch(new MoveBuilder()
+	Fire_Punch(b -> b
 		.secondary(10)
 		.affectEnemy(new StatusProperty(StatusEffect.Burn))
 		.add()
 	),
-	Ice_Punch(new MoveBuilder()
+	Ice_Punch(b -> b
 		.secondary(10)
 		.affectEnemy(new StatusProperty(StatusEffect.Freeze))
 		.add()
 	),
-	Thunder_Punch(new MoveBuilder()
+	Thunder_Punch(b -> b
 		.secondary(10)
 		.affectEnemy(new StatusProperty(StatusEffect.Paralysis))
 		.add()
 	),
 	Scratch,
 	Vice_Grip,
-	Guillotine(new MoveBuilder()
+	Guillotine(b -> b
 		.ohko(DamageCategory.Physical)
 	),
-	Razor_Wind(m -> m.builder.charge(ChargeState.Normal)),
-	Swords_Dance(new MoveBuilder()
+	Razor_Wind(b -> b.charge(ChargeState.Normal)),
+	Swords_Dance(b -> b
 		.primary().affectSelf(StatBuilder.get(Stat.Attack, 2)).add()
 	),
 	Cut,
-	Gust(new MoveBuilder()
-		.damage(new DamageBuilder(DamageCategory.Special, new ClassicDamage(40, 0) {
-			@Override
-			protected int getPower(MoveContext context) {
-				int base = super.getPower(context);
-				if(context.user.getChargeState() == ChargeState.Sky)
-					base *= 2; // power doubled in the sky
-				return base;
-			}
-		}))
+	Gust(b -> b
+		.damageEffect.modifyPower((context, basePower) -> {
+			if(context.user.getChargeState() == ChargeState.Sky)
+				return basePower * 2; // power doubled in the sky
+			return basePower;
+		})
 	),
 	Wing_Attack,
 	Whirlwind, // no impl
-	Fly(m -> m.builder.charge(ChargeState.Sky)),
-	Bind(new MoveBuilder()
+	Fly(b -> b.charge(ChargeState.Sky)),
+	Bind(b -> b
 		.primary().affectEnemy(new TrapProperty(p -> p+" is squeezed by "+p.getOpponent()+"!")).add()
 	),
 	Slam,
 	Vine_Whip,
-	Stomp(new MoveBuilder()
+	Stomp(b -> b
 		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
 	),
 	Double_Kick(
-		m -> m.damageBuilder.multiHit(new MultiHitProperty(2))
+		b -> b.damageEffect.multiHit(new MultiHitProperty(2))
 	),
 	Mega_Kick,
-	Jump_Kick(new MoveBuilder().onMiss(context -> {
+	Jump_Kick(b -> b.onMiss(context -> {
 		int dam = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / 2);
 		context.withUser("crashed to the ground and took ").append(-dam).append(" damage!");
 	})),
-	Rolling_Kick(new MoveBuilder()
+	Rolling_Kick(b -> b
 		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
 	),
-	Sand_Attack(new MoveBuilder()
+	Sand_Attack(b -> b
 		.primary().affectEnemy(StatBuilder.get(Stat.Accuracy, -1)).add()
 	),
-	Headbutt(new MoveBuilder()
+	Headbutt(b -> b
 		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
 	),
 	Horn_Attack,
-	Fury_Attack(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
-	Horn_Drill(new MoveBuilder().ohko(DamageCategory.Physical)),
+	Fury_Attack(b -> b.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)),
+	Horn_Drill(b -> b.ohko(DamageCategory.Physical)),
 	Tackle,
-	Body_Slam(new MoveBuilder()
+	Body_Slam(b -> b
 		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Paralysis)).add()
 	),
-	Wrap(new MoveBuilder()
+	Wrap(b -> b
 		.primary().affectEnemy(new TrapProperty(p -> p+" was wrapped by "+p.getOpponent()+"!")).add()
 	),
-	Take_Down(m -> m.damageBuilder.recoil(25)),
-	Thrash(new MoveBuilder().primary().affectSelf(PokemonEffect.THRASH).add()),
-	Double_Edge(m -> m.damageBuilder.recoil(33)),
-	Tail_Whip(new MoveBuilder()
+	Take_Down(b -> b.damageEffect.recoil(25)),
+	Thrash(b -> b
+		.primary().affectSelf(PokemonEffect.THRASH).add()
+	),
+	Double_Edge(b -> b.damageEffect.recoil(33)),
+	Tail_Whip(b -> b
 		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
 	),
-	Poison_Sting(new MoveBuilder()
+	Poison_Sting(b -> b
 		.secondary(30).affectEnemy(new StatusProperty(StatusEffect.Poison)).add()
 	),
-	Twineedle(new MoveBuilder() // TODO each hit should have a chance to activate the secondary effects
-		.secondary(20).affectEnemy(new StatusProperty(StatusEffect.Poison)).add(),
-		m -> m.damageBuilder.multiHit(new MultiHitProperty(2))
+	Twineedle(b -> b // TODO each hit should have a chance to activate the secondary effects
+		.secondary(20).affectEnemy(new StatusProperty(StatusEffect.Poison)).add()
+		.damageEffect.multiHit(new MultiHitProperty(2))
 	),
-	Pin_Missile(m -> m.damageBuilder.multiHit(MultiHitProperty.SCALED_2_5)),
-	Leer(new MoveBuilder()
+	Pin_Missile(b -> b
+		.damageEffect.multiHit(MultiHitProperty.SCALED_2_5)
+	),
+	Leer(b -> b
 		.primary().affectEnemy(StatBuilder.get(Stat.Defense, -1)).add()
 	),
-	Bite(new MoveBuilder()
+	Bite(b -> b
 		.secondary(30).affectEnemy(PokemonEffect.FLINCH).add()
 	),
-	Growl(new MoveBuilder()
+	Growl(b -> b
 		.primary().affectEnemy(StatBuilder.get(Stat.Attack, -1)).add()
 	),
 	Roar, // not impl
-	Sing(new MoveBuilder()
+	Sing(b -> b
 		.primary().affectEnemy(new StatusProperty(StatusEffect.Sleep)).add()
 	),
-	Supersonic(new MoveBuilder()
+	Supersonic(b -> b
 		.primary().affectEnemy(new StatusProperty(StatusEffect.Confusion)).add()
 	),
-	Sonic_Boom(new MoveBuilder().damage(
-		new DamageBuilder(DamageCategory.Special, (context, damageType) -> 20)
-	)),
-	Disable(new MoveBuilder()
+	Sonic_Boom(b -> b
+		.damageEffect.behavior((context, damageType) -> 20)
+	),
+	Disable(b -> b
 		.primary().affectEnemy(PokemonEffect.DISABLE).add()
 	),
-	Acid(new MoveBuilder()
+	Acid(b -> b
 		.secondary(10).affectEnemy(StatBuilder.get(Stat.SpDefense, -1)).add()
 	),
-	Ember(new MoveBuilder()
+	Ember(b -> b
 		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
 	),
-	Flamethrower(new MoveBuilder()
+	Flamethrower(b -> b
 		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Burn)).add()
 	),
 	Mist, // TODO prevention of stat-lowering effects
 	Water_Gun,
 	Hydro_Pump,
-	Surf(new MoveBuilder()
-		.damage(new DamageBuilder(DamageCategory.Special, new ClassicDamage(90, 0) {
-			@Override
-			protected int getPower(MoveContext context) {
-				int base = super.getPower(context);
-				if(context.enemy.getChargeState() == ChargeState.Underwater)
-					base *= 2; // power doubled if target underwater
-				return base;
-			}
-		}))
+	Surf(b -> b
+		.damageEffect.modifyPower((context, basePower) -> {
+			if(context.enemy.getChargeState() == ChargeState.Underwater)
+				return basePower * 2; // power doubled if target underwater
+			return basePower;
+		})
 	),
-	Ice_Beam(new MoveBuilder()
+	Ice_Beam(b -> b
 		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
 	),
-	Blizzard(new MoveBuilder()
+	Blizzard(b -> b
 		.secondary(10).affectEnemy(new StatusProperty(StatusEffect.Freeze)).add()
 	), // TODO 100% accuracy during hail. (100 - accuracy)% chance to break through protect and detect
 	Psybeam,
@@ -957,90 +958,26 @@ public enum Moves {
 	public static final Moves[] values = Moves.values();
 	
 	// private final String name;
-	private MoveDescription description;
-	private int accuracy;
-	private int pp;
-	private Type type;
-	private int priority;
-	private DamageProperty classicDamage;
-	private DamageBuilder damageBuilder;
-	private int secondaryChance;
+	// private MoveDescription description;
+	// private int accuracy;
+	// private int pp;
+	// private Type type;
+	// private int priority;
+	// private DamageProperty classicDamage;
+	// private DamageBuilder damageBuilder;
+	// private int secondaryChance;
 	// private EffectGroupBuilder secondary;
 	
 	private Move move;
-	private final MoveBuilder builder;
-	private final Consumer<Moves> valueEditor;
+	// private final MoveBuilder builder;
+	// private final Consumer<Moves> valueEditor;
 	
-	Moves() { this((String)null); }
-	Moves(String name) { this(new MoveBuilder(name)); }
-	Moves(MoveBuilder b) { this(b, m -> {}); }
-	Moves(Consumer<Moves> valueEditor) { this(new MoveBuilder(), valueEditor); }
-	Moves(MoveBuilder b, Consumer<Moves> valueEditor) {
-		/*if(b == null) {
-			move = null;
-			return;
-		}*/
-		this.builder = b;
-		this.valueEditor = valueEditor;
-		
-		if(ordinal() >= DataCore.MOVE_JSON.getLength())
-			return;
-		
-		try {
-			final JsonObjectNode node = DataCore.MOVE_JSON.getObjectNode(ordinal());
-			final JsonObjectNode meta = node.getObjectNode("meta");
-			
-			description = new MoveDescription(node);
-			int typeId = NodeParser.getResourceId(node.getObjectNode("type"))-1;
-			type = typeId >= 0 ? Type.values[typeId] : null;
-			pp = node.parseValueNode("pp", JsonNode::intValue);
-			priority = node.parseValueNode("priority", JsonNode::intValue);
-			accuracy = node.parseValueNode("accuracy", JsonNode::intValue);
-			
-			int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 2;
-			DamageCategory damageType = damageTypeId >= 0 ? DamageCategory.values[damageTypeId] : null;
-			if(damageType == null)
-				classicDamage = DamageProperty.NO_DAMAGE;
-			else {
-				int power = node.parseValueNode("power", JsonNode::intValue);
-				int critRateBonus = meta.parseValueNode("crit_rate", JsonNode::intValue);
-				damageBuilder = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus));
-				// check for stat changes
-				// actually don't because the database is simply too unreliable
-				// JsonArrayNode statChanges = node.getArrayNode("stat_changes");
-			}
-			
-			// secondaryChance = node.parseValueNode("effect_chance", JsonNode::intValue);
-			
-			// EffectGroupBuilder effects = new EffectGroupBuilder(b, false);
-			
-			/*JsonArrayNode statChanges = node.getArrayNode("stat_changes");
-			if(statChanges.getLength() > 0) {
-				StatBuilder builder = new StatBuilder();
-				for(int i = 0; i < statChanges.getLength(); i++) {
-					JsonObjectNode change = statChanges.getObjectNode(i);
-					Stat stat = Stat.values[NodeParser.getResourceId(change.getObjectNode("stat")) - 1];
-					int amount = change.parseValueNode("change", JsonNode::intValue);
-					builder.set(stat, amount);
-				}
-				builder.create();
-			}*/
-			/*target = MoveTarget.getTarget(node.getObjectNode("target").parseValueNode("name", JsonNode::textValue));
-			effectChance = node.parseValueNode("effect_chance", JsonNode::intValue);
-			
-			// damage = new DamageEffect();
-			stat = new StatEffect(node, meta);
-			status = new ApplyStatusEffect(node, meta);
-			
-			drain = meta.parseValueNode("drain", JsonNode::intValue);
-			healing = meta.parseValueNode("healing", JsonNode::intValue);
-			flinchChance = meta.parseValueNode("flinch_chance",JsonNode::intValue);*/
-		} catch(MissingPropertyException e) {
-			System.err.println("error while parsing json data for move "+name());
-			e.printStackTrace();
-		}
-		
-		// this.move = b.create(this);
+	private final Consumer<MoveBuilder> initFunc;
+	
+	Moves() { this(b -> {}); }
+	Moves(String name) { this(b -> b.name = name); }
+	Moves(Consumer<MoveBuilder> initFunc) {
+		this.initFunc = initFunc;
 	}
 	
 	public Move getMove() {
@@ -1052,23 +989,34 @@ public enum Moves {
 	// post-enum def initialization
 	static {
 		for(Moves move: Moves.values) {
-			move.valueEditor.accept(move);
-			if(move.classicDamage == null && move.damageBuilder != null)
-				move.classicDamage = move.damageBuilder.create();
-			move.move = move.builder.create(move);
+			// move.valueEditor.accept(move);
+			// if(move.classicDamage == null && move.damageBuilder != null)
+			// 	move.classicDamage = move.damageBuilder.create();
+			// move.move = move.builder.create(move);
+			MoveBuilder b = new MoveBuilder(move);
+			move.initFunc.accept(b);
+			move.move = b.create();
 		}
 	}
 	
 	static class MoveBuilder {
 		
-		private final String name;
+		private String name;
+		private final int id;
+		// set by data usually
+		private MoveDescription description;
+		private int accuracy;
+		private int pp;
+		private Type type;
+		private int priority;
+		// manually set
 		private ChargeState doesCharge;
-		private Boolean doesRecharge;
+		private boolean doesRecharge;
 		private AccuracyProperty accuracyProp;
 		private DamageBuilder damageEffect;
 		private EffectGroupBuilder primary;
 		private EffectGroupBuilder secondary;
-		private Integer secondaryChance;
+		private int secondaryChance;
 		private Function<MoveContext, Boolean> moveCondition;
 		private Consumer<MoveContext> onMoveMiss;
 		
@@ -1076,28 +1024,66 @@ public enum Moves {
 		// MoveBuilder(Type type, int pp, int accuracy) {  this(null, type, pp, accuracy); }
 		// MoveBuilder(@Nullable String name, Type type, int pp) { this(name, type, pp, 0); }
 		// MoveBuilder(@Nullable String name, Type type, int pp, int accuracy) {
-		MoveBuilder() {  this(null); }
+		// MoveBuilder() {  this((String)null); }
 		// MoveBuilder(int accuracy) {  this(null, accuracy); }
 		// MoveBuilder(@Nullable String name) { this(name, 0); }
-		MoveBuilder(@Nullable String name) {
+		/*MoveBuilder(@Nullable String name) {
 			this.name = name;
 			// doesCharge = false;
 			doesRecharge = false;
 			secondaryChance = -1;
+		}*/
+		
+		MoveBuilder(Moves moveEnum) {
+			// some defaults
+			id = moveEnum.ordinal() + 1;
+			doesRecharge = false;
+			secondaryChance = -1;
+			this.name = moveEnum.name().replaceAll("_", " ").trim();
+			
+			if(moveEnum.ordinal() >= DataCore.MOVE_JSON.getLength())
+				return;
+			
+			try {
+				final JsonObjectNode node = DataCore.MOVE_JSON.getObjectNode(moveEnum.ordinal());
+				final JsonObjectNode meta = node.getObjectNode("meta");
+				
+				description = new MoveDescription(node);
+				int typeId = NodeParser.getResourceId(node.getObjectNode("type")) - 1;
+				type = typeId >= 0 ? Type.values[typeId] : null;
+				pp = node.parseValueNode("pp", JsonNode::intValue);
+				priority = node.parseValueNode("priority", JsonNode::intValue);
+				accuracy = node.parseValueNode("accuracy", JsonNode::intValue);
+				
+				int damageTypeId = NodeParser.getResourceId(node.getObjectNode("damage_class")) - 2;
+				DamageCategory damageType = damageTypeId >= 0 ? DamageCategory.values[damageTypeId] : null;
+				/*
+					damageEffect = DamageProperty.NO_DAMAGE;
+				else*/if(damageType != null) {
+					int power = node.parseValueNode("power", JsonNode::intValue);
+					int critRateBonus = meta.parseValueNode("crit_rate", JsonNode::intValue);
+					damageEffect = new DamageBuilder(damageType, new ClassicDamage(power, critRateBonus));
+					// check for stat changes
+					// actually don't because the database is simply too unreliable
+					// JsonArrayNode statChanges = node.getArrayNode("stat_changes");
+				}
+			} catch(MissingPropertyException e) {
+				System.err.println("error while parsing json data for move "+moveEnum.name());
+				e.printStackTrace();
+			}
 		}
 		
-		Move create(Moves moveEnum) {
-			String name = this.name == null ? moveEnum.name().replaceAll("_", " ").trim() : this.name;
-			return new Move(name, moveEnum.ordinal()+1,
-				moveEnum.description, moveEnum.type,
-				moveEnum.pp, moveEnum.priority,
+		Move create() {
+			return new Move(name, id,
+				description, type,
+				pp, priority,
 				doesCharge, doesRecharge,
-				moveEnum.accuracy, accuracyProp,
-				damageEffect == null ? moveEnum.classicDamage : damageEffect.create(),
+				accuracy, accuracyProp,
+				damageEffect == null ? DamageProperty.NO_DAMAGE : damageEffect.create(),
 				moveCondition, onMoveMiss,
 				primary == null ? null : primary.create(),
 				secondary == null ? null : secondary.create(),
-				secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance
+				secondaryChance
 			);
 		}
 		

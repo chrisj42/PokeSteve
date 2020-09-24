@@ -4,6 +4,8 @@ import bot.world.pokemon.DamageRelation;
 import bot.world.pokemon.DamageCategory;
 import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.MoveContext;
+import bot.world.pokemon.move.DamageCalculator.ClassicDamage;
+import bot.world.pokemon.move.DamageCalculator.ClassicDamage.PowerModifier;
 import bot.world.pokemon.move.MultiHitProperty.MultiHitBuilder;
 import bot.util.Utils;
 
@@ -108,6 +110,22 @@ public class DamageProperty {
 			this.damageType = damageType;
 			this.damageBehavior = damageBehavior;
 			ignoreTypeBonuses = false;
+		}
+		
+		DamageBuilder type(DamageCategory damageType) {
+			this.damageType = damageType;
+			return this;
+		}
+		
+		DamageBuilder behavior(DamageCalculator damageBehavior) {
+			this.damageBehavior = damageBehavior;
+			return this;
+		}
+		
+		// note, this method doesn't bother checking if you actually have the right initial damage behavior, and *will* explode if you call it and the behavior is null or is not a ClassicDamage instance.
+		DamageBuilder modifyPower(PowerModifier modifier) {
+			((ClassicDamage)damageBehavior).modifyPower(modifier);
+			return this;
 		}
 		
 		MultiHitBuilder multiHit() { return new MultiHitBuilder(this); }
