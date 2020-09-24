@@ -6,6 +6,7 @@ import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.MoveContext;
 import bot.world.pokemon.battle.PlayerContext;
+import bot.world.pokemon.battle.status.StatusAilment;
 import bot.world.pokemon.move.PersistentEffect.TimedPersistentEffect;
 
 public interface MoveEffect {
@@ -30,7 +31,6 @@ public interface MoveEffect {
 				public void onEffectEnd(PlayerContext context) {
 					context.withUser(" stopped thrashing about.");
 					context.user.clearFlag(Flag.FORCED_MOVE);
-					// TODO cause confusion
 				}
 			});
 		}

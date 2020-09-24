@@ -53,13 +53,13 @@ public enum Moves {
 	Mega_Punch,
 	Pay_Day,
 	Fire_Punch(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Burn))
+		.secondary(10, StatusAilment.Burn.getEffect())
 	),
 	Ice_Punch(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Freeze))
+		.secondary(10, StatusAilment.Freeze.getEffect())
 	),
 	Thunder_Punch(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Paralysis))
+		.secondary(10, StatusAilment.Paralysis.getEffect())
 	),
 	Scratch,
 	Vice_Grip,
@@ -111,7 +111,7 @@ public enum Moves {
 	Horn_Drill(b -> b.ohko(DamageCategory.Physical)),
 	Tackle,
 	Body_Slam(b -> b
-		.secondary(30, new StatusEffect(StatusAilment.Paralysis))
+		.secondary(30, StatusAilment.Paralysis.getEffect())
 	),
 	Wrap(b -> b
 		.primary(new TrapEffect(" was wrapped by "))
@@ -123,10 +123,10 @@ public enum Moves {
 		.primary(new StatEffect(Stat.Defense, -1, true))
 	),
 	Poison_Sting(b -> b
-		.secondary(30, new StatusEffect(StatusAilment.Poison))
+		.secondary(30, StatusAilment.Poison.getEffect())
 	),
 	Twineedle(b -> b // TODO each hit should have a chance to activate the secondary effects
-		.secondary(20, new StatusEffect(StatusAilment.Poison))
+		.secondary(20, StatusAilment.Poison.getEffect())
 		.damageEffect.multiHit(new MultiHitProperty(2))
 	),
 	Pin_Missile(b -> b
@@ -143,10 +143,10 @@ public enum Moves {
 	),
 	Roar, // not impl
 	Sing(b -> b
-		.primary(new StatusEffect(StatusAilment.Sleep))
+		.primary(StatusAilment.Sleep.getEffect())
 	),
 	Supersonic(b -> b
-		.primary(new StatusEffect(StatusAilment.Confusion))
+		.primary(StatusAilment.Confusion.getEffect())
 	),
 	Sonic_Boom(b -> b
 		.damageEffect.behavior((context, damageType) -> 20)
@@ -158,10 +158,10 @@ public enum Moves {
 		.secondary(10, new StatEffect(Stat.SpDefense, -1, true))
 	),
 	Ember(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Burn))
+		.secondary(10, StatusAilment.Burn.getEffect())
 	),
 	Flamethrower(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Burn))
+		.secondary(10, StatusAilment.Burn.getEffect())
 	),
 	Mist, // TODO prevention of stat-lowering effects
 	Water_Gun,
@@ -174,13 +174,13 @@ public enum Moves {
 		})
 	),
 	Ice_Beam(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Freeze))
+		.secondary(10, StatusAilment.Freeze.getEffect())
 	),
 	Blizzard(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Freeze))
+		.secondary(10, StatusAilment.Freeze.getEffect())
 	), // TODO 100% accuracy during hail. (100 - accuracy)% chance to break through protect and detect
 	Psybeam(b -> b
-		.secondary(10, new StatusEffect(StatusAilment.Confusion))
+		.secondary(10, StatusAilment.Confusion.getEffect())
 	),
 	Bubble_Beam(b -> b
 		.secondary(10, new StatEffect(Stat.Speed, -1, true))
