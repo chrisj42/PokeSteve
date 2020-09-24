@@ -1,6 +1,7 @@
 package bot.world.pokemon.move;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import bot.data.json.MissingPropertyException;
 import bot.data.json.NodeParser;
@@ -12,12 +13,15 @@ import bot.world.pokemon.Type;
 import bot.world.pokemon.battle.MoveContext;
 import bot.world.pokemon.battle.status.StatusEffect;
 import bot.world.pokemon.move.DamageCalculator.ClassicDamage;
+import bot.world.pokemon.move.DamageCalculator.PercentageDamage;
 import bot.world.pokemon.move.DamageProperty.DamageBuilder;
-import bot.world.pokemon.move.Move.MoveBuilder;
+import bot.world.pokemon.move.EffectGroup.EffectGroupBuilder;
 import bot.world.pokemon.move.PokemonEffectSet.PokemonEffect;
 import bot.world.pokemon.move.StatProperty.StatBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import org.jetbrains.annotations.Nullable;
 
 public enum Moves {
 	
@@ -86,7 +90,7 @@ public enum Moves {
 					base *= 2; // power doubled in the sky
 				return base;
 			}
-		}).create())
+		}))
 	),
 	Wing_Attack,
 	Whirlwind, // no impl
@@ -158,7 +162,6 @@ public enum Moves {
 	),
 	Sonic_Boom(new MoveBuilder().damage(
 		new DamageBuilder(DamageCategory.Special, (context, damageType) -> 20)
-			.create()
 	)),
 	Disable(new MoveBuilder()
 		.primary().affectEnemy(PokemonEffect.DISABLE).add()
@@ -933,14 +936,14 @@ public enum Moves {
 	public static final Moves[] values = Moves.values();
 	
 	// private final String name;
-	MoveDescription description;
-	int accuracy;
-	int pp;
-	Type type;
-	int priority;
-	DamageProperty classicDamage;
+	private MoveDescription description;
+	private int accuracy;
+	private int pp;
+	private Type type;
+	private int priority;
+	private DamageProperty classicDamage;
 	private DamageBuilder damageBuilder;
-	int secondaryChance;
+	private int secondaryChance;
 	// EffectGroup secondary;
 	
 	private Move move;
@@ -1030,6 +1033,99 @@ public enum Moves {
 			if(move.classicDamage == null && move.damageBuilder != null)
 				move.classicDamage = move.damageBuilder.create();
 			move.move = move.builder.create(move);
+		}
+	}
+	
+	static class MoveBuilder {
+		
+		private final String name;
+		private ChargeState doesCharge;
+		private Boolean doesRecharge;
+		private AccuracyProperty accuracyProp;
+		private DamageBuilder damageEffect;
+		private EffectGroup primary;
+		private EffectGroup secondary;
+		private Integer secondaryChance;
+		private Function<MoveContext, Boolean> moveCondition;
+		private Consumer<MoveContext> onMoveMiss;
+		
+		// MoveBuilder(Type type, int pp) {  this(null, type, pp); }
+		// MoveBuilder(Type type, int pp, int accuracy) {  this(null, type, pp, accuracy); }
+		// MoveBuilder(@Nullable String name, Type type, int pp) { this(name, type, pp, 0); }
+		// MoveBuilder(@Nullable String name, Type type, int pp, int accuracy) {
+		MoveBuilder() {  this(null); }
+		// MoveBuilder(int accuracy) {  this(null, accuracy); }
+		// MoveBuilder(@Nullable String name) { this(name, 0); }
+		MoveBuilder(@Nullable String name) {
+			this.name = name;
+			// doesCharge = false;
+			doesRecharge = false;
+			secondaryChance = -1;
+		}
+		
+		Move create(Moves moveEnum) {
+			String name = this.name == null ? moveEnum.name().replaceAll("_", " ").trim() : this.name;
+			return new Move(name, moveEnum.ordinal()+1, moveEnum.description, moveEnum.type, moveEnum.pp, moveEnum.priority, doesCharge, doesRecharge, moveEnum.accuracy, accuracyProp, damageEffect == null ? moveEnum.classicDamage : 	damageEffect.create(), moveCondition, onMoveMiss, primary, secondary, secondaryChance < 0 ? moveEnum.secondaryChance : secondaryChance);
+		}
+		
+		MoveBuilder accuracy(AccuracyProperty prop) {
+			this.accuracyProp = prop;
+			return this;
+		}
+		
+		MoveBuilder damage(DamageBuilder damageEffect) {
+			this.damageEffect = damageEffect;
+			return this;
+		}
+		
+		MoveBuilder condition(Function<MoveContext, Boolean> condition) {
+			this.moveCondition = condition;
+			return this;
+		}
+		
+		MoveBuilder onMiss(Consumer<MoveContext> onMiss) {
+			this.onMoveMiss = onMiss;
+			return this;
+		}
+		
+		MoveBuilder charge(ChargeState chargeState) {
+			doesCharge = chargeState;
+			return this;
+		}
+		
+		MoveBuilder recharge() {
+			doesRecharge = true;
+			return this;
+		}
+		
+		EffectGroupBuilder primary() {
+			return new EffectGroupBuilder(this, true);
+		}
+		EffectGroupBuilder secondary(int chance) {
+			secondaryChance = chance;
+			return new EffectGroupBuilder(this, false);
+		}
+		
+		MoveBuilder primary(EffectGroup effects) {
+			this.primary = effects;
+			return this;
+		}
+		MoveBuilder secondary(EffectGroup effects) {
+			this.secondary = effects;
+			return this;
+		}
+		
+		MoveBuilder effectChance(int chance) {
+			secondaryChance = chance;
+			return this;
+		}
+		
+		// add properties for classic one-hit-KO
+		MoveBuilder ohko(DamageCategory damageType) {
+			return accuracy(context -> context.userPokemon.getLevel() - context.enemyPokemon.getLevel() + 30)
+				.condition(context -> context.userPokemon.getLevel() >= context.enemyPokemon.getLevel())
+				.damage(new DamageBuilder(damageType, new PercentageDamage(100, false)))
+				;
 		}
 	}
 }

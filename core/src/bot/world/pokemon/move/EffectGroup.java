@@ -3,7 +3,7 @@ package bot.world.pokemon.move;
 import java.util.LinkedList;
 
 import bot.world.pokemon.move.FieldEffectSet.FieldEffect;
-import bot.world.pokemon.move.Move.MoveBuilder;
+import bot.world.pokemon.move.Moves.MoveBuilder;
 import bot.world.pokemon.move.PokemonEffectSet.PokemonEffect;
 
 public class EffectGroup {
