@@ -12,6 +12,9 @@ public interface Flag {
 	
 	BoolFlag FLINCH = new BoolFlag();
 	
+	// failed attempt to catch a wild pokemon, turn is forfeit
+	BoolFlag FAILED_CATCH = new BoolFlag();
+	
 	// used for forced moves and forced lack of moves, if the index is invalid.
 	ValueFlag<Integer> FORCED_MOVE = new ValueFlag<>();
 	

@@ -69,7 +69,8 @@ public class Move implements Comparable<Move> {
 			return context.userPokemon.getName() + " flinched!";
 		}
 		
-		context.user.subtractPp(context.userMoveIdx);
+		if(context.userMoveIdx >= 0) // is -1 for struggle
+			context.user.subtractPp(context.userMoveIdx);
 		final String titleText = context.userPokemon.getName() + " used " + name+'!';
 		
 		if(moveCondition != null && !moveCondition.apply(context)) {

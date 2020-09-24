@@ -254,7 +254,7 @@ public abstract class BattleInstance {
 				return player;
 			else if(context.user.getHealth() <= 0)
 				return player.opponent; // recoil
-		} else {
+		} else if(!player.pokemon.hasFlag(Flag.FAILED_CATCH)) {
 			fieldTitles.add(player.pokemon.pokemon.getName()+" is recharging.");
 			fieldValues.add("zzz...");
 			player.pokemon.clearFlag(Flag.FORCED_MOVE);
@@ -295,6 +295,9 @@ public abstract class BattleInstance {
 				// either resting
 				if(pokemon.hasFlag(Flag.REST_MESSAGE))
 					return null;
+				// or failed to catch
+				if(pokemon.hasFlag(Flag.FAILED_CATCH))
+					return null;
 				// or struggling
 				return Moves.Struggle.getMove();
 			}
@@ -316,6 +319,7 @@ public abstract class BattleInstance {
 			ready = false;
 			lastDamageTaken = -1;
 			pokemon.clearFlag(Flag.FLINCH);
+			pokemon.clearFlag(Flag.FAILED_CATCH);
 		}
 		
 		public BattleInstance getBattle() { return battle; }

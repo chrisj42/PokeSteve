@@ -9,6 +9,7 @@ import bot.util.UsageException;
 import bot.util.Utils;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.battle.BattleInstance.Player;
+import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.PlayerBattle;
 import bot.world.pokemon.battle.WildBattle;
 
@@ -17,7 +18,7 @@ import reactor.core.publisher.Mono;
 
 public class CatchCommand extends ActionableCommand {
 	
-	private static final float BASE_CHANCE = 0.2f;
+	private static final float BASE_CHANCE = 0.05f;
 	private static final float CHANCE_PER_HEALTH = (1-BASE_CHANCE);
 	
 	public CatchCommand() {
@@ -53,7 +54,10 @@ public class CatchCommand extends ActionableCommand {
 				.setTitle("You threw a pokeball!")
 				.setDescription("But you couldn't catch it...")
 			).then(
-				player.getBattle().submitAttack(player, -1)
+				Mono.defer(() -> {
+					player.pokemon.setFlag(Flag.FAILED_CATCH);
+					return player.getBattle().submitAttack(player, -1);
+				})
 			);
 		}
 	}
