@@ -10,9 +10,16 @@ import bot.util.Utils;
 public class TrapEffect implements MoveEffect {
 	
 	private final String messagePhrase;
+	private final int damageFraction;
+	private final int[] turnDuration;
 	
 	public TrapEffect(String messagePhrase) {
+		this(messagePhrase, 8, null);
+	}
+	public TrapEffect(String messagePhrase, int damageFraction, int[] turnDuration) {
 		this.messagePhrase = messagePhrase;
+		this.damageFraction = damageFraction;
+		this.turnDuration = turnDuration;
 	}
 	
 	@Override
@@ -28,18 +35,19 @@ public class TrapEffect implements MoveEffect {
 		return EffectResult.RECORDED;
 	}
 	
-	public static class PersistentTrapEffect extends TimedPersistentEffect {
+	public class PersistentTrapEffect extends TimedPersistentEffect {
 		
 		private final Move source;
 		
 		public PersistentTrapEffect(Move source) {
-			super(Utils.randInt(4, 5));
+			//noinspection ConstantConditions
+			super(turnDuration == null ? Utils.randInt(4, 5) : Utils.pickRandom(turnDuration));
 			this.source = source;
 		}
 		
 		@Override
 		public boolean apply(PlayerContext context) {
-			int damage = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / 8);
+			int damage = context.user.alterHealth(-context.userPokemon.getStat(Stat.Health) / damageFraction);
 			if(damage < 0)
 				context.withUser(" took ").append(-damage).append(" damage from ").append(source).append('.');
 			

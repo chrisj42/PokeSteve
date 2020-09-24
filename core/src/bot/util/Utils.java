@@ -30,6 +30,12 @@ public final class Utils {
 			return null;
 		return array[randInt(0, array.length-1)];
 	}
+	@SuppressWarnings("unchecked")
+	public static <T> T pickRandom(Object array) {
+		if(Array.getLength(array) == 0)
+			return null;
+		return (T) Array.get(array, randInt(0, Array.getLength(array)-1));
+	}
 	
 	// classic out-of-100 chance integers
 	public static boolean chance(int chance) {

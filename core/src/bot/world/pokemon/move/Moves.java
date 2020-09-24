@@ -219,33 +219,76 @@ public enum Moves {
 	Leech_Seed(b -> b // extra functions relating to abilities
 		.primary(MoveEffect.LEECH_SEED)
 	),
-	Growth,
-	Razor_Leaf,
-	Solar_Beam,
-	Poison_Powder,
-	Stun_Spore,
-	Sleep_Powder,
-	Petal_Dance,
-	String_Shot,
-	Dragon_Rage,
-	Fire_Spin,
-	Thunder_Shock,
-	Thunderbolt,
-	Thunder_Wave,
-	Thunder,
+	Growth(b -> b // TODO increases by 2 stages in sunny weather
+		.primary(
+			new StatEffect(Stat.Attack, 1, false),
+			new StatEffect(Stat.SpAttack, 1, false)
+		)
+	),
+	Razor_Leaf, // increase in crit rate, but accounted for in json data
+	Solar_Beam(b -> b.charge(ChargeState.Normal)), // TODO weather interactions
+	Poison_Powder(b -> b
+		.primary(StatusAilment.Poison.getEffect())
+	),
+	Stun_Spore(b -> b
+		.primary(StatusAilment.Paralysis.getEffect())
+	),
+	Sleep_Powder(b -> b
+		.primary(StatusAilment.Sleep.getEffect())
+	),
+	Petal_Dance(b -> b.primary(MoveEffect.THRASH)),
+	String_Shot(b -> b
+		.primary(new StatEffect(Stat.Speed, -2, true))
+	),
+	Dragon_Rage(b -> b
+		.damageEffect.behavior((context, damageType) -> 40)
+	),
+	Fire_Spin(b -> b
+		.primary(new TrapEffect(" was trapped in a vortex by ", 16, new int[] {2, 2, 3, 3, 4, 5}))
+	),
+	Thunder_Shock(b -> b
+		.secondary(10, StatusAilment.Paralysis.getEffect())
+	),
+	Thunderbolt(b -> b
+		.secondary(10, StatusAilment.Paralysis.getEffect())
+	),
+	Thunder_Wave(b -> b
+		.primary(StatusAilment.Paralysis.getEffect())
+	),
+	Thunder(b -> b // TODO weather effects and some other things
+		.secondary(30, StatusAilment.Paralysis.getEffect())
+	),
 	Rock_Throw,
-	Earthquake,
-	Fissure,
-	Dig,
-	Toxic,
-	Confusion,
-	Psychic,
-	Hypnosis,
-	Meditate,
-	Agility,
+	Earthquake(b -> b
+		.damageEffect.modifyPower((context, basePower) -> {
+			if(context.enemy.getChargeState() == ChargeState.Underground)
+				return basePower * 2;
+			return basePower;
+		})
+	),
+	Fissure(b -> b.ohko(DamageCategory.Physical)),
+	Dig(b -> b.charge(ChargeState.Underground)),
+	Toxic(b -> b // TODO never misses when used by a poison type
+		.primary(StatusAilment.Bad_Poison.getEffect())
+	),
+	Confusion(b -> b
+		.secondary(10, StatusAilment.Confusion.getEffect())
+	),
+	Psychic(b -> b
+		.secondary(10, new StatEffect(Stat.SpDefense, -1, true))
+	),
+	Hypnosis(b -> b
+		.primary(StatusAilment.Sleep.getEffect())
+	),
+	Meditate(b -> b
+		.primary(new StatEffect(Stat.Attack, 1, false))
+	),
+	Agility(b -> b
+		.primary(new StatEffect(Stat.Speed, 2, false))
+	),
 	Quick_Attack,
-	Rage,
-	Teleport,
+	Rage, // TODO if hit after using move, and before next move, attack goes up one stage.
+	Teleport, // no effect
 	Night_Shade,
 	Mimic,
 	Screech,
@@ -1111,7 +1154,7 @@ public enum Moves {
 		MoveBuilder ohko(DamageCategory damageType) {
 			return accuracy(context -> context.userPokemon.getLevel() - context.enemyPokemon.getLevel() + 30)
 				.condition(context -> context.userPokemon.getLevel() >= context.enemyPokemon.getLevel())
-				.damage(new DamageBuilder(damageType, new PercentageDamage(100, false)))
+				.damage(new DamageBuilder(damageType, new PercentageDamage(100, true)))
 				;
 		}
 	}

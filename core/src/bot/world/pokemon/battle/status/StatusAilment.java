@@ -9,6 +9,7 @@ public enum StatusAilment {
 	Freeze("has been frozen!", "is frozen solid!", "thawed out."),
 	Burn("was burned!", "is hurt by its burn!", "is no longer on fire :D"),
 	Poison("was poisoned!", "is hurt by the poison!", "is no longer poisoned."),
+	Bad_Poison("was badly poisoned!", "is hurt by the poison!", "is no longer poisoned."),
 	Confusion("became confused!", "is confused!", "snapped out of its confusion.");
 	// most effects past here will be relocated / turned into flags
 	// Infatuation, Trap, Nightmare, Torment, Disable, Yawn,
