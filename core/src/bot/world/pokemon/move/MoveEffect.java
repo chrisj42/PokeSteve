@@ -28,9 +28,10 @@ public interface MoveEffect {
 			context.user.setFlag(Flag.FORCED_MOVE, context.userMoveIdx);
 			context.user.addEffect(new TimedPersistentEffect(Utils.randInt(2, 3)) {
 				@Override
-				public void onEffectEnd(PlayerContext context) {
-					context.withUser(" stopped thrashing about.");
-					context.user.clearFlag(Flag.FORCED_MOVE);
+				public void onEffectEnd(PlayerContext pcontext) {
+					pcontext.withUser(" stopped thrashing about.");
+					pcontext.user.clearFlag(Flag.FORCED_MOVE);
+					StatusAilment.Confusion.getEffect().doEffect(context); // using an old context
 				}
 			});
 		}
