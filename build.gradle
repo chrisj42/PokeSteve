@@ -34,6 +34,17 @@ project(":core") {
 		workingDir = new File("resources")
 		ignoreExitValue = true
 	}
+	
+	task dist(dependsOn: classes, type: Jar) {
+		from files(sourceSets.main.output.classesDirs)
+		from files(sourceSets.main.output.resourcesDir)
+		from {configurations.compile.collect {zipTree(it)}}
+		from files(new File("resources"))
+		
+		manifest {
+			attributes 'Main-Class': "bot.Core"
+		}
+	}
 }
 
 project(":importing") {
