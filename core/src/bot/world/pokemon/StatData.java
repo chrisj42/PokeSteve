@@ -24,8 +24,8 @@ public class StatData {
 		else statEquation = StatEquation.Main;
 		
 		this.base = pokemon.species.getBaseStat(stat);
-		this.iv = Utils.randInt(0, 31);
-		this.ev = 0;
+		this.iv = iv;
+		this.ev = ev;
 		recalcStat();
 	}
 	StatData(Pokemon pokemon, Stat stat) {
