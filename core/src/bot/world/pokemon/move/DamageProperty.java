@@ -44,7 +44,7 @@ public class DamageProperty {
 				context.setHadEffect();
 				context.withUser("is unaffected...");
 			}*/
-			return EffectResult.NO_OUTPUT;
+			return EffectResult.FAILURE;
 		}
 		
 		final boolean singleHit = multiHitProperty == null;

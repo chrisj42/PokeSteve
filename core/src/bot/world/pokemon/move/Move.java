@@ -117,7 +117,7 @@ public class Move implements Comparable<Move> {
 			}
 			
 			EffectResult result = context.userMove.damageEffect.doDamage(context);
-			if(result == EffectResult.NO_OUTPUT) {
+			if(result == EffectResult.FAILURE) {
 				context.line("It had no effect...");
 				return titleText;
 			}
@@ -130,7 +130,7 @@ public class Move implements Comparable<Move> {
 					result = result.combine(effect.doEffect(context));
 			}
 			
-			if(result == EffectResult.NO_OUTPUT)
+			if(result == EffectResult.FAILURE)
 				context.line("But it failed!");
 			else if(result == EffectResult.NA)
 				context.line("But nothing happened...");

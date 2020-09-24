@@ -16,7 +16,7 @@ public interface MoveEffect {
 	
 	MoveEffect FLINCH = (context) -> {
 		if(context.isFirst) context.enemy.setFlag(Flag.FLINCH);
-		return EffectResult.NO_OUTPUT;
+		return EffectResult.FAILURE;
 	};
 	
 	MoveEffect THRASH = (context) -> {
@@ -39,10 +39,10 @@ public interface MoveEffect {
 	
 	MoveEffect DISABLE = (context) -> {
 		if(context.enemy.hasFlag(Flag.DISABLED_MOVE))
-			return EffectResult.NO_OUTPUT; // "but it failed"
+			return EffectResult.FAILURE; // "but it failed"
 		int lastMove = context.enemyPlayer.getLastMoveIdx();
 		if(lastMove < 0)
-			return EffectResult.NO_OUTPUT;
+			return EffectResult.FAILURE;
 		
 		Move move = context.enemyPokemon.getMove(lastMove);
 		context.withEnemy("'s ").append(move).append(" was disabled!");
@@ -59,11 +59,11 @@ public interface MoveEffect {
 	
 	MoveEffect LEECH_SEED = context -> {
 		if(context.enemy.hasFlag(Flag.LEECH_SEED))
-			return EffectResult.NO_OUTPUT;
+			return EffectResult.FAILURE;
 		
 		// no effect on grass pokemon
 		if(context.enemySpecies.primaryType == Type.Grass || context.enemySpecies.secondaryType == Type.Grass)
-			return EffectResult.NO_OUTPUT;
+			return EffectResult.FAILURE;
 		
 		context.withEnemy(" was seeded!");
 		PersistentEffect effect = pcontext -> {
