@@ -163,6 +163,7 @@ public class UserData {
 		if(pokemon == null)
 			throw new UsageException("Could not find pokemon with id "+catchId);
 		this.selectedPokemon = pokemon;
+		save();
 		return pokemon;
 	}
 	
