@@ -23,6 +23,7 @@ public class DataCore {
 	private DataCore() {}
 	
 	public static JsonNode readTree(String file) {
+		System.out.println("reading "+file);
 		try {
 			return Core.jsonMapper.readTree(new File(file));
 		} catch(IOException e) {
