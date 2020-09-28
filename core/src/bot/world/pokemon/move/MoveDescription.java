@@ -16,24 +16,19 @@ public class MoveDescription {
 	
 	public MoveDescription(JsonObjectNode moveNode) throws MissingPropertyException {
 		JsonObjectNode effectNode = NodeParser.getEnglishNode(moveNode.getArrayNode("effect_entries"), true);
-		if(effectNode == null) {
-			shortText = null;
-			longText = null;
-		} else {
-			shortText = effectNode.parseValueNode("short_effect", JsonNode::textValue);
-			longText = effectNode.parseValueNode("effect", JsonNode::textValue);
-		}
+		shortText = effectNode.parseValueNode("short_effect", JsonNode::asText).replaceAll("[\\n\\r]", " ");
+		longText = effectNode.parseValueNode("effect", JsonNode::asText).replaceAll("[\\n\\r]", " ");
 		
 		JsonObjectNode flavorNode = NodeParser.getEnglishNode(moveNode.getArrayNode("flavor_text_entries"), false);
-		flavorText = flavorNode == null ? null : flavorNode.parseValueNode("flavor_text", JsonNode::textValue);
-	}
-	
-	public void addToEmbed(EmbedCreateSpec e) {
-		if(flavorText != null)
-			e.addField("Description", flavorText, false);
-		else if(shortText != null)
-			e.addField("Description", shortText, false);
-		else if(longText != null)
-			e.addField("Description", longText, false);
+		flavorText = flavorNode.parseValueNode("flavor_text", JsonNode::asText).replaceAll("[\\n\\r]", " ");
+		
+		// running this found no missing text in any of the cases...
+		/*String name = moveNode.parseValueNode("name", JsonNode::textValue);
+		if(shortText == null)
+			System.out.println(name+" has no short text.");
+		if(longText == null)
+			System.out.println(name+" has no long text.");
+		if(flavorText == null)
+			System.out.println(name+" has no flavor text.");*/
 	}
 }

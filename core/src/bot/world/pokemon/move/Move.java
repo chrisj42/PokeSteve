@@ -147,7 +147,10 @@ public class Move implements Comparable<Move> {
 		e.addField("Type", type.name(), false);
 		damageEffect.addToEmbed(e);
 		e.addField("Accuracy", accuracy > 0 ? String.valueOf(accuracy) : "--", true);
-		description.addToEmbed(e);
+		
+		// add descriptions
+		e.addField("Flavor Text", description.flavorText, false);
+		e.addField("Effect Details", description.longText.replaceAll("\\$effect_chance%", secondaryChance > 0 ? secondaryChance+"%" : "(not implemented)"), false);
 	}
 	
 	@Override
