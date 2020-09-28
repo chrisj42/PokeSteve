@@ -56,13 +56,14 @@ public class UserData {
 		return data;
 	}
 	public static void createData(User user, Pokemon starter) {
-		// if(getData(user) != null)
-		// 	return false; // already has data
 		UserData data = new UserData(user);
 		data.self = user;
 		data.addPokemon(starter);
 		USER_DATA.put(user.getId(), data);
-		// return true;
+	}
+	public static void deleteData(User user) {
+		USER_DATA.remove(user.getId());
+		new File(USER_DATA_FOLDER, String.valueOf(user.getId())).delete();
 	}
 	
 	public final Snowflake userId;

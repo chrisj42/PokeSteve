@@ -16,6 +16,7 @@ import bot.command.group.info.MoveCommand;
 import bot.command.group.info.StatsCommand;
 import bot.command.group.pokemon.PokemonCommand;
 import bot.command.group.pokemon.StarterCommand;
+import bot.command.group.system.ResetCommand;
 import bot.command.group.world.DuelCommand;
 import bot.command.group.world.SearchCommand;
 import bot.util.Utils;
@@ -31,6 +32,9 @@ public enum RootCommands {
 	DEX(new DexCommand()),
 	MOVE(new MoveCommand()),
 	STATS(new StatsCommand()),
+	
+	// system / config
+	RESET(new ResetCommand()),
 	
 	// pokemon
 	STARTER(new StarterCommand()),
