@@ -34,7 +34,7 @@ public class PokemonSpecies {
 	final GrowthRate growthRate;
 	
 	// private final Habitat habitat;
-	private final int catchRate;
+	public final int catchRate;
 	public final int femaleRate; // in eighths
 	public final int baseDefeatExp;
 	private final EnumMap<Stat, Integer> baseDefeatEVs;

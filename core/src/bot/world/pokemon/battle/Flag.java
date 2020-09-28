@@ -1,5 +1,6 @@
 package bot.world.pokemon.battle;
 
+import bot.world.pokemon.battle.status.StatusAilment;
 import bot.world.pokemon.move.PersistentEffect;
 import bot.world.pokemon.move.TrapEffect.PersistentTrapEffect;
 
@@ -19,6 +20,9 @@ public interface Flag {
 	ValueFlag<Integer> FORCED_MOVE = new ValueFlag<>();
 	
 	ValueFlag<Integer> DISABLED_MOVE = new ValueFlag<>();
+	
+	// currently afflicted status effect
+	ValueFlag<StatusAilment> STATUS_EFFECT = new ValueFlag<>();
 	
 	// denotes that no move will be used the following turn, and the value is the message for the player saying why they can't select a move
 	// so far, used for recharging
