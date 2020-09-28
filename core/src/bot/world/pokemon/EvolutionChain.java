@@ -87,7 +87,7 @@ public class EvolutionChain {
 		
 		public EvoRequirements(JsonObjectNode node) throws MissingPropertyException {
 			minLevel = node.parseValueNode("min_level", JsonNode::intValue);
-			trigger = NodeParser.parseEnumResource(node.getObjectNode("trigger"), EvolutionTrigger.class);
+			trigger = NodeParser.getEnumResource(EvolutionTrigger.class, node.getObjectNode("trigger"));
 		}
 		
 	}

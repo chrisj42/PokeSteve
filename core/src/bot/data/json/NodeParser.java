@@ -21,7 +21,15 @@ public interface NodeParser<T> {
 		return Integer.parseInt(idString);
 	}
 	
-	static <T extends Enum<T>> T parseEnumResource(JsonObjectNode resourceNode, Class<T> clazz) throws MissingPropertyException {
+	static <T extends Enum<T>> T getEnumResource(Class<T> clazz, JsonObjectNode resourceNode) throws MissingPropertyException {
+		return getEnumResource(clazz, false, resourceNode);
+	}
+	static <T extends Enum<T>> T getEnumResource(Class<T> clazz, boolean allowNull, JsonObjectNode resourceNode) throws MissingPropertyException {
+		if(!resourceNode.hasValue()) {
+			if(allowNull)
+				return null;
+			throw new MissingPropertyException(resourceNode+" has null value when null was not allowed, expected enum resource of type "+clazz.getSimpleName());
+		}
 		return Utils.values(clazz)[getResourceId(resourceNode)-1];
 	}
 	

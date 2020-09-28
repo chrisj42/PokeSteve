@@ -3,6 +3,7 @@ package bot.data.json.node;
 import bot.data.json.MissingPropertyException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 public abstract class TypedJsonNode {
 	
@@ -25,4 +26,9 @@ public abstract class TypedJsonNode {
 	}
 	
 	public JsonNode getNode() { return node; }
+	
+	public boolean hasValue() {
+		return node.getNodeType() != JsonNodeType.NULL &&
+			node.getNodeType() != JsonNodeType.MISSING;
+	}
 }

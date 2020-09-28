@@ -33,7 +33,7 @@ public class PokemonSpecies {
 	// private final EggGroup[] eggGroups;
 	final GrowthRate growthRate;
 	
-	// private final Habitat habitat;
+	// public final Habitat habitat;
 	public final int catchRate;
 	public final int femaleRate; // in eighths
 	public final int baseDefeatExp;
@@ -53,11 +53,11 @@ public class PokemonSpecies {
 		backSpriteUrl = spriteNode.parseValueNode("back_default", JsonNode::textValue);
 		
 		JsonArrayNode typeArray = pnode.getArrayNode("types");
-		primaryType = Type.values[NodeParser.getResourceId(typeArray.getObjectNode(0).getObjectNode("type"))-1];
+		primaryType = NodeParser.getEnumResource(Type.class, typeArray.getObjectNode(0).getObjectNode("type"));
 		if(typeArray.getLength() < 2)
 			secondaryType = null;
 		else
-			secondaryType = Type.values[NodeParser.getResourceId(typeArray.getObjectNode(1).getObjectNode("type"))-1];
+			secondaryType = NodeParser.getEnumResource(Type.class, typeArray.getObjectNode(1).getObjectNode("type"));
 		
 		learnableMoves = new LearnSet(this, pnode.getArrayNode("moves"));
 		
@@ -66,7 +66,7 @@ public class PokemonSpecies {
 		JsonArrayNode statArray = pnode.getArrayNode("stats");
 		for(int i = 0; i < statArray.getLength(); i++) {
 			JsonObjectNode statNode = statArray.getObjectNode(i);
-			Stat stat = Stat.values[NodeParser.getResourceId(statNode.getObjectNode("stat"))-1];
+			Stat stat = NodeParser.getEnumResource(Stat.class, statNode.getObjectNode("stat"));
 			baseStats.put(stat, statNode.parseValueNode("base_stat", JsonNode::intValue));
 			baseDefeatEVs.put(stat, statNode.parseValueNode("effort", JsonNode::intValue));
 		}
@@ -75,8 +75,8 @@ public class PokemonSpecies {
 		femaleRate = snode.parseValueNode("gender_rate", JsonNode::intValue);
 		// evolvesFrom = DataCore.POKEMON.getRef(snode.getObjectNode("evolves_from_species"));
 		// NOTE: turtwig has no habitat entry in database
-		// habitat = Habitat.values[NodeParser.getResourceId(snode.getObjectNode("habitat"))-1];
-		growthRate = GrowthRate.values[NodeParser.getResourceId(snode.getObjectNode("growth_rate"))-1];
+		// habitat = NodeParser.getEnumResource(Habitat.class, true, snode.getObjectNode("habitat"));
+		growthRate = NodeParser.getEnumResource(GrowthRate.class, snode.getObjectNode("growth_rate"));
 		
 		baseDefeatExp = pnode.parseValueNode("base_experience", JsonNode::intValue);
 	}
