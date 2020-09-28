@@ -20,8 +20,11 @@ import reactor.core.publisher.Mono;
 public class SearchCommand extends ActionableCommand {
 	
 	// TODO once I have location data set up, use that instead of choosing the pokemon
+	
+	private static final Option LEVEL_OPT = new Option("level", 'l', "select pokemon level", "<level>");
+	
 	public SearchCommand() {
-		super("search", "Search around the area for a wild pokemon.", "<wild pokemon>");
+		super("search", "Search around the area for a wild pokemon.", ArgumentSet.get("<wild pokemon>"), LEVEL_OPT);
 	}
 	
 	@Override
@@ -32,9 +35,14 @@ public class SearchCommand extends ActionableCommand {
 		
 		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
-		int centralLevel = data.getSelectedPokemon().getLevel();
-		int offset = centralLevel / 5;
-		int level = centralLevel + Utils.randInt(-offset, offset);
+		int level;
+		if(options.hasOption(LEVEL_OPT))
+			level = options.getOptionValue(LEVEL_OPT, ArgType.INTEGER);
+		else {
+			int centralLevel = data.getSelectedPokemon().getLevel();
+			int offset = centralLevel / 5;
+			level = centralLevel + Utils.randInt(-offset, offset);
+		}
 		
 		Pokemon wildPokemon = species.spawnPokemon(level);
 		
