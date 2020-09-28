@@ -51,13 +51,13 @@ public class DataCore {
 		{
 			for(Moves m: Moves.values) {
 				final Move move = m.getMove();
-				nameMap.put(format(m.name()/*move.name*/), move);
+				nameMap.put(format(move.name), move);
 			}
 		}
 		
 		private String format(String name) {
 			return name.toLowerCase()
-				.replaceAll("[ \\-_]", "");
+				.replaceAll("[\\s\\-_,']", "");
 		}
 		
 		@Override

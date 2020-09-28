@@ -9,17 +9,21 @@ import bot.world.pokemon.move.DamageCalculator.ClassicDamage.PowerModifier;
 import bot.world.pokemon.move.MultiHitProperty.MultiHitBuilder;
 import bot.util.Utils;
 
+import discord4j.core.spec.EmbedCreateSpec;
+
+import org.jetbrains.annotations.Nullable;
+
 public class DamageProperty {
 	
 	public static final DamageProperty NO_DAMAGE = new DamageBuilder(null, null).create();
 	
-	public final DamageCategory damageType;
-	private final DamageCalculator damageBehavior;
-	private final MultiHitProperty multiHitProperty;
+	@Nullable public final DamageCategory damageType;
+	private final DamageCalculator damageBehavior; // only nullable if damageType is null
+	@Nullable private final MultiHitProperty multiHitProperty;
 	private final int drainPercent;
 	private final boolean ignoreTypeBonuses;
 	
-	private DamageProperty(DamageCategory damageType, DamageCalculator damageBehavior, MultiHitProperty multiHitProperty, int drainPercent, boolean ignoreTypeBonuses) {
+	private DamageProperty(@Nullable DamageCategory damageType, @Nullable DamageCalculator damageBehavior, @Nullable MultiHitProperty multiHitProperty, int drainPercent, boolean ignoreTypeBonuses) {
 		this.damageType = damageType;
 		this.damageBehavior = damageBehavior;
 		this.multiHitProperty = multiHitProperty;
@@ -97,6 +101,12 @@ public class DamageProperty {
 			case 2: return "It's extremely effective!";
 			default: return null;
 		}
+	}
+	
+	public void addToEmbed(EmbedCreateSpec e) {
+		e.addField("Damage Type", damageType == null ? "--" : damageType.name(), true);
+		int power = damageBehavior == null ? -1 : damageBehavior.getDisplayPower();
+		e.addField("Power", power < 0 ? "--" : String.valueOf(power), true);
 	}
 	
 	public static class DamageBuilder {

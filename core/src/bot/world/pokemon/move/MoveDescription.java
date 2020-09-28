@@ -4,6 +4,8 @@ import bot.data.json.MissingPropertyException;
 import bot.data.json.NodeParser;
 import bot.data.json.node.JsonObjectNode;
 
+import discord4j.core.spec.EmbedCreateSpec;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class MoveDescription {
@@ -24,5 +26,14 @@ public class MoveDescription {
 		
 		JsonObjectNode flavorNode = NodeParser.getEnglishNode(moveNode.getArrayNode("flavor_text_entries"), false);
 		flavorText = flavorNode == null ? null : flavorNode.parseValueNode("flavor_text", JsonNode::textValue);
+	}
+	
+	public void addToEmbed(EmbedCreateSpec e) {
+		if(flavorText != null)
+			e.addField("Description", flavorText, false);
+		else if(shortText != null)
+			e.addField("Description", shortText, false);
+		else if(longText != null)
+			e.addField("Description", longText, false);
 	}
 }

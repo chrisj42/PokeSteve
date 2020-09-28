@@ -11,6 +11,8 @@ import bot.world.pokemon.battle.Flag;
 import bot.world.pokemon.battle.MoveContext;
 import bot.util.Utils;
 
+import discord4j.core.spec.EmbedCreateSpec;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -138,6 +140,14 @@ public class Move implements Comparable<Move> {
 		}
 		
 		return titleText;
+	}
+	
+	public void buildEmbed(EmbedCreateSpec e) {
+		e.setTitle("Move: "+name);
+		e.addField("Type", type.name(), false);
+		damageEffect.addToEmbed(e);
+		e.addField("Accuracy", accuracy > 0 ? String.valueOf(accuracy) : "--", true);
+		description.addToEmbed(e);
 	}
 	
 	@Override

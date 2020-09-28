@@ -13,17 +13,17 @@ import reactor.core.publisher.Mono;
 public class MoveCommand extends ActionableCommand {
 	
 	public MoveCommand() {
-		super("move", "View information about a move.", "<move name>");
+		super("moveinfo", "View information about a move.", "<move name>");
 	}
 	
 	@Override
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) throws ArgumentCountException {
 		requireArgs(1, args);
 		
-		Move move = DataCore.MOVES.get(args[0]);
+		Move move = DataCore.MOVES.get(String.join("", args));
 		if(move == null)
-			throw new UsageException("No move with that name could be found.");
+			throw new UsageException("No move could be found with the name \""+String.join(" ", args)+'"');
 		
-		return context.channel.createMessage("Move "+move.id+", "+move).then();
+		return context.channel.createEmbed(move::buildEmbed).then();
 	}
 }

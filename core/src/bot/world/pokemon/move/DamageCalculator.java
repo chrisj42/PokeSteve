@@ -10,6 +10,12 @@ public interface DamageCalculator {
 	
 	int getDamage(MoveContext context, DamageCategory damageType);
 	
+	default int getDisplayPower() {
+		if(this instanceof ClassicDamage)
+			return ((ClassicDamage)this).power;
+		return -1;
+	}
+	
 	// a fixed damage effect is easy enough to do with a lambda so it won't have a class
 	
 	class PercentageDamage implements DamageCalculator {
