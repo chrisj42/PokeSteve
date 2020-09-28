@@ -2,6 +2,7 @@ package bot.command.group.battle;
 
 import java.time.Duration;
 
+import bot.Core;
 import bot.command.ActionableCommand;
 import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
@@ -107,6 +108,7 @@ public class CatchCommand extends ActionableCommand {
 		}
 		
 		Mono<Void> doCatchEvent() {
+			Core.setUserWaiting(userData.userId, true);
 			cumulativeStatus = battle.wildPokemon+" was sucked inside...";
 			
 			return context.channel.createEmbed(this::createEmbed)
@@ -130,6 +132,7 @@ public class CatchCommand extends ActionableCommand {
 					.delayElement(BREAKOUT_INTERVAL)
 					.flatMap(m -> {
 						battle.player.pokemon.setFlag(Flag.FAILED_CATCH);
+						Core.setUserWaiting(userData.userId, false);
 						return battle.submitAttack(battle.player, -1)
 							.thenReturn(m);
 					});
@@ -143,6 +146,7 @@ public class CatchCommand extends ActionableCommand {
 						.edit(m -> m.setEmbed(this::createEmbed))
 						.flatMap(m -> {
 							userData.addPokemon(wildPokemon.pokemon);
+							Core.setUserWaiting(userData.userId, false);
 							return battle.onPokemonCaught()
 								.thenReturn(m);
 						});

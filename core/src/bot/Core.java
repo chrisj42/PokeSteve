@@ -1,6 +1,7 @@
 package bot;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import bot.command.Command;
 import bot.command.CommandContext;
@@ -20,6 +21,7 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
 import discord4j.core.object.presence.Activity;
 import discord4j.core.object.presence.Presence;
+import discord4j.core.object.reaction.ReactionEmoji;
 import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -44,6 +46,17 @@ public class Core {
 	public static DiscordClient client;
 	public static GatewayDiscordClient gateway;
 	public static User self;
+	
+	// used for tasks where the user must wait for something to occur, and during that time,
+	// commands should not be processed.
+	private static final HashSet<Snowflake> USERS_WAITING = new HashSet<>();
+	public static boolean isUserWaiting(Snowflake id) {
+		return USERS_WAITING.contains(id);
+	}
+	public static void setUserWaiting(Snowflake id, boolean waiting) {
+		if(waiting) USERS_WAITING.add(id);
+		else USERS_WAITING.remove(id);
+	}
 	
 	// private static final Map<Snowflake, SyncQueue<MessageCreateEvent>> waitingMessages = Collections.synchronizedMap(new HashMap<>());
 	
@@ -100,6 +113,10 @@ public class Core {
 	// pretty sure it only runs one of these at a time i.e. there is only actually one thread for the event dispatcher
 	private static Mono<Void> parseMessage(CommandContext context) {
 		// System.out.println("DM message");
+		
+		if(isUserWaiting(context.user.getId()))
+			// leave a reaction to show that the message was not and will not be processed
+			return context.event.getMessage().addReaction(ReactionEmoji.unicode("⏱"));
 		
 		// return context.channel.createMessage("hello!").then();
 		Command cmd = Command.tryParseSubCommand(RootCommands.getCommandsFor(context.user), context);
