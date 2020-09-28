@@ -154,7 +154,7 @@ public class Pokemon {
 			// statChanges.clear();
 			statData.forEach((stat, data) -> {
 				int prev = data.getStatValue();
-				data.recalcStat();
+				data.onLevelUp();
 				int cur = data.getStatValue();
 				final int diff = cur - prev;
 				if(diff != 0) {
