@@ -130,15 +130,17 @@ public class UserData {
 	
 	public User getUser() { return self; }
 	
-	public void buildStatistics(EmbedCreateSpec e) {
-		e.setTitle("User Statistics");
-		e.setAuthor(self.getUsername(), null, self.getAvatarUrl());
+	public EmbedCreateSpec.Builder buildStatistics() {
+		var e = EmbedCreateSpec.builder();
+		e.title("User Statistics");
+		e.author(self.getUsername(), null, self.getAvatarUrl());
 		e.addField("Pokedex completion", catchDex.size()+"/"+DataCore.POKEMON.getSize()+" pokemon caught.", false);
 		e.addField("Pokemon currently owned", String.valueOf(caughtPokemon.size()), false);
 		
 		e.addField("Wins", String.valueOf(wins), true);
 		e.addField("Losses", String.valueOf(losses), true);
 		e.addField("Ties", String.valueOf(ties), true);
+		return e;
 	}
 	
 	

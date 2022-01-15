@@ -25,7 +25,7 @@ project(":core") {
 	sourceSets.main.java.srcDirs = [ "src/" ]
 	
 	dependencies {
-		implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
+		implementation 'com.discord4j:discord4j-core:3.2.1'
 	}
 	
 	task run(dependsOn: classes, type: JavaExec) {
@@ -51,7 +51,7 @@ project(":importing") {
 	sourceSets.main.java.srcDirs = [ "src/" ]
 	
 	dependencies {
-		implementation 'com.discord4j:discord4j-core:3.1.0-SNAPSHOT'
+		implementation 'com.discord4j:discord4j-core:3.2.1'
 		//implementation 'me.sargunvohra.lib:pokekotlin:2.3.1'
 		compile group: 'com.google.http-client', name: 'google-http-client', version: '1.35.0'
 	}

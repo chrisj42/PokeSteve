@@ -7,6 +7,7 @@ import bot.world.pokemon.battle.BattleInstance.Player;
 
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
+import discord4j.core.spec.EmbedCreateSpec;
 import reactor.core.publisher.Mono;
 
 import org.jetbrains.annotations.Nullable;
@@ -37,11 +38,12 @@ public class UserPlayer extends Player {
 					if(evolved == null)
 						data.save(); // checkEvolution only saves on success
 					else
-						return channel.createEmbed(e -> e
-							.setTitle(pokemon.getName()+" is evolving!")
-							.setDescription(pokemon.getName()+" evolved into "+evolved.species.name+"!\nType `pokemon info` to see the new moves and stats!")
-							.setThumbnail(pokemon.species.getSpritePath())
-							.setImage(evolved.species.getSpritePath())
+						return channel.createMessage(EmbedCreateSpec.builder()
+							.title(pokemon.getName()+" is evolving!")
+							.description(pokemon.getName()+" evolved into "+evolved.species.name+"!\nType `pokemon info` to see the new moves and stats!")
+							.thumbnail(pokemon.species.getSpritePath())
+							.image(evolved.species.getSpritePath())
+							.build()
 						).then();
 				}
 				return Mono.empty();

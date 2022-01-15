@@ -103,7 +103,7 @@ public class DamageProperty {
 		}
 	}
 	
-	public void addToEmbed(EmbedCreateSpec e) {
+	public void addToEmbed(EmbedCreateSpec.Builder e) {
 		e.addField("Damage Type", damageType == null ? "--" : damageType.name(), true);
 		int power = damageBehavior == null ? -1 : damageBehavior.getDisplayPower();
 		e.addField("Power", power < 0 ? "--" : String.valueOf(power), true);

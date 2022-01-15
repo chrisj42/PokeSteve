@@ -5,6 +5,7 @@ import bot.command.ArgumentSet.ArgumentCountException;
 import bot.command.OptionSet.OptionValues;
 import bot.data.UserData;
 import bot.util.UsageException;
+import bot.util.Utils;
 import bot.world.pokemon.Pokemon.CaughtPokemon;
 
 import reactor.core.publisher.Mono;
@@ -47,7 +48,7 @@ public class PokemonCommand extends CommandParent {
 		@Override
 		protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
 			final CaughtPokemon pokemon = getPokemon(context, options);
-			return context.channel.createEmbed(pokemon::buildEmbed).then();
+			return context.channel.createMessage(pokemon.buildEmbed().build()).then();
 		}
 	}
 	

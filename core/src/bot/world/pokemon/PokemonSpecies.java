@@ -110,9 +110,10 @@ public class PokemonSpecies {
 		return new Pokemon(this, level, Utils.pickRandom(Nature.values), gender);
 	}
 	
-	public void buildDexEntry(EmbedCreateSpec e) {
+	public EmbedCreateSpec.Builder buildDexEntry() {
+		var e = EmbedCreateSpec.builder();
 		final String title = "#"+dex+" - "+name;
-		e.setTitle(title).setFooter(title, null);
+		e.title(title).footer(title, null);
 		e.addField("Typing", primaryType+(secondaryType == null ? "" : " | "+secondaryType), false);
 		e.addField(genus, flavorText, false);
 		e.addField("Base Stats", ""
@@ -131,7 +132,8 @@ public class PokemonSpecies {
 				+"\nSp. Defense  +"+baseDefeatEVs.get(Stat.SpDefense)
 				+"\nSpeed        +"+baseDefeatEVs.get(Stat.Speed)
 			, true);
-		e.setImage(getSpritePath());
+		e.image(getSpritePath());
+		return e;
 	}
 	
 	private static final DecimalFormat spriteDexFormat = new DecimalFormat("000");

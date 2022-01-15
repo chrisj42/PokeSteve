@@ -49,12 +49,16 @@ public abstract class BattleInstance {
 	public Mono<Void> broadcastMessage(Function<UserPlayer, String> messageFetcher) {
 		return broadcastImpl(player -> player.channel.createMessage(messageFetcher.apply(player)));
 	}
-	public Mono<Void> broadcastMessage(Consumer<MessageCreateSpec> messageMaker) {
-		return broadcastImpl(p -> p.channel.createMessage(messageMaker));
+	public Mono<Void> broadcastMessage(MessageCreateSpec messageSpec) {
+		return broadcastImpl(p -> p.channel.createMessage(messageSpec));
 	}
-	public Mono<Void> broadcastEmbed(Consumer<EmbedCreateSpec> embed) { return broadcastEmbed((p, e) -> embed.accept(e)); }
-	public Mono<Void> broadcastEmbed(BiConsumer<UserPlayer, EmbedCreateSpec> embedFetcher) {
-		return broadcastImpl(player -> player.channel.createEmbed(e -> embedFetcher.accept(player, e)));
+	public Mono<Void> broadcastEmbed(Consumer<EmbedCreateSpec.Builder> embed) { return broadcastEmbed((p, e) -> embed.accept(e)); }
+	public Mono<Void> broadcastEmbed(BiConsumer<UserPlayer, EmbedCreateSpec.Builder> embedFetcher) {
+		return broadcastImpl(player -> {
+			EmbedCreateSpec.Builder b = EmbedCreateSpec.builder();
+			embedFetcher.accept(player, b);
+			return player.channel.createMessage(b.build());
+		});
 	}
 	private <T> Mono<Void> broadcastImpl(Function<UserPlayer, Mono<T>> messageSender) {
 		return userFlux().flatMap(messageSender).then();
@@ -71,7 +75,7 @@ public abstract class BattleInstance {
 	public Mono<Void> onRoundStart() {
 		// send appropriate messages to all active players
 		return broadcastEmbed((player, e) -> {
-			e.setTitle("Next Round");
+			e.title("Next Round");
 			Player opponent = ((Player)player).opponent;
 			
 			e.addField("Opponent", opponent.getDescriptor()+"\n"+opponent.getHealthDisplay(), false);
@@ -229,7 +233,7 @@ public abstract class BattleInstance {
 		player2.resetMove();
 		
 		return broadcastEmbed(spec -> {
-			spec.setTitle("Turn Results");
+			spec.title("Turn Results");
 			for(int i = 0; i < fieldTitles.size(); i++)
 				spec.addField(fieldTitles.get(i), fieldValues.get(i), false);
 		}).then(Mono.defer(() -> {

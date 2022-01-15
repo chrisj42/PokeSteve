@@ -17,6 +17,6 @@ public class StatsCommand extends ActionableCommand {
 	protected Mono<Void> execute(CommandContext context, OptionValues options, String[] args) {
 		UserData data = UserData.reqData(context.user);
 		
-		return context.channel.createEmbed(data::buildStatistics).then();
+		return context.channel.createMessage(data.buildStatistics().build()).then();
 	}
 }

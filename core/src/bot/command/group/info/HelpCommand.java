@@ -9,6 +9,7 @@ import bot.command.*;
 import bot.command.OptionSet.OptionValues;
 import bot.util.UsageException;
 
+import discord4j.core.spec.EmbedCreateSpec;
 import reactor.core.publisher.Mono;
 
 public class HelpCommand extends ActionableCommand {
@@ -59,9 +60,10 @@ public class HelpCommand extends ActionableCommand {
 		final CommandSet rootCommands = RootCommands.getCommandsFor(context.user);
 		
 		if(args.length == 0)
-			return context.channel.createEmbed(e -> e
-				.setTitle("Available Commands")
-				.setDescription(getRootHelp(context.user.getId().equals(Core.devId)))
+			return context.channel.createMessage(EmbedCreateSpec.builder()
+				.title("Available Commands")
+				.description(getRootHelp(context.user.getId().equals(Core.devId)))
+				.build()
 			).then();
 		
 		CommandSet cmdSet = rootCommands;
@@ -86,9 +88,10 @@ public class HelpCommand extends ActionableCommand {
 		}
 		
 		final Command command = cmd;
-		return context.channel.createEmbed(e -> e
-			.setTitle("`"+command.getName()+"` Command Help:")
-			.setDescription(command.getHelp())
+		return context.channel.createMessage(EmbedCreateSpec.builder()
+			.title("`"+command.getName()+"` Command Help:")
+			.description(command.getHelp())
+			.build()
 		).then();
 	}
 }

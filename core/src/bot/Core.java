@@ -20,8 +20,12 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.Channel.Type;
 import discord4j.core.object.presence.Activity;
+import discord4j.core.object.presence.ClientActivity;
+import discord4j.core.object.presence.ClientPresence;
 import discord4j.core.object.presence.Presence;
 import discord4j.core.object.reaction.ReactionEmoji;
+import discord4j.gateway.intent.Intent;
+import discord4j.gateway.intent.IntentSet;
 import reactor.core.publisher.Mono;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -64,6 +68,9 @@ public class Core {
 		// create client
 		System.out.println("creating client...");
 		client = DiscordClient.create(token);
+		client.gateway().setEnabledIntents(IntentSet.of(
+			Intent.DIRECT_MESSAGES
+		));
 		System.out.println("logging in...");
 		gateway = client.login().block();
 		
@@ -76,7 +83,7 @@ public class Core {
 			.subscribe(ready -> {
 				Core.self = ready.getSelf();
 				System.out.println("Logged in as " + self.getUsername());
-				gateway.updatePresence(Presence.online(Activity.playing("with pokemans")))
+				gateway.updatePresence(ClientPresence.online(ClientActivity.playing("with pokemans")))
 					.then(Mono.fromRunnable(() -> System.out.println("presence updated")))
 					.subscribe();
 			});

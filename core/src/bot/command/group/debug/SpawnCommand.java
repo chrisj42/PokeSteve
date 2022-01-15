@@ -29,6 +29,6 @@ public class SpawnCommand extends ActionableCommand {
 			level = options.getOptionValue(LEVEL_OPT, ArgType.INTEGER);
 		
 		Pokemon pokemon = ArgType.POKEMON.parseArg(args[0]).spawnPokemon(level);
-		return context.channel.createEmbed(pokemon::buildEmbed).then();
+		return context.channel.createMessage(pokemon.buildEmbed().build()).then();
 	}
 }

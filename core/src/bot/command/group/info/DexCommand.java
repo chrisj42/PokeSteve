@@ -21,6 +21,6 @@ public class DexCommand extends ActionableCommand {
 		
 		PokemonSpecies species = ArgType.POKEMON.parseArg(args[0]);
 		
-		return context.channel.createEmbed(species::buildDexEntry).then();
+		return context.channel.createMessage(species.buildDexEntry().build()).then();
 	}
 }

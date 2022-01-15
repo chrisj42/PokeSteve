@@ -142,8 +142,9 @@ public class Move implements Comparable<Move> {
 		return titleText;
 	}
 	
-	public void buildEmbed(EmbedCreateSpec e) {
-		e.setTitle("Move: "+name);
+	public EmbedCreateSpec.Builder buildEmbed() {
+		var e = EmbedCreateSpec.builder();
+		e.title("Move: "+name);
 		e.addField("Type", type.name(), false);
 		damageEffect.addToEmbed(e);
 		e.addField("Accuracy", accuracy > 0 ? String.valueOf(accuracy) : "--", true);
@@ -151,6 +152,8 @@ public class Move implements Comparable<Move> {
 		// add descriptions
 		e.addField("Flavor Text", description.flavorText, false);
 		e.addField("Effect Details", description.longText.replaceAll("\\$effect_chance%", secondaryChance > 0 ? secondaryChance+"%" : "(not implemented)"), false);
+		
+		return e;
 	}
 	
 	@Override

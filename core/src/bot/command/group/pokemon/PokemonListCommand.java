@@ -12,6 +12,7 @@ import bot.data.UserData;
 import bot.util.UsageException;
 import bot.world.pokemon.Pokemon.CaughtPokemon;
 
+import discord4j.core.spec.EmbedCreateSpec;
 import reactor.core.publisher.Mono;
 
 public class PokemonListCommand extends ActionableCommand {
@@ -49,9 +50,10 @@ public class PokemonListCommand extends ActionableCommand {
 		}
 		
 		final String list = str.toString();
-		return context.channel.createEmbed(e -> e
-			.setTitle("Your pokemon")
-			.setDescription(list)
+		return context.channel.createMessage(EmbedCreateSpec.builder()
+			.title("Your pokemon")
+			.description(list)
+			.build()
 		).then();
 	}
 }

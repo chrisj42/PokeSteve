@@ -181,17 +181,19 @@ public class Pokemon {
 		if(this instanceof CaughtPokemon)
 			((CaughtPokemon)this).owner.save();
 		
-		return channel.createEmbed(emb -> emb
-			.setTitle("Gained "+expGain+" exp!")
-			.setDescription(str.toString())
+		return channel.createMessage(EmbedCreateSpec.builder()
+			.title("Gained "+expGain+" exp!")
+			.description(str.toString())
+			.build()
 		).map(msg -> true);
 	}
 	
 	// private static final DecimalFormat statFormat = new DecimalFormat("00");
 	// private static final int MAX_STAT_NAME_LEN = 18;
-	public void buildEmbed(EmbedCreateSpec e) {
-		e.setTitle("Lv. "+level+" "+species.name+(nickname != null ? " AKA "+nickname : ""));
-		e.setImage(species.getSpritePath());
+	public EmbedCreateSpec.Builder buildEmbed() {
+		var e = EmbedCreateSpec.builder();
+		e.title("Lv. "+level+" "+species.name+(nickname != null ? " AKA "+nickname : ""));
+		e.image(species.getSpritePath());
 		
 		// if(nickname != null)
 		// 	e.addField(, false);
@@ -234,6 +236,8 @@ public class Pokemon {
 		LevelUpEvolution evo = species.getEvolution();
 		if(evo != null)
 			e.addField("Evolves into "+DataCore.POKEMON.get(evo.nextSpeciesDex)+":", "Level "+evo.minLevel, true);
+		
+		return e;
 	}
 	
 	
@@ -261,11 +265,12 @@ public class Pokemon {
 		}
 		
 		@Override
-		public void buildEmbed(EmbedCreateSpec e) {
-			super.buildEmbed(e);
-			e.setDescription("Catch ID - #" + catchId);
-			e.setFooter("Owned by "+owner.getUser().getUsername(), Core.self.getAvatarUrl());
+		public EmbedCreateSpec.Builder buildEmbed() {
+			var e = super.buildEmbed();
+			e.description("Catch ID - #" + catchId);
+			e.footer("Owned by "+owner.getUser().getUsername(), Core.self.getAvatarUrl());
 			// e.setAuthor(owner.getUser().getUsername(), null, owner.getUser().getAvatarUrl());
+			return e;
 		}
 		
 		public void buildListEntry(StringBuilder str) {

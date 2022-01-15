@@ -101,17 +101,19 @@ public class CatchCommand extends ActionableCommand {
 			breakoutAttempts = 0;
 		}
 		
-		private void createEmbed(EmbedCreateSpec e) {
-			e.setTitle("You threw a pokeball!");
-			e.setColor(embedColor);
-			e.setDescription(cumulativeStatus);
+		private EmbedCreateSpec createEmbed() {
+			return EmbedCreateSpec.builder()
+				.title("You threw a pokeball!")
+				.color(embedColor)
+				.description(cumulativeStatus)
+				.build();
 		}
 		
 		Mono<Void> doCatchEvent() {
 			Core.setUserWaiting(userData.userId, true);
 			cumulativeStatus = battle.wildPokemon+" was sucked inside...";
 			
-			return context.channel.createEmbed(this::createEmbed)
+			return context.channel.createMessage(createEmbed())
 				.delayElement(BREAKOUT_INTERVAL)
 				.flatMap(this::onBreakoutAttempt)
 				.then();
@@ -128,7 +130,7 @@ public class CatchCommand extends ActionableCommand {
 			if(breakout) {
 				embedColor = FAILED_CATCH_EMBED_COLOR;
 				return msg
-					.edit(m -> m.setEmbed(this::createEmbed))
+					.edit().withEmbeds(createEmbed())
 					.delayElement(BREAKOUT_INTERVAL)
 					.flatMap(m -> {
 						battle.player.pokemon.setFlag(Flag.FAILED_CATCH);
@@ -143,7 +145,7 @@ public class CatchCommand extends ActionableCommand {
 					// capture
 					embedColor = SUCCESSFUL_CATCH_EMBED_COLOR;
 					return msg
-						.edit(m -> m.setEmbed(this::createEmbed))
+						.edit().withEmbeds(createEmbed())
 						.flatMap(m -> {
 							userData.addPokemon(wildPokemon.pokemon);
 							Core.setUserWaiting(userData.userId, false);
@@ -154,7 +156,7 @@ public class CatchCommand extends ActionableCommand {
 				
 				// shake
 				return msg
-					.edit(m -> m.setEmbed(this::createEmbed))
+					.edit().withEmbeds(createEmbed())
 					.delayElement(BREAKOUT_INTERVAL)
 					.flatMap(this::onBreakoutAttempt);
 			}

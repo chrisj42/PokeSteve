@@ -24,6 +24,6 @@ public class MoveCommand extends ActionableCommand {
 		if(move == null)
 			throw new UsageException("No move could be found with the name \""+String.join(" ", args)+'"');
 		
-		return context.channel.createEmbed(move::buildEmbed).then();
+		return context.channel.createMessage(move.buildEmbed().build()).then();
 	}
 }
