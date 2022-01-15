@@ -32,7 +32,7 @@ public class StatusEffect implements MoveEffect {
 	
 	@Override
 	public EffectResult doEffect(MoveContext context) {
-		context.withPlayer(!onEnemy, " has been afflicted with ").append(status).append("! ...except not really because those aren't implemented just yet...");
-		return EffectResult.NA;
+		// context.withPlayer(!onEnemy, " has been afflicted with ").append(status).append("! ...except not really because those aren't implemented just yet...");
+		return status.applyStatus(context, onEnemy ? context.enemy : context.user);
 	}
 }

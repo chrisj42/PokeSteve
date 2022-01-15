@@ -16,13 +16,15 @@ public interface Flag {
 	// failed attempt to catch a wild pokemon, turn is forfeit
 	BoolFlag FAILED_CATCH = new BoolFlag();
 	
+	// currently afflicted status effect
+	ValueFlag<StatusAilment> STATUS_EFFECT = new ValueFlag<>();
+	
+	BoolFlag CONFUSED = new BoolFlag();
+	
 	// used for forced moves and forced lack of moves, if the index is invalid.
 	ValueFlag<Integer> FORCED_MOVE = new ValueFlag<>();
 	
 	ValueFlag<Integer> DISABLED_MOVE = new ValueFlag<>();
-	
-	// currently afflicted status effect
-	ValueFlag<StatusAilment> STATUS_EFFECT = new ValueFlag<>();
 	
 	// denotes that no move will be used the following turn, and the value is the message for the player saying why they can't select a move
 	// so far, used for recharging
