@@ -148,7 +148,14 @@ public abstract class BattleInstance {
 		player.moveIdx = moveIdx;
 		player.ready = true;
 		
-		return broadcastMessage(player+" is ready.").then(
+		// notify the other player that we've finished.
+		Mono<Void> optionalMessage;
+		if(this instanceof PlayerBattle) {
+			optionalMessage = ((UserPlayer)player.opponent).channel.createMessage(player+" is ready.").then();
+		} else
+			optionalMessage = Mono.empty();
+		
+		return optionalMessage.then(
 			Mono.defer(() -> {
 				if(player.opponent.ready)
 					return doRound()
@@ -164,7 +171,6 @@ public abstract class BattleInstance {
 	}
 	
 	// both pokemon have selected their moves
-	// TODO later this will return a RichEmbed
 	private Mono<Boolean> doRound() {
 		@Nullable final Move move1 = player1.getMove();
 		@Nullable final Move move2 = player2.getMove();
