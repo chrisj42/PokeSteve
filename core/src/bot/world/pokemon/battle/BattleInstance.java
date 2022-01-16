@@ -1,5 +1,6 @@
 package bot.world.pokemon.battle;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -242,7 +243,7 @@ public abstract class BattleInstance {
 			spec.title("Turn Results");
 			for(int i = 0; i < fieldTitles.size(); i++)
 				spec.addField(fieldTitles.get(i), fieldValues.get(i), false);
-		}).then(Mono.defer(() -> {
+		}).delayElement(Duration.ofMillis(1500)).then(Mono.defer(() -> {
 			if(endMsg != null)
 				return broadcastMessage(endMsg).then(postMono);
 			return postMono;
