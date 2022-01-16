@@ -8,6 +8,7 @@ import bot.command.CommandContext;
 import bot.command.OptionSet.OptionValues;
 import bot.data.UserData;
 import bot.util.UsageException;
+import bot.world.pokemon.Pokemon.CaughtPokemon;
 import bot.world.pokemon.Stat;
 import bot.world.pokemon.battle.BattleInstance.Player;
 import bot.world.pokemon.battle.BattlePokemon;
@@ -147,9 +148,14 @@ public class CatchCommand extends ActionableCommand {
 					return msg
 						.edit().withEmbeds(createEmbed())
 						.flatMap(m -> {
-							userData.addPokemon(wildPokemon.pokemon);
+							// register the caught pokemon
+							CaughtPokemon caught = userData.addPokemon(wildPokemon.pokemon);
 							Core.setUserWaiting(userData.userId, false);
 							return battle.onPokemonCaught()
+								.delayElement(BREAKOUT_INTERVAL.dividedBy(2))
+								.then(Mono.defer(() ->
+									context.channel.createMessage(caught.buildEmbed().build())
+								))
 								.thenReturn(m);
 						});
 				}

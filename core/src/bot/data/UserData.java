@@ -193,13 +193,14 @@ public class UserData {
 		return caughtPokemon.tailMap(idOffset, true);
 	}
 	
-	public void addPokemon(Pokemon pokemon) {
+	public CaughtPokemon addPokemon(Pokemon pokemon) {
 		CaughtPokemon caught = new CaughtPokemon(pokemon, this, catchCounter++);
 		catchDex.add(caught.species.dex);
 		caughtPokemon.put(caught.catchId, caught);
 		if(selectedPokemon == null)
 			selectedPokemon = caught;
 		save();
+		return caught;
 	}
 	
 	
