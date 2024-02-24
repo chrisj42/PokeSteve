@@ -14,10 +14,8 @@ import bot.util.UsageException;
 import bot.util.Utils;
 import bot.world.pokemon.move.Moves;
 
-import discord4j.core.object.entity.User;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.core.spec.MessageCreateSpec;
-import discord4j.discordjson.json.EmbedFieldData;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
